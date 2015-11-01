@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.server.command.Command;
-import fr.maxcraft.server.command.HelpManager;
 import fr.maxcraft.utils.MySQLSaver;
 
 public class ZoneCommand extends Command{
@@ -20,30 +19,6 @@ public class ZoneCommand extends Command{
 	public ZoneCommand(String s) {
 		super(s);
 		this.setAliases(Arrays.asList("z")).register();
-		new HelpManager("Zone").setDesc("Liste des commandes de zones.").setUsage("Cliquez ici pour acceder aux commandes de zones.")
-		.setClickText("/help zone");
-		new HelpManager("zone info").setDesc("Info de la zone actuelle.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone tp").setDesc("Teleportation vers un zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone inactive").setDesc("Liste de parcelles inactive.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone create").setDesc("Creation de nouvelle zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone remove").setDesc("Supression de zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone resize").setDesc("Redefinition d'une zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone reload").setDesc("Rechargement d'une zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone set").setDesc("Crevebedaine doit finir.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone addtag").setDesc("Ajout de tag à un zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone removetag").setDesc("Retrait de tag à une zone.").setUsage("/zone info\n/z i")
-		.setPack("zone");
-		new HelpManager("zone reset").setDesc("Supression des utilisateurs.").setUsage("/zone info\n/z i")
-		.setPack("zone");
 	}
 
 	@Override

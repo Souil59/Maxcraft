@@ -1,7 +1,7 @@
 package fr.maxcraft.server.command;
 
+import java.io.File;
 import java.util.ArrayList;
-
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ClickEvent.Action;
@@ -12,6 +12,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import fr.maxcraft.Main;
@@ -26,6 +27,8 @@ public class HelpManager implements CommandExecutor{
 	private String pack;
 	private String clickText;
 	private Action clickevent;
+	private YamlConfiguration config;
+	private File file;
 	
 	public HelpManager(String name){
 		this.name = name;
@@ -39,7 +42,26 @@ public class HelpManager implements CommandExecutor{
 	}
 
 	public HelpManager() {
+		this.file = new File("plugins/Maxcraft/helpmanager.yml");
+		this.config = YamlConfiguration.loadConfiguration(this.file);
+		configReader();
 		Main.getPlugin().getCommand("help").setExecutor(this);
+	}
+
+	private void configReader() {
+		for (String t : this.config.getKeys(false)){
+			HelpManager h = new HelpManager(t);
+			if (this.config.contains(t+".desc"))
+				h.setDesc(this.config.getString(t+".desc"));
+			if (this.config.contains(t+".usage"))
+				h.setUsage(this.config.getString(t+".usage"));
+			if (this.config.contains(t+".perm"))
+				h.setPerm(this.config.getString(t+".perm"));
+			if (this.config.contains(t+".pack"))
+				h.setPack(this.config.getString(t+".pack"));
+			if (this.config.contains(t+".cmd"))
+				h.setClickText(this.config.getString(t+".cmd"));
+		}
 	}
 
 	public HelpManager setDesc(String desc) {

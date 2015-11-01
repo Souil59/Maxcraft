@@ -34,7 +34,7 @@ public class Faction implements Owner{
 
 	@SuppressWarnings("deprecation")
 	public Faction(String id,String name,String TAG,double balance,Location spawn,Location jail,User owner,ArrayList<User> heads,
-			ArrayList<User> members,ArrayList<User>recruits){
+			ArrayList<User> members,ArrayList<User>recruits,ItemStack banner){
 		this.setName(name);
 		this.id = UUID.fromString(id);
 		this.TAG = TAG;
@@ -42,7 +42,7 @@ public class Faction implements Owner{
 		this.setBalance(balance);
 		this.spawn = spawn;
 		this.jail = jail;
-		this.banner = Main.getPlugin().getConfig().getItemStack("faction."+TAG);
+		this.banner = banner;
 		if (Bukkit.getScoreboardManager().getMainScoreboard().getTeam(TAG)!=null)
 			this.team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(TAG);
 		else{
@@ -64,7 +64,7 @@ public class Faction implements Owner{
 		while (r.next()){
 		Location spawn = Serialize.locationFromString(r.getString("spawn"));
 		Location jail = Serialize.locationFromString(r.getString("jail"));
-		new Faction(r.getString("id"),r.getString("name"),r.getString("tag"),r.getDouble("balance"),spawn,jail, User.get(r.getString("owner")), Serialize.usersFromString(r.getString("heads")), Serialize.usersFromString(r.getString("members")), Serialize.usersFromString(r.getString("recruits")));
+		new Faction(r.getString("id"),r.getString("name"),r.getString("tag"),r.getDouble("balance"),spawn,jail, User.get(r.getString("owner")), Serialize.usersFromString(r.getString("heads")), Serialize.usersFromString(r.getString("members")), Serialize.usersFromString(r.getString("recruits")),Serialize.stringToItemStack(r.getString("banner")));
 
 		}
 		} catch (SQLException e) {
@@ -138,8 +138,8 @@ public class Faction implements Owner{
 	
 	public void setBanner(ItemStack s) {
 		this.banner = s;
-		Main.getPlugin().getConfig().set("faction."+TAG, s);
-		Main.getPlugin().saveConfig();
+		MySQLSaver.mysql_update("UPDATE `faction` SET `banner` = '"+Serialize.itemstackToString(s)+"' WHERE `id` = '"+this.id.toString()+"';");
+
 	}
 	public void setJail(Location l ){
 		this.jail = l;

@@ -33,6 +33,7 @@ public class MenuListener implements Listener {
 	}
 	@EventHandler
 	public void onclose(InventoryCloseEvent e){
+		Menu.menulist.remove(User.get(e.getPlayer().getUniqueId()));
 		new Fill(e.getPlayer()).runTaskLater(Main.getPlugin(), 1);
 	}
 	@EventHandler

@@ -22,8 +22,8 @@ import fr.maxcraft.player.permissions.PermsCommand;
 import fr.maxcraft.player.permissions.PermsListener;
 import fr.maxcraft.server.chatmanager.ChatListener;
 import fr.maxcraft.server.command.HelpManager;
-import fr.maxcraft.server.economy.EcoListener;
 import fr.maxcraft.server.game.GameListener;
+import fr.maxcraft.server.merchant.MerchantListener;
 import fr.maxcraft.server.protect.ProtectListener;
 import fr.maxcraft.server.world.Marker;
 import fr.maxcraft.server.world.Travel;
@@ -59,7 +59,7 @@ public class Main extends JavaPlugin {
 		
 		
 		//Task
-		new ManaTask().runTaskTimer(this, 0, 10);
+		new ManaTask().runTaskTimer(this, 0, 5);
 		
 		//CommandRegister
         final Field f = CraftServer.class.getDeclaredField("commandMap");
@@ -80,7 +80,7 @@ public class Main extends JavaPlugin {
 		new PermsListener(this);
 		new ZoneListener(this);
 		new WorldListener(this);
-		new EcoListener(this);
+		new MerchantListener(this);
 		new ChatListener(this);
 		new ProtectListener(this);
 		new FactionListener(this);

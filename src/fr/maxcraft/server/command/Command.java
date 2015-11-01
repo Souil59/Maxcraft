@@ -15,8 +15,8 @@ public abstract class Command extends org.bukkit.command.Command{
 	}
 
 	public void register() {
-		Main.log("Command registered");
 		Main.getCmap().register(Main.getPlugin().getDescription().getName(), this);
+		Main.log("Command "+this.getName()+" registered");
 	}
 	public Command setAliases(List<String> s) {
 		super.setAliases(s);

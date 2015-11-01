@@ -24,7 +24,7 @@ public class ManaDisplay {
 	}
 		@SuppressWarnings("deprecation")
 		public static PacketPlayOutSpawnEntityLiving getMobPacket(Player p, Mage mage){
-			Location loc = p.getLocation().add(p.getLocation().getDirection().multiply(20));
+			Location loc = p.getLocation().add(p.getLocation().getDirection().multiply(2));
 			PacketPlayOutSpawnEntityLiving mobPacket = new PacketPlayOutSpawnEntityLiving();
 			try {
 				Field a = mobPacket.getClass().getDeclaredField("a");
