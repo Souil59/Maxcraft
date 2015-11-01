@@ -1,5 +1,8 @@
 package fr.maxcraft.server.world;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
@@ -10,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.maxcraft.Main;
+import fr.maxcraft.utils.MySQLSaver;
 
 public class World implements CommandExecutor {
 
@@ -60,7 +64,10 @@ public class World implements CommandExecutor {
 			return false;
 		if (Bukkit.getWorld(args[1]) == null)
 			return false;
+		org.bukkit.World w = Bukkit.getWorld(args[1]);
 		Bukkit.unloadWorld(args[1], false);
+		w.getWorldFolder().delete();
+		MySQLSaver.mysql_update("DELETE FROM `world` WHERE `name` = '"+args[1]+"'");
 		return true;
 	}
 
@@ -82,7 +89,20 @@ public class World implements CommandExecutor {
 		org.bukkit.World w = Bukkit.createWorld(wc);
 		Location l = w.getSpawnLocation();
 		w.setSpawnLocation(l.getBlockX(), w.getHighestBlockYAt(l), l.getBlockZ());
+		MySQLSaver.mysql_update("INSERT INTO `world` (`name`, `group`) VALUES ('"+args[1]+"', '1');");
 		return true;
+	}
+	
+	public static void loadAll(){
+		Main.log("chargement");
+		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `world`",false);
+		try {
+			while (r.next()){
+			Bukkit.createWorld(new WorldCreator(r.getString("name")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

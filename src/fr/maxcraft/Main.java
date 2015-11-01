@@ -52,6 +52,7 @@ public class Main extends JavaPlugin {
 		User.loadActive();
 		Faction.load();
 		Zone.load();
+		World.loadAll();
 		//Marker.load();
 		//ZoneVente.load();if(Bukkit.getServer() instanceof CraftServer){
 		
