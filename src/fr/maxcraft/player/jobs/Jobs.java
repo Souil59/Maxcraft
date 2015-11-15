@@ -51,7 +51,7 @@ List<Material> blocks =  Arrays.asList();
 	}
 
 	protected void insert() {
-		MySQLSaver.mysql_update("INSERT INTO `maxcraft`.`jobs` (`id`, `metier`, `xp`) VALUES ('"+this.uuid.toString()+"', '"+this.name+"', '"+this.xp+"');");
+		MySQLSaver.mysql_update("INSERT INTO `jobs` (`id`, `metier`, `xp`) VALUES ('"+this.uuid.toString()+"', '"+this.name+"', '"+this.xp+"');");
 		
 	}
 	
