@@ -4,33 +4,12 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.command.HelpManager;
 import fr.maxcraft.utils.DurationParser;
 
 public class ModeratorCommand implements CommandExecutor {
 
 	public ModeratorCommand() {
-		new HelpManager("Moderation").setClickText("/help moderation").setDesc("Liste des commandes de moderation.")
-		.setUsage("Cliquez ici pour acceder aux commandes de moderations.").setPerm("maxcraft.guide");
-		Main m = Main.getPlugin();
-		m.getCommand("mute").setExecutor(this);
-		new HelpManager("mute").setDesc("Empeche un joueur de parler.").setUsage("/mute <pseudo> [durée] [raison]\n/mute Crevebedaine 30s insultes").setPack("moderation");
-		m.getCommand("ban").setExecutor(this);
-		new HelpManager("ban").setDesc("Banni un joueur du serveur.").setUsage("/ban <pseudo> [durée] [raison]\n/ban Crevebedaine 2m x-ray").setPack("moderation");
-		m.getCommand("jail").setExecutor(this);
-		new HelpManager("jail").setDesc("Emprisone un joueur.").setUsage("/jail <pseudo> [durée] [raison]\n/jail Crevebedaine 1d vandalisme").setPack("moderation");
-		m.getCommand("kick").setExecutor(this);
-		new HelpManager("kick").setDesc("Kick un joueur.").setUsage("/kick <pseudo> [raison]\n/kick Crevebedaine spam").setPack("moderation");
-		m.getCommand("invsee").setExecutor(this);
-		new HelpManager("invsee").setDesc("Affiche l'inventaire d'un joueur").setUsage("/invsee <pseudo>\n/invsee Crevebedaine").setPack("moderation");
-		m.getCommand("enderchest").setExecutor(this);
-		new HelpManager("enderchest").setDesc("Affiche l'inventaire d'un joueur").setUsage("/invsee <pseudo>\n/invsee Crevebedaine").setPack("moderation");
-		m.getCommand("journal").setExecutor(this);
-		new HelpManager("journal").setDesc("Affiche les dernieres actions de moderations.").setUsage("/journal [pseudo]\n/journal Crevebedaine").setPack("moderation");
-		m.getCommand("fine").setExecutor(this);
-		new HelpManager("fine").setDesc("Donne un amende à un joueur.").setUsage("/fine <pseudo> <montant> [raison]\n/fine Crevebedaine 50 arnaque").setPack("moderation");
 		
 	}
 	
@@ -61,37 +40,31 @@ public class ModeratorCommand implements CommandExecutor {
 
 	private boolean journal(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 
 	private boolean ec(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 
 	private boolean invsee(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 
 	private boolean jail(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 
 	private boolean fine(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 
 	private boolean kick(CommandSender sender, String[] args) {
 		return false;
-		// TODO Auto-generated method stub
 		
 	}
 

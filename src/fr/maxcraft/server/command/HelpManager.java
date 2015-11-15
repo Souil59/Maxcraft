@@ -52,9 +52,9 @@ public class HelpManager implements CommandExecutor{
 		for (String t : this.config.getKeys(false)){
 			HelpManager h = new HelpManager(t);
 			if (this.config.contains(t+".desc"))
-				h.setDesc(this.config.getString(t+".desc"));
+				h.setDesc(this.config.getString(t+".desc").replace(" \n ", "\n"));
 			if (this.config.contains(t+".usage"))
-				h.setUsage(this.config.getString(t+".usage"));
+				h.setUsage(this.config.getString(t+".usage").replace(" \n ", "\n"));
 			if (this.config.contains(t+".perm"))
 				h.setPerm(this.config.getString(t+".perm"));
 			if (this.config.contains(t+".pack"))
