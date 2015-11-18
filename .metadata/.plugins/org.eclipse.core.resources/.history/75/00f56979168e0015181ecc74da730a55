@@ -32,9 +32,8 @@ public class Zone {
 	private ArrayList<User> builder = new ArrayList<User>();
 	private ArrayList<User> cubo = new ArrayList<User>();
 	private String world;
-	private int price;
 
-	public Zone (int id,String name,Owner owner,Polygon p,String worldname,int parent,ArrayList<String> tag,ArrayList<User> builder,ArrayList<User> cubo, Owner tenant, double rent , boolean payed, int price){
+	public Zone (int id,String name,Owner owner,Polygon p,String worldname,int parent,ArrayList<String> tag,ArrayList<User> builder,ArrayList<User> cubo, Owner tenant, double rent , boolean payed){
 		this.id = id;
 		this.name = name;
 		this.polygon = p;
@@ -48,10 +47,8 @@ public class Zone {
 			this.cubo = cubo;
 		this.world=worldname;
 		zonelist.add(this);
-		this.price = price;
 	}
 	
-	//TODO ajouter prix, voir avec nouveau site pour requetes SQL
 	public static void load() throws SQLException{
 			ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `zone`",false);
 			while (r.next()){
@@ -82,7 +79,7 @@ public class Zone {
 			Main.logError("Erreur au chargement de la zone : "+r.getInt("id"));
 			}
 		}
-			Main.log("Zones chargÃ©es. ("+Zone.zonelist.size()+" zones.)");
+			Main.log("Zones chargees. ("+Zone.zonelist.size()+" zones.)");
 	}
 
 	public static Zone getZone(Location l) {
@@ -195,7 +192,7 @@ public class Zone {
 		World w = u.getPlayer().getWorld();
 		Owner o = null;
 		if (p.npoints<2)
-			return "Vous devez faire une sï¿½lection d'au moins 2 points !";
+			return "Vous devez faire une sélection d'au moins 2 points !";
 		if (p.npoints==2){
 			int[] x = p.xpoints.clone();
 			int[] y = p.ypoints.clone();
@@ -207,9 +204,9 @@ public class Zone {
 		}
 		Zone parent = Zone.getZone(new Location(w,p.xpoints[0],0,p.ypoints[0]));
 		if (parent==null && !u.getPlayer().hasPermission("maxcraft.modo"))
-			return "Cette sï¿½lection n'est pas dans une zone, vous devez ï¿½tre admin.";
+			return "Cette sélection n'est pas dans une zone, vous devez être admin.";
 		if (parent!=null && !parent.canCubo(u.getPlayer()))
-			return "Cette sï¿½lection n'est pas dans une zone oï¿½ vous pouvez cuboider !";
+			return "Cette sélection n'est pas dans une zone où vous pouvez cuboider !";
 		int pid;
 		
 		if (parent==null)
@@ -221,7 +218,7 @@ public class Zone {
 		}
 		Zone z = new Zone(0, name, o, p, w.getName(), pid, null, null, null,null,0,true);
 		z.insert();
-		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A ï¿½tï¿½ crï¿½e !";
+		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A été crée !";
 		
 	}
 
@@ -250,12 +247,12 @@ public class Zone {
 	public String description(){
 		String d = "";
 		d+=ChatColor.WHITE+"*** <"+ChatColor.GOLD+ this.getName() +ChatColor.GRAY +"> ***";
-		d+="\n" + ChatColor.WHITE+"Numï¿½ro : "+ ChatColor.GREEN + this.id;
-		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " mï¿½.";
+		d+="\n" + ChatColor.WHITE+"Numèro : "+ ChatColor.GREEN + this.id;
+		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " m².";
 		if(this.getOwner() != null)
-			d+="\n" + ChatColor.WHITE+"Propriï¿½taire : "+ ChatColor.GREEN + this.owner.getName();
+			d+="\n" + ChatColor.WHITE+"Propriétaire : "+ ChatColor.GREEN + this.owner.getName();
 		else
-			d+="\n" + ChatColor.WHITE+"Propriï¿½taire : "+ ChatColor.RED + "Aucun";
+			d+="\n" + ChatColor.WHITE+"Propriétaire : "+ ChatColor.RED + "Aucun";
 		if(this.getParent() != null)
 			d+="\n" + ChatColor.WHITE+"Localisation : "+ ChatColor.GREEN + this.getParent().getName();
 		if (this.cubo.size()>0)

@@ -82,7 +82,7 @@ public class Zone {
 			Main.logError("Erreur au chargement de la zone : "+r.getInt("id"));
 			}
 		}
-			Main.log("Zones chargées. ("+Zone.zonelist.size()+" zones.)");
+			Main.log("Zones chargees. ("+Zone.zonelist.size()+" zones.)");
 	}
 
 	public static Zone getZone(Location l) {
