@@ -33,7 +33,7 @@ public class MenuListener implements Listener {
 	}
 	@EventHandler
 	public void onclose(InventoryCloseEvent e){
-		Menu.menulist.remove(User.get(e.getPlayer().getUniqueId()));
+		//Menu.menulist.remove(User.get(e.getPlayer().getUniqueId()));
 		new Fill(e.getPlayer()).runTaskLater(Main.getPlugin(), 1);
 	}
 	@EventHandler
@@ -41,13 +41,10 @@ public class MenuListener implements Listener {
 		new Fill(e.getPlayer()).runTaskLater(Main.getPlugin(), 1);
 	}
 	public class Fill extends BukkitRunnable{
-
 		private Player p;
-
 		public Fill(HumanEntity player) {
 			this.p = (Player) player;
 		}
-
 		@Override
 		public void run() {
 			if (this.p.getOpenInventory().getType().equals(InventoryType.CHEST))

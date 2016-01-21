@@ -20,9 +20,9 @@ public class JailSetter extends Menu{
 	@Override
 	public void execute(User u) {
 		if (Zone.getZone(u.getPlayer().getLocation())==null)
-			popup(Arrays.asList(ChatColor.RED+"Cette zone n'appartient pas à ",ChatColor.RED+"votre faction"));
+			popup(Arrays.asList(ChatColor.RED+"Cette zone n'appartient pas Ã  ",ChatColor.RED+"votre faction"));
 		if (!Zone.getZone(u.getPlayer().getLocation()).getOwner().equals(u.getFaction()));
-			popup(Arrays.asList(ChatColor.RED+"Cette zone n'appartient pas à ",ChatColor.RED+"votre faction"));
+			popup(Arrays.asList(ChatColor.RED+"Cette zone n'appartient pas Ã  ",ChatColor.RED+"votre faction"));
 		if (Zone.getZone(u.getPlayer().getLocation()).getOwner().equals(u.getFaction()));
 			u.getFaction().setJail(u.getPlayer().getLocation());
 			popup(Arrays.asList(ChatColor.GREEN+"Le nouvel emplacement de la prison ",ChatColor.GREEN+"est pris en compte."));

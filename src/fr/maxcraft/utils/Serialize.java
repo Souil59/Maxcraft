@@ -42,9 +42,6 @@ public class Serialize {
 				, Float.parseFloat(arg[4]), Float.parseFloat(arg[5]));
 		return l;
 	}
-	
-
-
 	public static String usersToString(ArrayList<User> ul){
 		String s = "";
 		for (User u : ul )
@@ -103,7 +100,6 @@ public class Serialize {
 		}
 		return new BigInteger(1, outputStream.toByteArray()).toString(32);
 		}
-
 	public static ItemStack stringToItemStack(String str) {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(new BigInteger(str, 32).toByteArray());
 		NBTTagCompound item = null;

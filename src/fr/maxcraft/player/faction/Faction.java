@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Team;
@@ -30,7 +31,7 @@ public class Faction implements Owner{
 	private Location jail;
 	private double balance;
 	private Team team;
-	private ItemStack banner;
+	private ItemStack banner = new ItemStack(Material.BANNER);
 
 	@SuppressWarnings("deprecation")
 	public Faction(String id,String name,String TAG,double balance,Location spawn,Location jail,User owner,ArrayList<User> heads,

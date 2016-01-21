@@ -17,6 +17,8 @@ public class MySQLSaver {
 	 * Connexion MySQL
 	 */
 	public static void connect(){
+
+
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -28,7 +30,7 @@ public class MySQLSaver {
 			Main.log("Connexion sql etablie !"); //$NON-NLS-1$
 		} catch (SQLException e) {
 			e.printStackTrace();
-			Main.log("Connexion sql echouée !");
+			Main.log("Connexion sql echouï¿½e !");
 			Main.getPlugin().getServer().shutdown();
 		}
 	}

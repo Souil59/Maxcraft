@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import fr.maxcraft.Main;
+import fr.maxcraft.player.menu.zone.ZoneDisplay;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Bukkit;
@@ -48,6 +50,7 @@ public abstract class Menu {
 		Inventory inv = Bukkit.createInventory(null, 9, ChatColor.GOLD+"Menu");
 		for (int s = 0 ; s<inv.getSize();s++)
 			inv.setItem(s, voiditem);
+        inv.setItem(3,new ZoneDisplay(u).getItem(u));
 		inv.setItem(4, new FactionMenu(u).getItem(u));
 		inv.setItem(0, new PlayerMenu(u).getItem(u));
 		return inv;
@@ -55,8 +58,8 @@ public abstract class Menu {
 	public void popup(List<String> list){
 		ItemStack i = MenuListener.events.get(this.u).getCurrentItem();
 		ItemMeta m = i.getItemMeta();
-		m.setDisplayName(" ");
-		m.setLore(list);
+		m.setDisplayName(list.get(0));
+		m.setLore(list.subList(1,list.size()));
 		i.setItemMeta(m);
 		MenuListener.events.get(this.u).setCancelled(true);
 	}
@@ -68,10 +71,11 @@ public abstract class Menu {
 			e.setCancelled(true);
 			u.getPlayer().openInventory(getMainInventory(u));
 		}
-		for (Menu m : menulist.get(u))
+        ArrayList<Menu> me = menulist.get(u);
+		for (Menu m : me)
 			if (m.getItem(u).getItemMeta().equals(item.getItemMeta())){
 				e.setCancelled(true);
-				m.execute(u);
+                m.execute(u);
 			}
 		if (voiditem.getItemMeta().equals(item.getItemMeta()))
 			e.setCancelled(true);

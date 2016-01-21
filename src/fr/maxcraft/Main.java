@@ -53,12 +53,7 @@ public class Main extends JavaPlugin {
 		Faction.load();
 		Zone.load();
 		World.loadAll();
-		//Marker.load();
-		//ZoneVente.load();if(Bukkit.getServer() instanceof CraftServer){
-		
-		
-		
-		
+
 		//Task
 		new ManaTask().runTaskTimer(this, 0, 5);
 		
@@ -74,14 +69,13 @@ public class Main extends JavaPlugin {
 		Marker.register(this);
 		Travel.register(this);
 		ChatListener.register(this);
-		
-		
+
 		//Listeners
 		new JobsListener(this);
 		new PermsListener(this);
 		new ZoneListener(this);
 		new WorldListener(this);
-		new MerchantListener(this);
+		//new MerchantListener(this);
 		new ChatListener(this);
 		new ProtectListener(this);
 		new FactionListener(this);
@@ -92,12 +86,12 @@ public class Main extends JavaPlugin {
 		
 		
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"===================");
-		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"= Maxcraft chargé =");
+		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"= Maxcraft chargÃ© =");
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"===================");
 		} catch (Exception e) {
 			e.printStackTrace();
 			logError("Erreur au chargement!");
-			//this.getServer().shutdown();
+			this.getServer().shutdown();
 		}
 		
 	}
