@@ -7,7 +7,7 @@ public class MerchantListener extends Command{
 
 	public MerchantListener(String name) {
 		super(name);
-		//TODO this.setAliases("alias");
+		this.setAliases("alias");
 		this.setPerms("maxcraft.guide");
 		this.register();
 	}

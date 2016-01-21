@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/Users/admin/Desktop/privé/Jeux Vidéos/minecraft/Maxcraft/Sauvegardes:fichiers importants/dernier spigot/server.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Louis/Desktop/bukkitserver/server.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

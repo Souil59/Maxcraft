@@ -81,7 +81,7 @@ public class Main extends JavaPlugin {
 		new PermsListener(this);
 		new ZoneListener(this);
 		new WorldListener(this);
-		//TODO new MerchantListener(this);
+		new MerchantListener(this);
 		new ChatListener(this);
 		new ProtectListener(this);
 		new FactionListener(this);
@@ -92,7 +92,7 @@ public class Main extends JavaPlugin {
 		
 		
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"===================");
-		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"= Maxcraft chargÃ© =");
+		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"= Maxcraft chargé =");
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"===================");
 		} catch (Exception e) {
 			e.printStackTrace();
