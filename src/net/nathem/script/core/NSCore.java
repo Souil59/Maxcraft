@@ -21,7 +21,7 @@ import net.nathem.script.enums.LogType;
 public class NSCore {
 
 	public Main plugin;
-	public Editor Editor;
+	public static Editor Editor;
 	private DevListener DevListener;
 	private NathemListener NathemListener;
 	public ArrayList<NathemWorld> registeredWorlds;
@@ -29,6 +29,7 @@ public class NSCore {
 
 	public NSCore(Main main){
 		this.plugin = main;
+		this.onEnable();
 	}
 
 	public void onEnable() {
@@ -71,19 +72,6 @@ public class NSCore {
 	public static void log(String message)
 	{
 		//NSCore.log(message, LogType.CONSOLE);
-	}
-	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		
-		switch(cmd.getName())
-		{
-		case "nse":
-			new EditorCommand(this.Editor, sender, args);
-			break;
-		
-		}
-		return false;
-		
 	}
 	
 	public NathemWorld getNathemWorld(World world)

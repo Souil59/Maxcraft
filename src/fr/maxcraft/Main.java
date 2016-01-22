@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 
 import net.md_5.bungee.api.ChatColor;
 
+import net.nathem.script.core.NSCommand;
+import net.nathem.script.core.NSCore;
+import net.nathem.script.editor.EditorCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -43,6 +46,8 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		
 		try {
+
+			new NSCore(this);
 			
 		//MySql
 		this.saveDefaultConfig();
@@ -65,6 +70,7 @@ public class Main extends JavaPlugin {
 		new HelpManager();
 		new ZoneCommand("zone");
 		new PermsCommand("perms");
+		new NSCommand("nse");
 		World.register(this);
 		Marker.register(this);
 		Travel.register(this);
