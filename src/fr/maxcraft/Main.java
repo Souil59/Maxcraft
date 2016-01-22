@@ -75,7 +75,7 @@ public class Main extends JavaPlugin {
 		new PermsListener(this);
 		new ZoneListener(this);
 		new WorldListener(this);
-		//new MerchantListener(this);
+		new MerchantListener(this);
 		new ChatListener(this);
 		new ProtectListener(this);
 		new FactionListener(this);

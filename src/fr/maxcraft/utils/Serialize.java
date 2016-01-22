@@ -61,6 +61,8 @@ public class Serialize {
 		return ul;
 	}
 	public static ArrayList<Faction> factionsFromString(String str){
+		if (str==null)
+			return new ArrayList<Faction>();
 		if (str.length()<2)
 			return new ArrayList<Faction>();
 		String[] arg = str.split(";");

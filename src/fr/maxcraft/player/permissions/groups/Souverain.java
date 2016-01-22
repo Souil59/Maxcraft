@@ -16,7 +16,7 @@ public class Souverain implements Group{
 
 	@Override
 	public String getPrefix() {
-		return "Souverain ";
+		return ChatColor.BOLD+"Souverain ";
 	}
 
 	@Override

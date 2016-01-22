@@ -27,15 +27,19 @@ public class Faction implements Owner{
 	private String TAG;
 	private User owner;
 	private ArrayList<User> members = new ArrayList<User>();
+	private ArrayList<User> heads = new ArrayList<User>();
+	private ArrayList<User> recruits = new ArrayList<User>();
+	private ArrayList<User> allMembers = new ArrayList<User>();
+	private ArrayList<Faction> allies = new ArrayList<Faction>();
+	private ArrayList<Faction> ennemies = new ArrayList<Faction>();
 	private Location spawn;
 	private Location jail;
 	private double balance;
 	private Team team;
 	private ItemStack banner = new ItemStack(Material.BANNER);
 
-	@SuppressWarnings("deprecation")
 	public Faction(String id,String name,String TAG,double balance,Location spawn,Location jail,User owner,ArrayList<User> heads,
-			ArrayList<User> members,ArrayList<User>recruits,ItemStack banner){
+			ArrayList<User> members,ArrayList<User>recruits,ItemStack banner,String ennemies,String allies){
 		this.setName(name);
 		this.id = UUID.fromString(id);
 		this.TAG = TAG;
@@ -44,6 +48,13 @@ public class Faction implements Owner{
 		this.spawn = spawn;
 		this.jail = jail;
 		this.banner = banner;
+		this.members = members;
+		this.recruits = recruits;
+		this.heads = heads;
+		this.allMembers.add(owner);
+		this.allMembers.addAll(heads);
+		this.allMembers.addAll(members);
+		this.allMembers.addAll(recruits);
 		if (Bukkit.getScoreboardManager().getMainScoreboard().getTeam(TAG)!=null)
 			this.team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(TAG);
 		else{
@@ -52,12 +63,13 @@ public class Faction implements Owner{
 			this.team.setCanSeeFriendlyInvisibles(true);
 			this.team.setNameTagVisibility(NameTagVisibility.ALWAYS);
 		}
-		owner.setFaction(this);
-		for (User u : members){
+		for (User u : allMembers){
 			u.setFaction(this);
 			this.team.addPlayer(u.getPlayer());
+			u.getPlayer().setBedSpawnLocation(this.spawn);
 		}
 		factionlist.add(this);
+		new FactionRelations(this,ennemies,allies).runTaskLater(Main.getPlugin(),120);
 	}
 	public static void load(){
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `faction`", false);
@@ -65,7 +77,7 @@ public class Faction implements Owner{
 		while (r.next()){
 		Location spawn = Serialize.locationFromString(r.getString("spawn"));
 		Location jail = Serialize.locationFromString(r.getString("jail"));
-		new Faction(r.getString("id"),r.getString("name"),r.getString("tag"),r.getDouble("balance"),spawn,jail, User.get(r.getString("owner")), Serialize.usersFromString(r.getString("heads")), Serialize.usersFromString(r.getString("members")), Serialize.usersFromString(r.getString("recruits")),Serialize.stringToItemStack(r.getString("banner")));
+		new Faction(r.getString("id"),r.getString("name"),r.getString("tag"),r.getDouble("balance"),spawn,jail, User.get(r.getString("owner")), Serialize.usersFromString(r.getString("heads")), Serialize.usersFromString(r.getString("members")), Serialize.usersFromString(r.getString("recruits")),Serialize.stringToItemStack(r.getString("banner")),r.getString("enemies"),r.getString("allies"));
 
 		}
 		} catch (SQLException e) {
@@ -101,7 +113,6 @@ public class Faction implements Owner{
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-	
 	public static Faction get(UUID uuid) {
 		for (Faction f : factionlist)
 			if (f.id.equals(uuid))
@@ -136,7 +147,6 @@ public class Faction implements Owner{
 	public ItemStack getBanner() {
 		return this.banner;
 	}
-	
 	public void setBanner(ItemStack s) {
 		this.banner = s;
 		MySQLSaver.mysql_update("UPDATE `faction` SET `banner` = '"+Serialize.itemstackToString(s)+"' WHERE `id` = '"+this.id.toString()+"';");
@@ -149,5 +159,39 @@ public class Faction implements Owner{
 	public void setSpawn(Location l ){
 		this.spawn = l;
 		MySQLSaver.mysql_update("UPDATE `faction` SET `spawn` = '"+Serialize.locationToString(l)+"' WHERE `id` = '"+this.id.toString()+"';");
+	}
+	public ArrayList<User> getHeads() {
+		return heads;
+	}
+	public void setHeads(ArrayList<User> heads) {
+		this.heads = heads;
+	}
+	public ArrayList<User> getRecruits() {
+		return recruits;
+	}
+	public void setRecruits(ArrayList<User> recruits) {
+		this.recruits = recruits;
+	}
+	public ArrayList<User> getAllMembers() {
+		return allMembers;
+	}
+	public void setAllMembers(ArrayList<User> allMembers) {
+		this.allMembers = allMembers;
+	}
+
+	public ArrayList<Faction> getAllies() {
+		return allies;
+	}
+
+	public void setAllies(ArrayList<Faction> allies) {
+		this.allies = allies;
+	}
+
+	public ArrayList<Faction> getEnnemies() {
+		return ennemies;
+	}
+
+	public void setEnnemies(ArrayList<Faction> ennemies) {
+		this.ennemies = ennemies;
 	}
 }
