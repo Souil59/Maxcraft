@@ -1,5 +1,7 @@
 package fr.maxcraft.player.magicraft;
 
+import fr.maxcraft.player.User;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -50,6 +52,14 @@ public class Mage {
 	
 	public int getMaxMana(){
 		return 100+this.getLevel()*10;
+	}
+
+	public User getUser(){
+		return User.get(this.uuid);
+	}
+
+	public void manaConsume(int how){
+		this.mana -= how;
 	}
 
 }
