@@ -1,0 +1,17 @@
+health: 20.0
+hunger: 20
+xp: 0
+gamemode: SURVIVAL
+inv:
+  '0':
+    ==: org.bukkit.inventory.ItemStack
+    type: COMMAND
+  '1':
+    ==: org.bukkit.inventory.ItemStack
+    type: SKULL_ITEM
+    damage: 3
+    meta:
+      ==: ItemMeta
+      meta-type: SKULL
+      internal: H4sIAAAAAAAAAE1Uya6jSBCkWzPS66f+jL6hJ5vVcJgD3qDKLLYBA3Vjp9htzKr5pPnIoW99zIzMSEVkKj8J4pP4aRZ9WV5fTYLL+IP4S/ermPh5eMVDHMSRj+s1+R1ExK9EpBg/9sMviqWEL1YIwq+A5f0vgRfZIKI5mg/CT+JzZWrj1xvH3Q/i4x1P7/4Vd58EQXz7IP5++GUff/s3nuHWd6gyZO5Z4ErYyE9b3dIW42gvmnWaNCvsQL2fAxq1gfyA6AB4UHmcZukZcs65Zt0m43hjvUrH+hFlxtHjdBkWWm7PegVzgEccKnBAVdkhm8sCx8YGhsewetDIgSWSz21Q2Vg9wMV3ot5z79SKmcg9U7674uu8SIEUMkccyQ82Uh4zcjVs1B22t29oYcCvGtae8TdvEyn30cDC8EdtHzhljxx99hy0VSuujA7iFrnZNlr51QWMOq1RxjFkvDykNfpeaUdv6y333Ms9xrDA4i0FpS3aVjueth4NM93RVl/umeHYjJ4X44rP+nJjVu0UwqADFVVG8rlYtWQgb3drPCD50YG8wSE9tYEJxcSlxA/ih4nT2v+9l+//TWb5FPZoeeN9exOSXLX4Au3mhbPEIjlNPAtmjSShk5bV5Na+xztpdZwwkLh+Cl73S3HDpO8smSl4yi7LnZ5zgixKaDmSySmmoudmpgrq9boVLXURTClRvD5TdsC08dOFjg5yenNWH80G3m6cbyhbl7RCDCMyXchNZZeBAK6DNLZq0sSMlUY0AIXeGIjx7pCxRjnShZedYvdkTPnj3RphT4VqqXE9K/HXAXVMC+qGMrcu4y8Ny0PvfiHJ3VGHXvtOZDsOoYioTDvfeDpiH9Yl3G6kFKoSSy8sieuMDWs/mD1WiBvGAJF2SaLbA3XVXWCy86bBbSnKb8Yglw0c+NLlzSHsh/fA6WgqTjm/T/U7YIpkr9GMfNy5XtdB2+Rotw0sPBsX6rGTGEFNgyzkLwHd7h6SdhJLhdFUGNT6QSr33cUaxaY3g+Q66csJ72OdukI2DetOsVNGaDgHhl6SViMA8/UZlkmyH2nRPJMY7FoWnhRqeMflwh7iLKNkOTOlrHLysDTpvW6xS8oMvcPZetEOlDYsyGvxOAcDu+8vQ0YmncmfnUhJTuHhMZHNJqIExWyKBKmvLuIA+37KDbVJxUo6ujupTLTBqKfBBCPia1zWWlGI7HhvCwlzN6ytR34DVZaJvKAGT28IyCYEIhJ3dbkJ97SFYv9yfWtqG99jAz2tGafZs5POyjLY/6w/hPgf2GVGqLMEAAA=
+      skull-owner: Crevebedaine
