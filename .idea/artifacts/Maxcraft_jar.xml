@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Maxcraft:jar">
+    <output-path>$PROJECT_DIR$/serveur/plugins</output-path>
+    <root id="archive" name="Maxcraft.jar">
+      <element id="module-output" name="Maxcraft" />
+      <element id="library" level="module" name="server.jar" module-name="Maxcraft" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/serveur/server.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
