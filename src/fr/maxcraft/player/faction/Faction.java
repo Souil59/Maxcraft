@@ -65,13 +65,16 @@ public class Faction implements Owner{
 		}
 		for (User u : allMembers){
 			u.setFaction(this);
-			this.team.addPlayer(u.getPlayer());
-			u.getPlayer().setBedSpawnLocation(this.spawn);
 		}
 		factionlist.add(this);
 		new FactionRelations(this,ennemies,allies).runTaskLater(Main.getPlugin(),120);
 	}
-	public static void load(){
+
+    public Faction() {
+
+    }
+
+    public static void load(){
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `faction`", false);
 		try {
 		while (r.next()){
@@ -178,20 +181,19 @@ public class Faction implements Owner{
 	public void setAllMembers(ArrayList<User> allMembers) {
 		this.allMembers = allMembers;
 	}
-
 	public ArrayList<Faction> getAllies() {
 		return allies;
 	}
-
 	public void setAllies(ArrayList<Faction> allies) {
 		this.allies = allies;
 	}
-
 	public ArrayList<Faction> getEnnemies() {
 		return ennemies;
 	}
-
 	public void setEnnemies(ArrayList<Faction> ennemies) {
 		this.ennemies = ennemies;
+	}
+	public void load(User u) {
+		this.team.addPlayer(u.getPlayer());
 	}
 }

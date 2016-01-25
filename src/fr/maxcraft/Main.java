@@ -2,11 +2,13 @@ package fr.maxcraft;
 
 import java.lang.reflect.Field;
 
+import fr.maxcraft.server.game.GameCommand;
+import fr.maxcraft.server.game.GameListener;
+import fr.maxcraft.server.game.StartSign;
 import net.md_5.bungee.api.ChatColor;
 
 import net.nathem.script.core.NSCommand;
 import net.nathem.script.core.NSCore;
-import net.nathem.script.editor.EditorCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.craftbukkit.v1_8_R3.CraftServer;
@@ -25,7 +27,6 @@ import fr.maxcraft.player.permissions.PermsCommand;
 import fr.maxcraft.player.permissions.PermsListener;
 import fr.maxcraft.server.chatmanager.ChatListener;
 import fr.maxcraft.server.command.HelpManager;
-import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.merchant.MerchantListener;
 import fr.maxcraft.server.protect.ProtectListener;
 import fr.maxcraft.server.world.Marker;
@@ -42,52 +43,58 @@ public class Main extends JavaPlugin {
 
 	private static Plugin plugin;
 	private static CommandMap cmap;
-	public void onEnable() {
+    private static NSCore NSCore;
+
+    public void onEnable() {
+
 		plugin = this;
 		
 		try {
 
-			new NSCore(this);
+			NSCore = new NSCore(this);
 			
 		//MySql
-		this.saveDefaultConfig();
-		MySQLSaver.connect();
+		    this.saveDefaultConfig();
+		    MySQLSaver.connect();
 
 		//Entity Loader
-		User.loadActive();
-		Faction.load();
-		Zone.load();
-		World.loadAll();
+		    User.loadActive();
+		    Faction.load();
+		    Zone.load();
+		    World.loadAll();
+            StartSign.load();
 
 		//Task
-		new ManaTask().runTaskTimer(this, 0, 5);
+		    new ManaTask().runTaskTimer(this, 0, 5);
 		
 		//CommandRegister
-        final Field f = CraftServer.class.getDeclaredField("commandMap");
-        f.setAccessible(true);
-        cmap=(CommandMap)f.get(Bukkit.getServer());
-		new ModeratorCommand();
-		new HelpManager();
-		new ZoneCommand("zone");
-		new PermsCommand("perms");
-		new NSCommand("nse");
-		World.register(this);
-		Marker.register(this);
-		Travel.register(this);
-		ChatListener.register(this);
+            final Field f = CraftServer.class.getDeclaredField("commandMap");
+            f.setAccessible(true);
+            cmap=(CommandMap)f.get(Bukkit.getServer());
+
+		    new ModeratorCommand();
+		    new HelpManager();
+		    new ZoneCommand("zone");
+		    new PermsCommand("perms");
+		    new NSCommand("nse");
+            new GameCommand("game");
+		    World.register(this);
+		    Marker.register(this);
+		    Travel.register(this);
+		    ChatListener.register(this);
 
 		//Listeners
-		new JobsListener(this);
-		new PermsListener(this);
-		new ZoneListener(this);
-		new WorldListener(this);
-		new MerchantListener(this);
-		new ChatListener(this);
-		new ProtectListener(this);
-		new FactionListener(this);
-		new MenuListener(this);
-		new MagicListener(this);
-		new GameListener(this);
+		    new JobsListener(this);
+		    new PermsListener(this);
+		    new ZoneListener(this);
+		    new WorldListener(this);
+		    new MerchantListener(this);
+		    new ChatListener(this);
+		    new ProtectListener(this);
+		    new FactionListener(this);
+		    new MenuListener(this);
+		    new MagicListener(this);
+            new GameListener(this);
 		
 		
 		
@@ -113,4 +120,10 @@ public class Main extends JavaPlugin {
 	public static CommandMap getCmap() {
 		return cmap;
 	}
+    public static net.nathem.script.core.NSCore getNSCore() {
+        return NSCore;
+    }
+    public static void setNSCore(net.nathem.script.core.NSCore NSCore) {
+        Main.NSCore = NSCore;
+    }
 }

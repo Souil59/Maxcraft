@@ -22,6 +22,7 @@ public class FactionListener implements Listener {
 		User u = User.get(e.getPlayer());
 		if (u.getFaction()==null)
 			return;
+		u.getFaction().load(u);
 		Scoreboard s = u.getPlayer().getScoreboard();
 		for (Faction f : u.getFaction().getAllies()){
 			s.getTeam(f.getTAG()).setPrefix(ChatColor.GREEN+f.getTAG()+" ");
