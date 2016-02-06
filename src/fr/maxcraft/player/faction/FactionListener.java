@@ -1,6 +1,7 @@
 package fr.maxcraft.player.faction;
 
 import fr.maxcraft.player.User;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
@@ -32,5 +33,6 @@ public class FactionListener implements Listener {
 		}
 		s.getTeam(u.getFaction().getTAG()).setPrefix(ChatColor.GREEN+u.getFaction().getTAG()+" ");
 		u.getPlayer().setScoreboard(s);
+        u.getPlayer().setPlayerListName(u.getPerms().dysplayName());
 	}
 }

@@ -14,7 +14,6 @@ public class Bucheron extends Jobs implements Farmer{
 		super.uuid = uuid;
 		super.xp = xp;
 		super.name = "Bucheron";
-		super.addBlocks(blockList());
 	}
 
 	@Override

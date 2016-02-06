@@ -14,7 +14,7 @@ public class FactionChat {
 		for (Player p : Bukkit.getOnlinePlayers())
 			if (User.get(p).getFaction()!=null)
 				if (User.get(p).getFaction().equals(User.get(e.getPlayer()).getFaction()))
-					User.get(p).sendNotifMessage(ChatColor.DARK_GREEN+"[Faction] "+e.getPlayer().getName()+" "+e.getMessage());
+					User.get(p).sendNotifMessage(ChatColor.DARK_GREEN+"[Faction] "+e.getPlayer().getName()+" "+e.getMessage().substring(1));
 	}
 
 }

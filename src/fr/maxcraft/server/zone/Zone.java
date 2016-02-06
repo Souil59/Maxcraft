@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
+import fr.maxcraft.server.zone.sale.Sale;
+import fr.maxcraft.server.zone.sale.SaleType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -19,6 +21,7 @@ import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.player.faction.Faction;
 import fr.maxcraft.utils.MySQLSaver;
+import sun.misc.Regexp;
 
 public class Zone {
 
@@ -32,8 +35,9 @@ public class Zone {
 	private ArrayList<User> builder = new ArrayList<User>();
 	private ArrayList<User> cubo = new ArrayList<User>();
 	private String world;
+    private Sale sale;
 
-	public Zone (int id,String name,Owner owner,Polygon p,String worldname,int parent,ArrayList<String> tag,ArrayList<User> builder,ArrayList<User> cubo, Owner tenant, double rent , boolean payed){
+    public Zone (int id,String name,Owner owner,Polygon p,String worldname,int parent,ArrayList<String> tag,ArrayList<User> builder,ArrayList<User> cubo){
 		this.id = id;
 		this.name = name;
 		this.polygon = p;
@@ -46,15 +50,27 @@ public class Zone {
 		if (cubo != null)
 			this.cubo = cubo;
 		this.world=worldname;
+        this.loadDependencies();
 		zonelist.add(this);
 	}
-	
-	public static void load() throws SQLException{
+
+    private void loadDependencies() {
+        ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `sale` WHERE `id` = "+this.id,true);
+        try {
+        if (r.isFirst())
+            new Sale(this, r.getInt("price"), SaleType.valueOf(r.getString("type").toUpperCase()), r.getString("sign"));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+    }
+
+    public static void load() throws SQLException{
 			ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `zone`",false);
 			while (r.next()){
 			try {
 			Owner o = null;
-			if (r.getString("Owner")!=null){
+			if (r.getString("Owner")!=null&&r.getString("Owner").length()>10){
 				if (User.get(r.getString("Owner")) != null)
 					o = User.get(r.getString("Owner"));
 				if (Faction.get(UUID.fromString(r.getString("Owner"))) != null)
@@ -72,7 +88,7 @@ public class Zone {
 				tag =new ArrayList<String>(Arrays.asList(r.getString("tags").split(";")));
 			
 			new Zone(r.getInt("id"), r.getString("name"),o, p,r.getString("world"), r.getInt("parent")
-					, tag, builder, cubo,User.get(r.getString("tenant")),r.getDouble("rent"),true);
+					, tag, builder, cubo);
 
 			} catch (Exception e) {
 			e.printStackTrace();
@@ -85,7 +101,7 @@ public class Zone {
 	public static Zone getZone(Location l) {
 		Zone smalest = null;
 		for (Zone z : zonelist){
-			if(!l.getWorld().getName().equals(z.world))
+			if(!l.getWorld().getName().equals(z.world)||z.getWorld().getName().contains("[game]"+l.getWorld().getName()))
 				continue;
 			if (z.isInside(l.getBlockX(), l.getBlockZ())){
 				if (smalest == null)
@@ -151,6 +167,8 @@ public class Zone {
 	public boolean hasTag(String tag) {
 		if (this.tag.contains(tag))
 			return true;
+        if (this.tag.contains("!"+tag))
+            return false;
 		if (this.getParent()!=null)
 			if (this.getParent().hasTag(tag))
 				return true;
@@ -192,7 +210,7 @@ public class Zone {
 		World w = u.getPlayer().getWorld();
 		Owner o = null;
 		if (p.npoints<2)
-			return "Vous devez faire une sélection d'au moins 2 points !";
+			return "Vous devez faire une sï¿½lection d'au moins 2 points !";
 		if (p.npoints==2){
 			int[] x = p.xpoints.clone();
 			int[] y = p.ypoints.clone();
@@ -204,9 +222,9 @@ public class Zone {
 		}
 		Zone parent = Zone.getZone(new Location(w,p.xpoints[0],0,p.ypoints[0]));
 		if (parent==null && !u.getPlayer().hasPermission("maxcraft.modo"))
-			return "Cette sélection n'est pas dans une zone, vous devez être admin.";
+			return "Cette sÃ©lection n'est pas dans une zone, vous devez Ã©tre admin.";
 		if (parent!=null && !parent.canCubo(u.getPlayer()))
-			return "Cette sélection n'est pas dans une zone où vous pouvez cuboider !";
+			return "Cette sÃ©lection n'est pas dans une zone oÃ© vous pouvez cuboider !";
 		int pid;
 		
 		if (parent==null)
@@ -216,16 +234,19 @@ public class Zone {
 			if (parent.owner!=null)
 				o = parent.owner;
 		}
-		Zone z = new Zone(0, name, o, p, w.getName(), pid, null, null, null,null,0,true);
+		Zone z = new Zone(0, name, o, p, w.getName(), pid, null, null, null);
 		z.insert();
-		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A été crée !";
+		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A ï¿½tï¿½ crï¿½e !";
 		
 	}
 
 	public boolean canCubo(Player player) {
-		if (this.owner!=null)
-			if (this.owner.equals(User.get(player)))
-				return true;
+		if (this.owner instanceof User)
+            if (this.owner.equals(User.get(player)))
+                return true;
+        if (this.owner instanceof Faction)
+            if (((Faction)this.owner).getOwner().equals(User.get(player)))
+                return true;
 		if (this.cubo.contains(User.get(player)))
 			return true;
 		if (player.hasPermission("maxcraft.modo"))
@@ -241,18 +262,26 @@ public class Zone {
 		for (int i = 0;i<this.polygon.npoints;i++)
 			points = points+this.polygon.xpoints[i]+":"+this.polygon.ypoints[i]+";";
 		MySQLSaver.mysql_update("INSERT INTO `zone` (`id`, `name`,`parent`, `points`, `owner`,  `world`) VALUES"
-				+ " (NULL, '"+this.name+"', "+this.parentid+", '"+points+"', "+owner+", '"+this.world+"');");
-		
-	}
+				+ " (NULL, '"+this.name+"', "+this.parentid+", '"+points+"', '"+owner+"', '"+this.world+"');");
+        try {
+            this.id = MySQLSaver.mysql_query("SELECT * FROM `zone` WHERE `points` = '"+points+"'",true).getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 	public String description(){
 		String d = "";
-		d+=ChatColor.WHITE+"*** <"+ChatColor.GOLD+ this.getName() +ChatColor.GRAY +"> ***";
-		d+="\n" + ChatColor.WHITE+"Numèro : "+ ChatColor.GREEN + this.id;
-		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " m².";
+        d+=ChatColor.GRAY+"*** <"+ChatColor.GOLD+ this.getName() +ChatColor.GRAY +"> ***";
+        if (isToSell())
+            d+="\n" + ChatColor.WHITE+"NumÃ©ro : "+ ChatColor.GOLD + this.getSale()+"POs";
+		d+="\n" + ChatColor.WHITE+"NumÃ©ro : "+ ChatColor.GREEN + this.id;
+		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " mï¿½.";
 		if(this.getOwner() != null)
-			d+="\n" + ChatColor.WHITE+"Propriétaire : "+ ChatColor.GREEN + this.owner.getName();
+			d+="\n" + ChatColor.WHITE+"PropriÃ©taire : "+ ChatColor.GREEN + this.owner.getName();
 		else
-			d+="\n" + ChatColor.WHITE+"Propriétaire : "+ ChatColor.RED + "Aucun";
+			d+="\n" + ChatColor.WHITE+"PropriÃ©taire : "+ ChatColor.RED + "Aucun";
 		if(this.getParent() != null)
 			d+="\n" + ChatColor.WHITE+"Localisation : "+ ChatColor.GREEN + this.getParent().getName();
 		if (this.cubo.size()>0)
@@ -284,6 +313,7 @@ public class Zone {
 	}
 
 	public void reset() {
+        this.sale=null;
 		this.owner = null;
 		this.builder = new ArrayList<User>();
 		this.cubo = new ArrayList<User>(); 
@@ -298,7 +328,7 @@ public class Zone {
 		for (int i = 0;i<this.polygon.npoints;i++)
 			points = points+this.polygon.xpoints[i]+":"+this.polygon.ypoints[i]+";";
 		MySQLSaver.mysql_update("UPDATE `zone` SET `owner` ='"+owner+"',`points` ='"+points+"',`parent` ="+this.parentid+""
-				+ ",`name` ='"+this.name+"' WHERE 'id' = "+this.id);
+				+ ",`name` ='"+this.name+"' WHERE `id` = "+this.id);
 		
 	}
 
@@ -312,4 +342,19 @@ public class Zone {
 			return true;
 		return false;
 	}
+
+    public boolean isToSell() {
+        if (this.sale!=null)
+            return true;
+        return false;
+    }
+
+    public Sale getSale() {
+        return sale;
+    }
+
+    public void setSale(Sale sale) {
+        this.sale = sale;
+        this.save();
+    }
 }

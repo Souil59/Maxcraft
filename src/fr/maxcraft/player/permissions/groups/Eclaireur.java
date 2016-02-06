@@ -26,7 +26,7 @@ public class Eclaireur implements Group{
 
 	@Override
 	public ChatColor getColor() {
-		return ChatColor.DARK_AQUA;
+		return ChatColor.AQUA;
 	}
 
 }

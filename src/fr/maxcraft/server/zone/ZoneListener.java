@@ -3,12 +3,16 @@ package fr.maxcraft.server.zone;
 import java.awt.Polygon;
 import java.util.HashMap;
 
+import fr.maxcraft.server.zone.sale.Sale;
+import fr.maxcraft.server.zone.sale.SaleType;
+import fr.maxcraft.utils.Serialize;
+import net.nathem.script.editor.event.SignPlaceEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
-import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Painting;
@@ -16,11 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockGrowEvent;
-import org.bukkit.event.block.BlockIgniteEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -61,7 +60,7 @@ public class ZoneListener implements Listener{
 				if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 				{
 					selections.remove(m);
-					p.sendMessage(message("Sélection réinitialisée !"));
+					p.sendMessage(message("Sï¿½lection rï¿½initialisï¿½e !"));
 				}
 				else if(e.getAction().equals(Action.LEFT_CLICK_BLOCK))
 				{
@@ -72,17 +71,17 @@ public class ZoneListener implements Listener{
 						if (Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0]))!=null)
 							if(!Zone.getZone(l).equals(Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0])))){
 								e.setCancelled(true);
-								p.sendMessage(message("Selection impossible, ce point n'est pas dans la même zone que le premier."));
+								p.sendMessage(message("Selection impossible, ce point n'est pas dans la mï¿½me zone que le premier."));
 								return;
 					}
 					if (Zone.getZone(l)==null&&Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0]))!=null){
 						e.setCancelled(true);
-						p.sendMessage(message("Selection impossible, ce point n'est pas dans la même zone que le premier."));
+						p.sendMessage(message("Selection impossible, ce point n'est pas dans la mï¿½me zone que le premier."));
 						return;
 					}
 					}
 					selections.get(m).addPoint(l.getBlockX(), l.getBlockZ());
-					p.sendMessage(message("Position "+selections.get(m).npoints+" enregistrée !"));
+					p.sendMessage(message("Position "+selections.get(m).npoints+" enregistrï¿½e !"));
 				}
 					
 				e.setCancelled(true);
@@ -90,6 +89,57 @@ public class ZoneListener implements Listener{
 				}
 			
 		}
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onSignPlace(SignChangeEvent e) throws Exception{
+            User u = User.get(e.getPlayer());
+            Zone zone = Zone.getZone(e.getBlock().getLocation());
+            if (zone==null)
+                return;
+            if (zone.canCubo(e.getPlayer()))
+                if (e.getLine(0).toUpperCase().contains("VENDRE")) {
+                    if (!isInt(e.getLine(1))) {
+                        u.sendNotifMessage("Le prix de votre terrain doit Ãªtre entier !");
+                        return;
+                    }
+                    int price = Integer.parseInt(e.getLine(1));
+                    if (price <= 0) {
+                        u.sendNotifMessage("Le prix de votre terrain doit Ãªtre strictement positif !");
+                        return;
+                    }
+                    if (zone.isToSell()) {
+                        u.sendNotifMessage("La zone est dÃ©jÃ  en vente !");
+                        return;
+                    }
+                    if (!zone.canCubo(u.getPlayer())) {
+                        u.sendNotifMessage("Vous n'avez pas le droit de vendre ce terrain !");
+                        return;
+                    }
+                    new Sale(zone,price, SaleType.SELL, Serialize.locationToString(e.getBlock().getLocation())).insert();
+                }
+         }
+
+    @EventHandler
+    public void onSignClic(PlayerInteractEvent e){
+        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)&&!e.getAction().equals(Action.LEFT_CLICK_AIR))
+            return;
+        if (e.getClickedBlock().getType().equals(Material.SIGN_POST)) {
+            if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+                for (Sale s : Sale.getSaleliste())
+                    if (s.getSign().getBlock().equals(e.getClickedBlock())) {
+                        s.sell(User.get(e.getPlayer()));
+                        return;
+                    }
+            if (e.getAction().equals(Action.LEFT_CLICK_BLOCK))
+                for (Sale s : Sale.getSaleliste())
+                    if (s.getSign().getBlock().equals(e.getClickedBlock())) {
+                        e.setCancelled(true);
+                        return;
+                    }
+
+        }
+    }
+
 		@EventHandler(priority = EventPriority.NORMAL)
 		public void onBreak(BlockBreakEvent e)
 		{
@@ -107,7 +157,7 @@ public class ZoneListener implements Listener{
 					if(!z.hasTag(tag) && ! z.hasTag("allow-break"))
 					{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					e.getPlayer().sendMessage(message("Vous n'Ãªtes pas builder sur cette zone !"));
 					}
 				}
 			}
@@ -145,7 +195,7 @@ public class ZoneListener implements Listener{
 					if(z.hasTag("allow-soil") && !z.hasTag("allow-break"))
 					{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					e.getPlayer().sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 					}
 				}
 			}
@@ -181,7 +231,7 @@ public class ZoneListener implements Listener{
 				if(!z.canBuild(p) && !z.hasTag("allow-break") && !z.hasTag("allow-break-hangings"))
 				{
 					e.setCancelled(true);
-					p.sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					p.sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 				}
 			}
 			
@@ -213,7 +263,7 @@ public class ZoneListener implements Listener{
 				if(! z.canBuild(p) && !z.hasTag("allow-place") && !z.hasTag("allow-place-hangings"))
 				{
 					e.setCancelled(true);
-					p.sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					p.sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 				}
 			}
 			
@@ -245,22 +295,17 @@ public class ZoneListener implements Listener{
 				if(! z.canBuild(p) && !z.hasTag("allow-break") && !z.hasTag("allow-break-hangings"))
 				{
 					e.setCancelled(true);
-					p.sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					p.sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 				}
 			}
 			
 		}
-		
-	
-		
 
-	
-		
 		@EventHandler(priority = EventPriority.NORMAL)
 		public void onPlace(BlockPlaceEvent e)
 		{
 			User m = User.get(e.getPlayer());
-			
+
 			if(m == null)
 			{
 				// Pas maxcraftien
@@ -276,7 +321,7 @@ public class ZoneListener implements Listener{
 				if(! z.canBuild(e.getPlayer()))
 				{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					e.getPlayer().sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 				}
 				}
 			}
@@ -331,7 +376,7 @@ public class ZoneListener implements Listener{
 				if(! z.canBuild(e.getPlayer()) && !z.hasTag("allow-place"))
 				{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage(message("Vous n'êtes pas builder sur cette zone !"));
+					e.getPlayer().sendMessage(message("Vous n'ï¿½tes pas builder sur cette zone !"));
 				}
 			}
 			
@@ -361,18 +406,15 @@ public class ZoneListener implements Listener{
 			if(!z.canBuild(e.getPlayer()) && ! z.hasTag("allow-fire"))
 			{
 				e.setCancelled(true);
-				e.getPlayer().sendMessage(message("Vous n'êtes pas builder, ni pyromane sur cette zone !"));
+				e.getPlayer().sendMessage(message("Vous n'ï¿½tes pas builder, ni pyromane sur cette zone !"));
 			}
 		}
 		
 		}
-		
-	
-		
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onMobSpawn(CreatureSpawnEvent e)
-{
+        @EventHandler(priority = EventPriority.NORMAL)
+         public void onMobSpawn(CreatureSpawnEvent e)
+       {
 
 	
 	Zone z = Zone.getZone(e.getLocation());
@@ -407,9 +449,9 @@ public void onMobSpawn(CreatureSpawnEvent e)
 	}
 }
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onDamage(EntityDamageEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onDamage(EntityDamageEvent e)
+    {
 
 if(!(e.getEntity() instanceof Player))
 {
@@ -437,9 +479,9 @@ if(z != null)
 }
 
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onInteract(PlayerInteractEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onInteract(PlayerInteractEvent e)
+    {
 	
 if(!(e.getAction().equals(Action.LEFT_CLICK_BLOCK) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)))
 {
@@ -462,9 +504,9 @@ if(z != null)
 }
 
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onKillCheval(EntityDamageEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onKillCheval(EntityDamageEvent e)
+    {
 	
 if(!(e.getCause().equals(DamageCause.PROJECTILE) || e.getCause().equals(DamageCause.ENTITY_ATTACK) || e.getCause().equals(DamageCause.ENTITY_EXPLOSION) || e.getCause().equals(DamageCause.POISON) || e.getCause().equals(DamageCause.MAGIC)))
 {
@@ -488,9 +530,9 @@ if(z != null)
 }
 }
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onEnderpearl(PlayerTeleportEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEnderpearl(PlayerTeleportEvent e)
+    {
 	Zone z = Zone.getZone(e.getTo());
 	if (z != null)
 		if (z.hasTag("no-hunger")){
@@ -527,8 +569,8 @@ public void onEnderpearl(PlayerTeleportEvent e)
 }
 
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onItemFrameRightClick(PlayerInteractEntityEvent e){
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onItemFrameRightClick(PlayerInteractEntityEvent e){
 	
 	if(!( e.getRightClicked() instanceof ItemFrame))
 	{
@@ -547,9 +589,9 @@ public void onItemFrameRightClick(PlayerInteractEntityEvent e){
 	
 }
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
+    {
 
 	//Item Frame
 	if(e.getEntity() instanceof ItemFrame)
@@ -606,9 +648,9 @@ public void onEntityDamageByEntity(EntityDamageByEntityEvent e)
 	
 	}
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onEntityDamage(EntityDamageEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEntityDamage(EntityDamageEvent e)
+    {
 	
 	Zone z = Zone.getZone(e.getEntity().getLocation());
 	
@@ -628,9 +670,9 @@ public void onEntityDamage(EntityDamageEvent e)
 	}
 }
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onFarmProtect(PlayerInteractEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onFarmProtect(PlayerInteractEvent e)
+    {
 	
 	if(!(e.getAction() == Action.PHYSICAL && e.getClickedBlock().getType() == Material.SOIL))
 	{
@@ -663,18 +705,18 @@ public void onFarmProtect(PlayerInteractEvent e)
 	
 }
 
-@EventHandler
-public void BlockPhysicsEvent(BlockPhysicsEvent e)
-{
+    @EventHandler
+    public void BlockPhysicsEvent(BlockPhysicsEvent e)
+    {
 	if(e.getBlock().getType().equals(Material.SOIL))
 		if (Zone.getZone(e.getBlock().getLocation())!=null)
 			if (Zone.getZone(e.getBlock().getLocation()).hasTag("farm"))
 					e.setCancelled(true);;
 }
 
-@EventHandler(priority = EventPriority.NORMAL)
-public void onEnterLeave(PlayerMoveEvent e)
-{
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onEnterLeave(PlayerMoveEvent e)
+    {
 	Zone z1 = Zone.getZone(e.getFrom());
 	Zone z2 = Zone.getZone(e.getTo());
 	
@@ -701,12 +743,12 @@ public void onEnterLeave(PlayerMoveEvent e)
 		
 		if(z1 != null && z1.hasTag("fly")){
 			p.setFlying(false);
-			p.sendMessage(message("Vous êtes sorti de la zone de fly."));
+			p.sendMessage(message("Vous ï¿½tes sorti de la zone de fly."));
 		}
 		
 		if(z2 != null && z2.hasTag("fly") && z2.canBuild(p)){
 			p.setFlying(true);
-			p.sendMessage(message("Vous êtes entré dans une zone de fly."));
+			p.sendMessage(message("Vous ï¿½tes entrï¿½ dans une zone de fly."));
 		}
 		
 		
@@ -856,7 +898,15 @@ public void onEnterLeave(PlayerMoveEvent e)
 	{
 		return ChatColor.AQUA + "[Zones] " + ChatColor.GRAY + message;
 	}
-	
+    public boolean isInt(String chaine) {
+        try {
+            Integer.parseInt(chaine);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        return true;
+    }
 
 
 }

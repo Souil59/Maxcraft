@@ -4,15 +4,15 @@ import fr.maxcraft.server.customentities.custompathfinder.PathfinderGoalLookAtPl
 import fr.maxcraft.server.customentities.custompathfinder.PathfinderGoalWalkToLoc;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 
 /**
  * Created by Crevebedaine on 26/01/2016.
  */
 public class EntityNPC  extends EntityAgeable implements NPC {
+
     public EntityNPC(World world) {
-        super(((CraftWorld)world).getHandle());
+        super(world);
         NBTTagCompound tag = new NBTTagCompound();
         this.c(tag);
         tag.setBoolean("Invulnerable", true);
@@ -25,7 +25,7 @@ public class EntityNPC  extends EntityAgeable implements NPC {
     }
 
     public static EntityNPC spawn(Location l){
-        EntityNPC e = new EntityNPC(l.getWorld());
+        EntityNPC e = new EntityNPC(((CraftWorld)l.getWorld()).getHandle());
         EntityTypes.spawnEntity(e,l);
         return e;
 

@@ -1,14 +1,15 @@
 package fr.maxcraft.server.game;
 
-import fr.maxcraft.Main;
 import fr.maxcraft.server.command.Command;
+import fr.maxcraft.server.customentities.EntityNPC;
+import fr.maxcraft.server.customentities.Franky;
+import fr.maxcraft.server.customentities.customplayer.CustomPlayer;
+import net.minecraft.server.v1_8_R3.Entity;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Villager;
 
-import java.util.UUID;
+import java.util.Arrays;
 
 /**
  * Created by Crevebedaine on 25/01/2016.
@@ -18,13 +19,16 @@ public class GameCommand extends Command {
     public GameCommand(String game) {
         super(game);
         this.setPerms("maxcraft.modo").register();
+        this.tabComplete(game, Arrays.asList("test","new [nbrInstance] [nom] [nomMap] [nbrJoueurs] [nbrVie]"));
     }
 
     @Override
     public boolean execute(CommandSender arg0, String arg1, String[] args){
+        if (args[0].equals("test"))
+            Franky.spawn(((Player)arg0));
         if (args[0].equals("new")) {
-            Villager e = (Villager) ((Player)arg0).getWorld().spawnEntity(((Player)arg0).getLocation(), EntityType.VILLAGER);
-            StartSign s = new StartSign(e.getUniqueId(), Integer.parseInt(args[1]), Boolean.getBoolean(args[2]), args[3], args[4], args[5], Integer.parseInt(args[6]), Integer.parseInt(args[7]));
+            Entity nmsEntity = EntityNPC.spawn(((Player)arg0).getLocation());
+            StartSign s = new StartSign(nmsEntity.getBukkitEntity().getUniqueId(), Integer.parseInt(args[1]),false, args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]));
             s.save();
         }
         return true;

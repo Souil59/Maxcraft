@@ -14,7 +14,6 @@ public class Fermier extends Jobs implements Farmer{
 		super.uuid = uuid;
 		super.xp = xp;
 		super.name = "Fermier";
-		super.addBlocks(blockList());
 	}
 
 	@Override

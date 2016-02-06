@@ -33,6 +33,9 @@ public enum EntityTypes {
         ((Map)getPrivateField("d", net.minecraft.server.v1_8_R3.EntityTypes.class, null)).put(clazz, name);
         ((Map)getPrivateField("f", net.minecraft.server.v1_8_R3.EntityTypes.class, null)).put(clazz, Integer.valueOf(id));
     }
+
+    public static void register(){
+    }
     public static Object getPrivateField(String fieldName, Class clazz, Object object) {
         Field field;
         Object o = null;

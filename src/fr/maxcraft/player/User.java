@@ -164,6 +164,10 @@ public class User implements Owner {
 			return perms;
 		}
 
+         public void setPerms(Perms perms) {
+        this.perms = perms;
+    }
+
 		public void setJob(Jobs jobs) {
 			this.jobs = jobs;
 		}
@@ -198,7 +202,8 @@ public class User implements Owner {
 			}
 			this.balance-=d;
 			this.sendNotifMessage("Vous avez payer "+d+" POs.");
-			return true;
+            MySQLSaver.mysql_update("UPDATE `player` SET `balance` = "+this.balance+" WHERE `id` = '"+this.uuid.toString()+"';");
+            return true;
 		}
 
 		@Override
@@ -210,12 +215,13 @@ public class User implements Owner {
 		public void give(double d) {
 			this.balance+=d;
 			this.sendNotifMessage("Vous avez recu "+d+" POs.");
-			
-		}
+            MySQLSaver.mysql_update("UPDATE `player` SET `balance` = "+this.balance+" WHERE `id` = '"+this.uuid.toString()+"';");
+
+        }
 
 		@Override
 		public boolean pay(double d, Account to) {
-			if (this.take(d))
+			if (!this.take(d))
 				return false;
 			to.give(d);
 			return true;

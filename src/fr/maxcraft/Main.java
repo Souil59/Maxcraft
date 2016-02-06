@@ -2,9 +2,11 @@ package fr.maxcraft;
 
 import java.lang.reflect.Field;
 
+import fr.maxcraft.server.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
+import fr.maxcraft.server.world.WorldCommand;
 import net.md_5.bungee.api.ChatColor;
 
 import net.nathem.script.core.NSCommand;
@@ -45,6 +47,11 @@ public class Main extends JavaPlugin {
 	private static CommandMap cmap;
     private static NSCore NSCore;
 
+    public void onLoad() {
+        EntityTypes.register();
+        log("Custom Entities registered!");
+    }
+
     public void onEnable() {
 
 		plugin = this;
@@ -78,7 +85,7 @@ public class Main extends JavaPlugin {
 		    new PermsCommand("perms");
 		    new NSCommand("nse");
             new GameCommand("game");
-		    World.register(this);
+            new WorldCommand("world");
 		    Marker.register(this);
 		    Travel.register(this);
 		    ChatListener.register(this);

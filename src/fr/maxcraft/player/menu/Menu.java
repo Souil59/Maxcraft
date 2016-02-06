@@ -64,6 +64,7 @@ public abstract class Menu {
 		m.setLore(list.subList(1,list.size()));
 		i.setItemMeta(m);
 		MenuListener.events.get(this.u).setCancelled(true);
+        new UnClickable(this.u,i);
 	}
 	
 	public static void clic(InventoryClickEvent e, ItemStack item, User u) {
@@ -78,6 +79,7 @@ public abstract class Menu {
 				if (m.getItem(u).getItemMeta().equals(item.getItemMeta())){
 					e.setCancelled(true);
            	     m.execute(u);
+                 return;
 				}
 		if (voiditem.getItemMeta().equals(item.getItemMeta()))
 			e.setCancelled(true);

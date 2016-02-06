@@ -4,6 +4,7 @@ import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.player.menu.Menu;
 import fr.maxcraft.player.menu.game.Instance;
+import fr.maxcraft.player.menu.game.SwitchUsable;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.inventory.Inventory;
 
@@ -22,7 +23,7 @@ public class StartSign {
     private final int nbrInstances;
     private ArrayList<GameInstance> instances = new ArrayList<GameInstance>();
     private final UUID npcUUID;
-    private final boolean open;
+    private boolean open;
 
     public StartSign(UUID pnj,int instances,boolean open,String name, String source, String entrance, int max,int life){
         this.npcUUID = pnj;
@@ -30,7 +31,7 @@ public class StartSign {
         this.game = new Game(name,source,entrance,max,life);
         this.nbrInstances = instances;
         for (int i = 1;i<=instances;i++)
-            this.instances.add(new GameInstance(game,name+i));
+            this.instances.add(new GameInstance(game,source+i));
         sslist.add(this);
     }
 
@@ -51,9 +52,11 @@ public class StartSign {
         Inventory i = Menu.getInventory("Instances");
         int j = 0;
         for (GameInstance g : instances) {
-            i.setItem(j, new Instance(u, g).getItem(u));
+            i.setItem(j, new Instance(u, g,this).getItem(u));
             j++;
         }
+        if (u.getPerms().hasPerms("maxcraft.modo"))
+            i.setItem(8,new SwitchUsable(u,this).getItem(u));
         u.getPlayer().openInventory(i);
     }
 
@@ -62,7 +65,15 @@ public class StartSign {
     }
 
     public void save(){
-        MySQLSaver.mysql_update("INSER INTO `startsign` (`uuid`, `nbrInstances`,`open`, `name`, `source`,  `entrance`, `max`, `life`) VALUES"
-                + " ('"+this.npcUUID+"', "+this.nbrInstances+", "+this.open+", '"+this.game.getName()+"', '"+this.game.getSource()+"', '"+this.game.getEntrance()+", "+this.game.getMax()+", "+this.game.getLife()+"');");
+        MySQLSaver.mysql_update("INSERT INTO `startsign` (`uuid`, `nbrInstances`,`open`, `name`, `source`,  `entrance`, `max`, `life`) VALUES"
+                + " ('"+this.npcUUID+"',"+this.nbrInstances+","+this.open+",'"+this.game.getName()+"','"+this.game.getSource()+"','"+this.game.getEntrance()+"',"+this.game.getMax()+","+this.game.getLife()+");");
+    }
+
+    public boolean isOpen(){
+        return open;
+    }
+
+    public void switchAccess() {
+        this.open = !this.open;
     }
 }

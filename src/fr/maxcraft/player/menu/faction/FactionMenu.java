@@ -41,23 +41,21 @@ public class FactionMenu extends Menu{
 		ItemStack i = getItem(u);
 		ItemMeta m = i.getItemMeta();
 		m.setDisplayName("");
-		m.setLore(Arrays.asList(ChatColor.RED+"Seul le proprietaire de la faction",ChatColor.RED+"peux acceder à ce menu"));
+		m.setLore(Arrays.asList(ChatColor.RED+"Seul le proprietaire de la faction",ChatColor.RED+"peux acceder Ã  ce menu"));
 		i.setItemMeta(m);
 		u.getPlayer().getOpenInventory().setItem(4, i);
 	}
 
 	@Override
 	public ItemStack getItem(User u) {
-		if (u.getFaction()==null)
-			return new ItemStackCreator(Material.BANNER,"Vous n'avez pas de faction", Arrays.asList("Vous devez etre dans une faction pour","pour acceder à ce menu"), 1, 0);
-		else{
-			ItemStack i = u.getFaction().getBanner();
-			ItemMeta m = i.getItemMeta();
-			m.setDisplayName(ChatColor.RED+u.getFaction().getName());
-			m.setLore(Arrays.asList(u.getFaction().getName(),u.getFaction().getTAG(),u.getFaction().getBalance()+"POs"));
-			i.setItemMeta(m);
-			return i;
-		}
-	}
+        if (u.getFaction() == null)
+            return new ItemStackCreator(Material.IRON_SWORD, "Vous n'avez pas de faction", Arrays.asList("Vous devez etre dans une faction pour", "pour acceder Ã  ce menu"), 1, 0);
+        return new ItemStackCreator(Material.IRON_SWORD, ChatColor.GRAY + "*** <" + ChatColor.GOLD + u.getFaction().getName() + ChatColor.GRAY + "> ***", Arrays.asList(
+                ChatColor.RESET+"Faction : " + ChatColor.GREEN + u.getFaction().getName()
+                ,ChatColor.RESET+ "Tag : " + ChatColor.GREEN + u.getFaction().getTAG()
+                ,ChatColor.RESET+ "Chef : " + ChatColor.GREEN + u.getFaction().getOwner().getName()
+                ,ChatColor.RESET+ "Argent : " + ChatColor.GREEN + u.getFaction().getBalance() + "POs"), 1, 0);
+
+    }
 
 }

@@ -37,13 +37,13 @@ public class Respond implements CommandExecutor {
 		}
 		User u = User.get(reply.get((Player)sender));
 		if (u == null){
-			sender.sendMessage("Ce joueur n'est pas connecté.");
+			sender.sendMessage("Ce joueur n'est pas connectï¿½.");
 			return true;
 		}
 		String p = ChatColor.GOLD+"["+j.getName()+ChatColor.GOLD+" -> Moi] :";
 		String p2 = ChatColor.GOLD+"[Moi -> "+u.getName()+"] :";
 		String m =ChatColor.WHITE+"";
-		for (int i = 1; i<args.length ;i++)
+		for (int i = 0; i<args.length ;i++)
 			m += " "+args[i];
 		TextComponent message = new TextComponent(p+m);
 		message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour repondre.").color(ChatColor.BLUE).create() ));

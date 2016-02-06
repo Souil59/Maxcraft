@@ -27,7 +27,7 @@ public class MenuListener implements Listener {
 	@EventHandler
 	public void onclic(InventoryClickEvent e){
 		events.put(User.get((Player)e.getWhoClicked()),e);
-		if (!e.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))
+		//if (!e.getWhoClicked().getGameMode().equals(GameMode.CREATIVE))
 			Menu.clic(e,e.getCurrentItem(),User.get((Player)e.getWhoClicked()));
 		events.remove(User.get((Player)e.getWhoClicked()));
 	}

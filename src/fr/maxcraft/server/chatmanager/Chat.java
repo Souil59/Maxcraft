@@ -21,11 +21,11 @@ public class Chat {
 			if (u.getFaction()==null||u.getPerms().hasPerms("maxcraft.guide"))
 				player = new TextComponent(u.getPerms().dysplayName()+ChatColor.WHITE+" : ");
 			else
-				player = new TextComponent(ChatColor.AQUA+u.getFaction().getTAG()+""+u.getName()+ChatColor.WHITE+" : ");
+				player = new TextComponent(ChatColor.AQUA+u.getFaction().getTAG()+" "+u.getName()+ChatColor.WHITE+" : ");
 			player.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour ajouter ce joueur en ami.").color(ChatColor.BLUE).create() ));
 			player.setClickEvent( new ClickEvent( ClickEvent.Action.RUN_COMMAND, "/friends add "+e.getPlayer().getName()));
 			TextComponent message = new TextComponent(e.getMessage());
-			message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour repondre en privé.").color(ChatColor.BLUE).create() ));
+			message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour repondre en privï¿½.").color(ChatColor.BLUE).create() ));
 			message.setClickEvent( new ClickEvent( ClickEvent.Action.SUGGEST_COMMAND, "/msg "+e.getPlayer().getName()));
 			player.addExtra(message);
 			p.spigot().sendMessage(player);

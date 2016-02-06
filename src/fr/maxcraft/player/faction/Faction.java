@@ -124,13 +124,16 @@ public class Faction implements Owner{
 	}
 	@Override
 	public boolean take(double d) {
-		// TODO Auto-generated method stub
-		return false;
+        if (this.getBalance()<d)
+            return false;
+        this.balance -= d;
+        MySQLSaver.mysql_update("UPDATE `faction` SET `balance` = "+this.balance+" WHERE `id` = '"+this.id.toString()+"';");
+		return true;
 	}
 	@Override
 	public void give(double d) {
 		this.balance += d;
-		MySQLSaver.mysql_update("UPDATE `faction` SET `balance` = '"+this.balance+"' WHERE `id` = '"+this.id.toString()+"';");
+		MySQLSaver.mysql_update("UPDATE `faction` SET `balance` = "+this.balance+" WHERE `id` = '"+this.id.toString()+"';");
 	}
 	@Override
 	public boolean pay(double d, Account to) {

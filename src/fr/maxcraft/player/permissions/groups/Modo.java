@@ -26,7 +26,7 @@ public class Modo implements Group{
 
 	@Override
 	public ChatColor getColor() {
-		return ChatColor.DARK_BLUE;
+		return ChatColor.DARK_AQUA;
 	}
 
 }

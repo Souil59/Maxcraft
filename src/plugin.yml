@@ -6,7 +6,6 @@ author: Crevebedaine
 commands:
 
   help:
-  world:
   marker:
   travel:
   mute:

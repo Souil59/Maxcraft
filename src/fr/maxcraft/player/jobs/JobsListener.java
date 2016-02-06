@@ -9,6 +9,8 @@ import org.bukkit.event.block.BlockBreakEvent;
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.player.jobs.jobstype.Farmer;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 
 public class JobsListener implements Listener {
@@ -47,4 +49,10 @@ public class JobsListener implements Listener {
 		if (rate>50)
 			e.getBlock().setType(Material.AIR);
 	}
+    @EventHandler
+    public void onPlace(BlockPlaceEvent e) {
+        if (!e.getPlayer().getGameMode().equals(GameMode.SURVIVAL))
+            return;
+        e.getBlock().setMetadata("player",new FixedMetadataValue(Main.getPlugin(),e.getPlayer().getName()));
+    }
 }

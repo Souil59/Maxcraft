@@ -188,6 +188,7 @@ public class GameInstance {
                     if (this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i).distance(pl.getLocation()) < 2) {
                         break;
                     } else {
+                        this.backLocations.put(p,p.getLocation());
                         p.teleport((this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i)));
                         if (this.life.containsKey(p)) {
                             this.life.put(p, game.getLife());
@@ -198,8 +199,9 @@ public class GameInstance {
                     }
         }
         if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance())){
+            this.backLocations.put(p,p.getLocation());
             p.teleport(this.getNathemWorld().getMarkers().get(this.game.getEntrance()));
-            if (this.life.containsKey(p)) {
+            if (!this.life.containsKey(p)) {
                 this.life.put(p, game.getLife());
             }else{
                 this.life.put(p,this.life.get(p)-1);

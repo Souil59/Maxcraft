@@ -9,6 +9,7 @@ import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.utils.MySQLSaver;
 import fr.maxcraft.utils.Serialize;
+import org.bukkit.ChatColor;
 
 public class Perms {
 
@@ -47,7 +48,11 @@ public class Perms {
 		return group;
 	}
 
-	public void setGroup(Group group) {
+    public ArrayList<String> getPerms() {
+        return perms;
+    }
+
+    public void setGroup(Group group) {
 		this.group = group;
 	}
 	
@@ -58,6 +63,12 @@ public class Perms {
 	}
 	
 	public String dysplayName(){
-		return this.getGroup().getColor()+this.getGroup().getPrefix()+User.get(this.uuid).getName();
+        return this.getGroup().getColor()+""+ChatColor.BOLD+this.getGroup().getPrefix()+ChatColor.RESET+this.getGroup().getColor()+User.get(this.uuid).getName();
 	}
+
+    public void save() {
+        MySQLSaver.mysql_update("UPDATE `perms` SET `group` = '"+group.getClass().getName()+"' , `perms` = '"+Serialize.ArrayStringToString(this.getPerms())+"' " +
+                " WHERE 'id' = '"+uuid+"'");
+
+    }
 }
