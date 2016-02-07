@@ -42,12 +42,11 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
     private boolean unban(CommandSender sender, String[] args){
-        return false;
+		return false;
     }
 
 	private boolean journal(CommandSender sender, String[] args) {
 		return false;
-		
 	}
 
 	private boolean ec(CommandSender sender, String[] args) {
