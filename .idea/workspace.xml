@@ -7,25 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="91f85112-8be2-40e9-8386-6e65aa582eee" name="Default" comment="Checkpoint">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/Instance.java" afterPath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/Instance.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/InstanceFaction.java" afterPath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/InstanceFaction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/InstancePublic.java" afterPath="$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/InstancePublic.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fr/maxcraft/server/game/GameInstance.java" afterPath="$PROJECT_DIR$/src/fr/maxcraft/server/game/GameInstance.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/nathem/script/core/NathemWorld.java" afterPath="$PROJECT_DIR$/src/net/nathem/script/core/NathemWorld.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/net/nathem/script/enums/ObjectType.java" afterPath="$PROJECT_DIR$/src/net/nathem/script/enums/ObjectType.java" />
-    </list>
-    <list id="6ec0660d-16e5-4e84-90a7-e9ea59a650b1" name="nop" comment="nop">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/artifacts/Maxcraft_jar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/server.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serveur/logs/latest.log" afterPath="$PROJECT_DIR$/serveur/logs/latest.log" />
     </list>
     <list id="7ad29cb6-e16b-46d3-a4f0-085c0a29c10c" name="Revert: workspace" comment="" />
     <ignored path="Maxcraft.iws" />
@@ -61,8 +45,8 @@
       <file leaf-file-name="Instance.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/Instance.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.45454547">
-              <caret line="44" column="46" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.017656501">
+              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -700,7 +684,7 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="91f85112-8be2-40e9-8386-6e65aa582eee" name="Default" comment="" />
-      <changelist id="6ec0660d-16e5-4e84-90a7-e9ea59a650b1" name="nop" comment="" />
+      <changelist id="" name="nop" comment="" />
       <created>1453380054758</created>
       <option name="number" value="Default" />
       <updated>1453380054758</updated>
@@ -747,7 +731,19 @@
       <option name="project" value="LOCAL" />
       <updated>1453502950556</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="A del">
+      <created>1454872602154</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1454872602154</updated>
+    </task>
+    <task id="LOCAL-00009" summary="nop">
+      <created>1454872686352</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1454872686352</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -765,7 +761,7 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32872504" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1797235" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1797235" sideWeight="0.49707174" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26261127" sideWeight="0.5058565" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -835,7 +831,9 @@
     <MESSAGE value="Deleting bin / serveur" />
     <MESSAGE value="Deleting" />
     <MESSAGE value="Checkpoint" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkpoint" />
+    <MESSAGE value="A del" />
+    <MESSAGE value="nop" />
+    <option name="LAST_COMMIT_MESSAGE" value="nop" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1267,8 +1265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fr/maxcraft/player/menu/game/Instance.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45454547">
-          <caret line="44" column="46" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.017656501">
+          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
           <folding />
         </state>
       </provider>
