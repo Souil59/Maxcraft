@@ -35,9 +35,15 @@ public class ModeratorCommand implements CommandExecutor {
 		    	return this.ec(sender,args);
 		    case "journal":
 		    	return this.journal(sender,args);
+            case "pardon":
+                return this.unban(sender, args);
 		}
 		return true;
 	}
+
+    private boolean unban(CommandSender sender, String[] args){
+        return false;
+    }
 
 	private boolean journal(CommandSender sender, String[] args) {
 		return false;
@@ -76,27 +82,24 @@ public class ModeratorCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED+"Ce joueur n'existe pas !");
 			return true;
 		}
+        if (args[1] == null){
+            sender.sendMessage("Vous devez indiquer une raison");
+            return true;}
 		if (args.length>2){
 			long d = DurationParser.translateTimeStringToDate(args[2]);
 			sender.sendMessage(Moderation.message() + args[0] + " est desormais muet");
-			j.sendNotifMessage(ChatColor.RED + "Vous avez été ban " + DurationParser.translateToString(args[1]) + " pour :" + args[1]);
+			j.sendNotifMessage(ChatColor.RED + "Vous avez été ban " + DurationParser.translateToString(args[2]) + " pour :" + args[1]);
 			j.getModeration().setBan(true, d);
-			Journal.add(sender.getName(), "ban", j.getUuid(), DurationParser.translateToString(args[1]), args[2]);
+			Journal.add(sender.getName(), "ban", j.getUuid(), DurationParser.translateToString(args[2]), args[1]);
 			j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
 		if (!j.getModeration().isBan()){
 			j.getModeration().setBan(true, -1);
-			sender.sendMessage(Moderation.message()+ args[0]+" est desormais banni pour");
-			j.sendNotifMessage("Vous avez �t� ban.");
-			Journal.add(sender.getName(),"ban",j.getUuid(),"","");
-			return true;
-		}
-		if (j.getModeration().isBan()){
-			j.getModeration().setBan(false, -1);
-			sender.sendMessage(args[0]+" n'est plus mu�");
-			j.sendNotifMessage("Vous n'est plus ban.");
-			Journal.add(sender.getName(),"deban",j.getUuid(),"","");
+			sender.sendMessage(Moderation.message() + args[0] + " est desormais banni pour" + args[1]);
+			j.sendNotifMessage(ChatColor.GOLD + "Vous avez été banni pour" + args[1]);
+			Journal.add(sender.getName(), "ban", j.getUuid(), "", args[1]);
+            j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
 		return false;
