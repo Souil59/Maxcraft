@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import fr.maxcraft.utils.MySQLSaver;
+import org.bukkit.ChatColor;
 
 public class Moderation {
 	private boolean mute;
@@ -83,4 +84,8 @@ public class Moderation {
 		this.banend = banend;
 		this.save();
 	}
+
+	public static String message(){
+        return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY;
+    }
 }

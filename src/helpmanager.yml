@@ -3,4 +3,8 @@ zone:
     -truc
     -truc
     -truc
+
+moderation:
+  ban:
+    commande: /ban <joueur> [raison] [temps]
     

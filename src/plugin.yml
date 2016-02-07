@@ -2,7 +2,7 @@ name: Maxcraft
 main: fr.maxcraft.Main
 version: 1.0.0
 description: Maxcraft
-author: Crevebedaine
+author: Crevebedaine, Lu27600
 commands:
 
   help:
