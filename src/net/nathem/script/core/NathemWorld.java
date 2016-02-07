@@ -13,6 +13,7 @@ import net.nathem.script.core.object.Stuff;
 import net.nathem.script.core.sign.Sign;
 import net.nathem.script.enums.LogType;
 import net.nathem.script.enums.ObjectType;
+import sun.java2d.pipe.RenderBuffer;
 
 public class NathemWorld {
 
@@ -25,8 +26,9 @@ public class NathemWorld {
 	private NSCore core;
 	private ArrayList<Player> spectators;
 	private HashMap<String, Location> markers;
+    private HashMap<Player, Location> checkPoints;
 
-	public NathemWorld(NSCore core, String worldName, Map map) {
+    public NathemWorld(NSCore core, String worldName, Map map) {
 		this.loaded = false;
 		NSCore.log("Loading script for world <"+ worldName + "> from map <"+ map.getWorldName() + ">");
 		this.objects = new ArrayList<NathemObject>();
@@ -37,6 +39,7 @@ public class NathemWorld {
 		this.spectators = new ArrayList<Player>();
 		this.world = Bukkit.getServer().getWorld(this.worldName);
 		this.markers = new HashMap<String, Location>();
+        this.checkPoints = new HashMap<Player, Location>();
 		
 		if(this.world != null)
 		{
@@ -224,6 +227,9 @@ public class NathemWorld {
 		}
 		return nearest;
 	}
-	
 
+
+    public HashMap<Player, Location> getCheckPoints() {
+        return checkPoints;
+    }
 }

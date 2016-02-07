@@ -35,6 +35,7 @@ public enum ObjectType {
 	EXPLOSION("explosion", Explosion.class),
 	RANDOM("random", Random.class),
 	TAG("tag", Tag.class),
+    CHECKPOINT("checkpoint", CheckPoint.class),
     END("end",End.class);
 	
 	private String objectName;

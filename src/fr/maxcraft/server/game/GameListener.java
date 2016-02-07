@@ -27,8 +27,13 @@ public class GameListener implements Listener {
     public void onReSpawn(PlayerRespawnEvent e){
         for (GameInstance g : GameInstance.getInstances())
             if (e.getPlayer().getWorld().equals(g.getInstanceWorld()))
-                if (g.getLife().get(e.getPlayer())>0)
-                    g.Teleport(e.getPlayer());
+                if (g.getLife().get(e.getPlayer())>0) {
+                    g.getLife().put(e.getPlayer(),g.getLife().get(e.getPlayer())-1);
+                    if (g.getNathemWorld().getCheckPoints().containsKey(e.getPlayer()))
+                        e.setRespawnLocation(g.getNathemWorld().getCheckPoints().get(e.getPlayer()));
+                    else
+                        g.teleport(e.getPlayer());
+                }
     }
 
     @EventHandler

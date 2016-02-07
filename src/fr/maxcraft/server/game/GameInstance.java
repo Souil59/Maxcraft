@@ -180,7 +180,7 @@ public class GameInstance {
         return backLocations;
     }
 
-    public void Teleport(Player p){
+    public void teleport(Player p){
         int i;
         for(i = 0;i<100;i++) {
             if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance() + ":" + i))
@@ -190,22 +190,16 @@ public class GameInstance {
                     } else {
                         this.backLocations.put(p,p.getLocation());
                         p.teleport((this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i)));
-                        if (this.life.containsKey(p)) {
+                        if (this.life.containsKey(p))
                             this.life.put(p, game.getLife());
-                        }else{
-                            this.life.put(p,this.life.get(p)-1);
-                        }
                         return;
                     }
         }
         if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance())){
             this.backLocations.put(p,p.getLocation());
             p.teleport(this.getNathemWorld().getMarkers().get(this.game.getEntrance()));
-            if (!this.life.containsKey(p)) {
+            if (!this.life.containsKey(p))
                 this.life.put(p, game.getLife());
-            }else{
-                this.life.put(p,this.life.get(p)-1);
-            }
             return;
         }
         p.sendMessage(ChatColor.RED+"L'entrée n'existe pas!");
@@ -255,6 +249,9 @@ public class GameInstance {
                     ps.add(p);
         return ps;
     }
+
+
+
 
     public class Task extends BukkitRunnable {
         private GameInstance instance;
