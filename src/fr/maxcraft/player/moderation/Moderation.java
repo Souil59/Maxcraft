@@ -16,8 +16,9 @@ public class Moderation {
 	private long jailend;
 	private long banend;
 	private UUID uuid;
+    private String banReason;
 
-	public Moderation(UUID uuid,boolean ismute,long muteend,boolean isjail,long jailend,boolean isban,long banend,boolean insert){
+	public Moderation(UUID uuid,boolean ismute,long muteend,boolean isjail,long jailend,boolean isban,long banend,boolean insert, String banReason){
 		this.uuid = uuid;
 		this.mute = ismute;
 		this.muteend = muteend;
@@ -25,6 +26,7 @@ public class Moderation {
 		this.jailend = jailend;
 		this.ban = isban;
 		this.banend = banend;
+        this.banReason = banReason;
 		if (insert)
 			this.sqlInsert();
 	}
@@ -32,13 +34,18 @@ public class Moderation {
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `moderation` WHERE `moderation`.`id` = '"+uuid.toString()+"';",true);
 		try {
 			if (r.next())
-				return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"),false);
-			return new Moderation(uuid,false,-1,false,-1,false,-1,true);
+				return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"),false, r.getString("banreason"));
+			return new Moderation(uuid,false,-1,false,-1,false,-1,true, null);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
+
+	public static String message(){
+		return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY;
+	}
+
 	private void sqlInsert() {
 		MySQLSaver.mysql_update("INSERT INTO `moderation` (`id`, `ismute`, `isban`, `isjail`, `muteend`, `banend`, `jailend`) "
 				+ "VALUES ('"+this.uuid.toString()+"', '0', '0', '0', '-1', '-1', '-1');");
@@ -85,7 +92,12 @@ public class Moderation {
 		this.save();
 	}
 
-	public static String message(){
-        return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY;
+    public String getBanReason() {
+        return banReason;
     }
+
+    public void setBanReason(String banReason) {
+        this.banReason = banReason;
+    }
+
 }
