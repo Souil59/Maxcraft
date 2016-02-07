@@ -1,5 +1,6 @@
 package fr.maxcraft.player.moderation;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,7 +25,7 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.ban(sender,args);
 			case "kick":
 				return this.kick(sender,args);
-			case "fine":
+			case "fine":  //amende
 				return this.fine(sender,args);
 			case "jail":
 				return this.jail(sender,args);
@@ -34,13 +35,18 @@ public class ModeratorCommand implements CommandExecutor {
 		    	return this.ec(sender,args);
 		    case "journal":
 		    	return this.journal(sender,args);
+            case "pardon":
+                return this.unban(sender, args);
 		}
 		return true;
 	}
 
+    private boolean unban(CommandSender sender, String[] args){
+		return false;
+    }
+
 	private boolean journal(CommandSender sender, String[] args) {
 		return false;
-		
 	}
 
 	private boolean ec(CommandSender sender, String[] args) {
@@ -69,33 +75,30 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean ban(CommandSender sender, String[] args) {
-		args = args.toString().split(" ", 3);
-		sender.sendMessage(args[0]);
+
 		User j = User.get(args[0]);
 		if (j==null){
-			sender.sendMessage("Ce joueur n'existe pas ou est inactif");
+			sender.sendMessage(ChatColor.RED+"Ce joueur n'existe pas !");
 			return true;
 		}
+        if (args[1] == null){
+            sender.sendMessage("Vous devez indiquer une raison");
+            return true;}
 		if (args.length>2){
-			long d = DurationParser.translateTimeStringToDate(args[1]);
-			sender.sendMessage(args[0]+" est desormais mué");
-			j.sendNotifMessage("Vous avez été ban "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
+			long d = DurationParser.translateTimeStringToDate(args[2]);
+			sender.sendMessage(Moderation.message() + args[0] + " est desormais muet");
+			j.sendNotifMessage(ChatColor.RED + "Vous avez Ã©tÃ© ban " + DurationParser.translateToString(args[2]) + " pour :" + args[1]);
 			j.getModeration().setBan(true, d);
-			Journal.add(sender.getName(),"ban",j.getUuid(),DurationParser.translateToString(args[1]),args[2]);
+			Journal.add(sender.getName(), "ban", j.getUuid(), DurationParser.translateToString(args[2]), args[1]);
+			j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
 		if (!j.getModeration().isBan()){
 			j.getModeration().setBan(true, -1);
-			sender.sendMessage(args[0]+" est desormais mué");
-			j.sendNotifMessage("Vous avez été ban.");
-			Journal.add(sender.getName(),"ban",j.getUuid(),"","");
-			return true;
-		}
-		if (j.getModeration().isBan()){
-			j.getModeration().setBan(false, -1);
-			sender.sendMessage(args[0]+" n'est plus mué");
-			j.sendNotifMessage("Vous n'est plus ban.");
-			Journal.add(sender.getName(),"deban",j.getUuid(),"","");
+			sender.sendMessage(Moderation.message() + args[0] + " est desormais banni pour" + args[1]);
+			j.sendNotifMessage(ChatColor.GOLD + "Vous avez Ã©tÃ© banni pour" + args[1]);
+			Journal.add(sender.getName(), "ban", j.getUuid(), "", args[1]);
+            j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
 		return false;
@@ -106,27 +109,27 @@ public class ModeratorCommand implements CommandExecutor {
 		args = args.toString().split(" ", 3);
 		User j = User.get(args[0]);
 		if (j==null){
-			sender.sendMessage("Ce joueur n'existe pas ou est inactif");
+			sender.sendMessage("Ce joueur n'existe pas !");
 			return true;
 		}
 		if (args.length>2){
 			long d = DurationParser.translateTimeStringToDate(args[1]);
-			sender.sendMessage(args[0]+" est desormais mué");
-			j.sendNotifMessage("Vous avez été mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
+			sender.sendMessage(args[0]+" est desormais muï¿½");
+			j.sendNotifMessage("Vous avez ï¿½tï¿½ mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
 			j.getModeration().setMute(true, d);
 			Journal.add(sender.getName(),"mute",j.getUuid(),DurationParser.translateToString(args[1]),args[2]);
 			return true;
 		}
 		if (!j.getModeration().isMute()){
 			j.getModeration().setMute(true, -1);
-			sender.sendMessage(args[0]+" est desormais mué");
-			j.sendNotifMessage("Vous avez été mute.");
+			sender.sendMessage(args[0]+" est desormais muï¿½");
+			j.sendNotifMessage("Vous avez ï¿½tï¿½ mute.");
 			Journal.add(sender.getName(),"mute",j.getUuid(),"","");
 			return true;
 		}
 		if (j.getModeration().isMute()){
 			j.getModeration().setMute(false, -1);
-			sender.sendMessage(args[0]+" n'est plus mué");
+			sender.sendMessage(args[0]+" n'est plus muï¿½");
 			j.sendNotifMessage("Vous n'est plus mute.");
 			Journal.add(sender.getName(),"demute",j.getUuid(),"","");
 			return true;

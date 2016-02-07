@@ -2,6 +2,7 @@ package fr.maxcraft;
 
 import java.lang.reflect.Field;
 
+import fr.maxcraft.player.moderation.ModerationListener;
 import fr.maxcraft.server.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
@@ -102,6 +103,7 @@ public class Main extends JavaPlugin {
 		    new MenuListener(this);
 		    new MagicListener(this);
             new GameListener(this);
+			new ModerationListener(this);
 		
 		
 		
