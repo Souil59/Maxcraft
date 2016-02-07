@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 /**
- * Created by admin on 07/02/16.
+ * Created by Lu29600 on 07/02/16.
  */
 public class ModerationListener implements Listener {
 
