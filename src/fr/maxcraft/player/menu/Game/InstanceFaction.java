@@ -20,7 +20,7 @@ public class InstanceFaction extends Menu{
     public void execute(User u) {
         this.gameInstance.build();
         this.gameInstance.setFaction(u.getFaction());
-        this.gameInstance.Teleport(u.getPlayer());
+        this.gameInstance.teleport(u.getPlayer());
     }
 
     @Override

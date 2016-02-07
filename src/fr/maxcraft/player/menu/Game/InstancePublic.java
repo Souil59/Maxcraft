@@ -25,7 +25,7 @@ public class InstancePublic extends Menu{
     public void execute(User u) {
         this.gameInstance.build();
         this.gameInstance.setFaction(new Faction());
-        this.gameInstance.Teleport(u.getPlayer());
+        this.gameInstance.teleport(u.getPlayer());
     }
 
     @Override

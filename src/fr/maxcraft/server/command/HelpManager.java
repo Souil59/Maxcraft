@@ -17,9 +17,9 @@ import org.bukkit.entity.Player;
 
 import fr.maxcraft.Main;
 
-public class HelpManager implements CommandExecutor{
+public class HelpManager{
 	
-	private static ArrayList<HelpManager> helper = new ArrayList<HelpManager>();
+	public static ArrayList<HelpManager> helper = new ArrayList<HelpManager>();
 	private String name;
 	private String desc;
 	private String usage;
@@ -29,11 +29,11 @@ public class HelpManager implements CommandExecutor{
 	private Action clickevent;
 	private YamlConfiguration config;
 	private File file;
-	
+
 	public HelpManager(String name){
 		this.name = name;
-		this.desc = "non renseigné";
-		this.usage = "non renseigné";
+		this.desc = "non renseignï¿½";
+		this.usage = "non renseignï¿½";
 		this.perm = "maxcraft.base";
 		this.pack = "root";
 		this.clickText = "";
@@ -45,7 +45,6 @@ public class HelpManager implements CommandExecutor{
 		this.file = new File("plugins/Maxcraft/helpmanager.yml");
 		this.config = YamlConfiguration.loadConfiguration(this.file);
 		configReader();
-		Main.getPlugin().getCommand("help").setExecutor(this);
 	}
 
 	private void configReader() {
@@ -94,8 +93,7 @@ public class HelpManager implements CommandExecutor{
 		return this;
 	}
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String lbl,
+	public static boolean onCommand(CommandSender sender, Command cmd, String lbl,
 			String[] args) {
 		Player p = (Player) sender;
 		sender.sendMessage(ChatColor.YELLOW+"---------"+ChatColor.WHITE+"HELP"+ChatColor.YELLOW+"---------");

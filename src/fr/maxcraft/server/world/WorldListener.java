@@ -22,9 +22,5 @@ public class WorldListener implements Listener {
 			WorldInventories.load(e.getPlayer(),e.getTo().getWorld());
 		}
 	}
-	@EventHandler
-	public void onMove(PlayerMoveEvent e){
-		Travel.playerMove(e.getFrom(),e.getTo(),e.getPlayer());
-	}
 
 }

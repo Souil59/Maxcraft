@@ -3,10 +3,14 @@ package fr.maxcraft;
 import java.lang.reflect.Field;
 
 import fr.maxcraft.player.moderation.ModerationListener;
+import fr.maxcraft.server.command.HelpManagerCommand;
 import fr.maxcraft.server.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
+import fr.maxcraft.server.marker.Marker;
+import fr.maxcraft.server.marker.MarkerCommand;
+import fr.maxcraft.server.marker.MarkerListener;
 import fr.maxcraft.server.world.WorldCommand;
 import net.md_5.bungee.api.ChatColor;
 
@@ -32,8 +36,6 @@ import fr.maxcraft.server.chatmanager.ChatListener;
 import fr.maxcraft.server.command.HelpManager;
 import fr.maxcraft.server.merchant.MerchantListener;
 import fr.maxcraft.server.protect.ProtectListener;
-import fr.maxcraft.server.world.Marker;
-import fr.maxcraft.server.world.Travel;
 import fr.maxcraft.server.world.World;
 import fr.maxcraft.server.world.WorldListener;
 import fr.maxcraft.server.zone.Zone;
@@ -71,6 +73,7 @@ public class Main extends JavaPlugin {
 		    Zone.load();
 		    World.loadAll();
             StartSign.load();
+            Marker.load();
 
 		//Task
 		    new ManaTask().runTaskTimer(this, 0, 5);
@@ -81,15 +84,14 @@ public class Main extends JavaPlugin {
             cmap=(CommandMap)f.get(Bukkit.getServer());
 
 		    new ModeratorCommand();
-		    new HelpManager();
+		    new HelpManagerCommand("help");
 		    new ZoneCommand("zone");
 		    new PermsCommand("perms");
 		    new NSCommand("nse");
             new GameCommand("game");
             new WorldCommand("world");
-		    Marker.register(this);
-		    Travel.register(this);
-		    ChatListener.register(this);
+            new MarkerCommand("warp");
+		    //ChatListener.register(this);
 
 		//Listeners
 		    new JobsListener(this);
@@ -104,6 +106,7 @@ public class Main extends JavaPlugin {
 		    new MagicListener(this);
             new GameListener(this);
 			new ModerationListener(this);
+            new MarkerListener(this);
 		
 		
 		

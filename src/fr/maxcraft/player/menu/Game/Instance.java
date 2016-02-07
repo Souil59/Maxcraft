@@ -42,7 +42,7 @@ public class Instance extends Menu{
         }
 
         if (gameInstance.getStatus().equals(InstanceStatus.OPEN)||((gameInstance.getStatus().equals(InstanceStatus.FACTION)&&gameInstance.getFaction().equals(u.getFaction()))))
-            gameInstance.Teleport(u.getPlayer());
+            gameInstance.teleport(u.getPlayer());
     }
 
     @Override
