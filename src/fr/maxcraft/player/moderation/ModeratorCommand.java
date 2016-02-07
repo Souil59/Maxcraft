@@ -1,5 +1,6 @@
 package fr.maxcraft.player.moderation;
 
+import fr.maxcraft.server.chatmanager.AdminChat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,6 +38,8 @@ public class ModeratorCommand implements CommandExecutor {
 		    	return this.journal(sender,args);
             case "pardon":
                 return this.unban(sender, args);
+            case "bantemp":
+                return this.bantemp(sender, args);
 		}
 		return true;
 	}
@@ -75,7 +78,7 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean ban(CommandSender sender, String[] args) {
-
+        args = args.toString().split(" ", 2);
 		User j = User.get(args[0]);
 		if (j==null){
 			sender.sendMessage(ChatColor.RED+"Ce joueur n'existe pas !");
@@ -83,21 +86,13 @@ public class ModeratorCommand implements CommandExecutor {
 		}
         if (args[1] == null){
             sender.sendMessage("Vous devez indiquer une raison");
-            return true;}
-		if (args.length>2){
-			long d = DurationParser.translateTimeStringToDate(args[2]);
-			sender.sendMessage(Moderation.message() + args[0] + " est desormais muet");
-			j.sendNotifMessage(ChatColor.RED + "Vous avez été ban " + DurationParser.translateToString(args[2]) + " pour :" + args[1]);
-			j.getModeration().setBan(true, d);
-			Journal.add(sender.getName(), "ban", j.getUuid(), DurationParser.translateToString(args[2]), args[1]);
-			j.getPlayer().kickPlayer(args[1]);
-			return true;
-		}
+            return true;
+        }
 		if (!j.getModeration().isBan()){
 			j.getModeration().setBan(true, -1);
-			sender.sendMessage(Moderation.message() + args[0] + " est desormais banni pour" + args[1]);
+			AdminChat.sendMessageToStaffs(Moderation.message() + ChatColor.RED + args[0] + ChatColor.GOLD + " est desormais banni pour" + ChatColor.ITALIC +args[1]);
 			j.sendNotifMessage(ChatColor.GOLD + "Vous avez été banni pour" + args[1]);
-			Journal.add(sender.getName(), "ban", j.getUuid(), "", args[1]);
+			Journal.add(sender.getName(), "ban", j.getUuid(), "definitif", args[1]);
             j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
@@ -106,35 +101,39 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean mute(CommandSender sender, String[] args) {
-		args = args.toString().split(" ", 3);
+        args = args.toString().split(" ", 3);
 		User j = User.get(args[0]);
 		if (j==null){
-			sender.sendMessage("Ce joueur n'existe pas !");
+			sender.sendMessage(ChatColor.RED+"Ce joueur n'existe pas !");
 			return true;
 		}
 		if (args.length>2){
 			long d = DurationParser.translateTimeStringToDate(args[1]);
-			sender.sendMessage(args[0]+" est desormais mu�");
+			sender.sendMessage(Moderation.message()+args[0]+" est desormais muet");
 			j.sendNotifMessage("Vous avez �t� mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
 			j.getModeration().setMute(true, d);
-			Journal.add(sender.getName(),"mute",j.getUuid(),DurationParser.translateToString(args[1]),args[2]);
+			Journal.add(sender.getName(), "mute", j.getUuid(), DurationParser.translateToString(args[1]), args[2]);
 			return true;
 		}
 		if (!j.getModeration().isMute()){
 			j.getModeration().setMute(true, -1);
-			sender.sendMessage(args[0]+" est desormais mu�");
+			sender.sendMessage(args[0] + " est desormais mu�");
 			j.sendNotifMessage("Vous avez �t� mute.");
-			Journal.add(sender.getName(),"mute",j.getUuid(),"","");
+			Journal.add(sender.getName(), "mute", j.getUuid(), "", "");
 			return true;
 		}
 		if (j.getModeration().isMute()){
 			j.getModeration().setMute(false, -1);
-			sender.sendMessage(args[0]+" n'est plus mu�");
+			sender.sendMessage(args[0] + " n'est plus mu�");
 			j.sendNotifMessage("Vous n'est plus mute.");
-			Journal.add(sender.getName(),"demute",j.getUuid(),"","");
+			Journal.add(sender.getName(), "demute", j.getUuid(), "", "");
 			return true;
 		}
 		return false;
 	}
+
+    private boolean bantemp(CommandSender sender, String[] args){
+        return false;
+    }
 
 }
