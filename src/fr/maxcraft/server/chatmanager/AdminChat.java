@@ -15,4 +15,10 @@ public class AdminChat {
 				p.sendMessage(ChatColor.RED + "[A] " +ChatColor.GRAY+ e.getPlayer().getName()+ " : " +ChatColor.WHITE+   e.getMessage().substring(1,e.getMessage().length()));
 	}
 
+	public static void sendMessageToStaffs(String message){
+        for(Player p: Bukkit.getOnlinePlayers()) {
+            if (!p.hasPermission("moderation.notif")) return;
+            p.sendMessage(message);
+        }
+    }
 }
