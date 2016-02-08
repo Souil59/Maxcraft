@@ -8,9 +8,7 @@ import fr.maxcraft.server.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
-import fr.maxcraft.server.marker.Marker;
-import fr.maxcraft.server.marker.MarkerCommand;
-import fr.maxcraft.server.marker.MarkerListener;
+import fr.maxcraft.server.marker.*;
 import fr.maxcraft.server.world.WorldCommand;
 import net.md_5.bungee.api.ChatColor;
 
@@ -74,6 +72,7 @@ public class Main extends JavaPlugin {
 		    World.loadAll();
             StartSign.load();
             Marker.load();
+            Travel.load();
 
 		//Task
 		    new ManaTask().runTaskTimer(this, 0, 5);

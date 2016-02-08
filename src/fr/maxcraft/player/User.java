@@ -95,7 +95,7 @@ public class User implements Owner {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			Main.log("Joueurs chargés ("+playerlist.size()+" joueurs).");
+			Main.log("Joueurs charg�s ("+playerlist.size()+" joueurs).");
 		}
 		public void sendMessage(String string){
 			if (this.getPlayer()!=null)

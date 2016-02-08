@@ -14,10 +14,8 @@ public class MarkerCommand extends Command{
     public MarkerCommand(String warp) {
         super(warp);
         this.setPerms("maxcraft.guide").setAliases(Arrays.asList("marker","lieu")).register();
-        ArrayList<String> name = new ArrayList<String>();
-        for (Marker m : Marker.getMarkerlist())
-            name.add(m.getName());
-        this.tabComplete(warp,name);
+        this.tabComplete(warp,Arrays.asList("tp","create","delete","travel"));
+        this.tabComplete("travel",Arrays.asList("create","delete"));
     }
 
     @Override
@@ -31,13 +29,41 @@ public class MarkerCommand extends Command{
         }
         if (args[0].equals("tp"))
             tp((Player) arg0,args);
-        if (!arg0.hasPermission("maxcraft.mode"))
+        if (!arg0.hasPermission("maxcraft.modo"))
             return true;
         if (args[0].equals("new")||args[0].equals("create"))
             create((Player) arg0,args);
         if (args[0].equals("remove")||args[0].equals("delete"))
             remove((Player) arg0,args);
+        if (args[0].equals("marker"))
+            travel((Player) arg0,args);
             return true;
+    }
+
+    private void travel(Player arg0, String[] args) {
+        if (args.length==5){
+            if (args[2].equals("create")&&(Marker.getMarker(args[5])==null||Marker.getMarker(args[4])==null||Marker.getMarker(args[3])==null)) {
+                arg0.sendMessage("Un ou plusieurs des markers n'existe pas!");
+                return;
+            }
+            new Travel(Marker.getMarker(args[5]),Marker.getMarker(args[4]),Marker.getMarker(args[3])).insert();
+        }
+        if (args.length==3){
+            if (args[2].equals("delete")&&Marker.getMarker(args[3])==null) {
+                arg0.sendMessage("Le marker n'existe pas!");
+                return;
+            }
+            int i = 0;
+            for (Travel t : Travel.travelslist)
+                if (t.contains(Marker.getMarker(args[3]))) {
+                    t.remove();
+                    i++;
+                }
+            arg0.sendMessage(i+" travels passant par "+args[3]+" supprimé(s)");
+            return;
+        }
+        arg0.sendMessage("/warp travel create [marker1] [marker2] [marker3]");
+        arg0.sendMessage("/warp travel delete [marker1]");
     }
 
     private void tp(Player p,String[] args){
