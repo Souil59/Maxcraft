@@ -20,6 +20,7 @@ public class Travel {
     private final Marker temp;
     private final Marker m2;
     public static ArrayList<Travel> travelslist = new ArrayList<Travel>();
+    private ArrayList<Player> traveler = new ArrayList<Player>();
 
     public Travel(Marker m1, Marker temp, Marker m2){
         this.m1 = m1;
@@ -53,6 +54,8 @@ public class Travel {
         MySQLSaver.mysql_update("DELETE FROM `travel` WHERE `marker1`= "+this.m1.getName());
     }
     public boolean isReadyToTravel(Player p){
+        if (traveler.contains(p))
+            return false;
         if (p.getLocation().distance(m1)<5||p.getLocation().distance(m2)<5)
             return true;
         return false;
@@ -60,10 +63,11 @@ public class Travel {
 
     public void travel(Player p){
         p.sendMessage(ChatColor.GRAY+"Patientez ici quelques secondes le temps de larguer les ammarres");
+        traveler.add(p);
         if (p.getLocation().distance(m1)<5)
-            new Task(m1,temp,m2,p).runTaskLater(Main.getPlugin(),100);
+            new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
         if (p.getLocation().distance(m2)<5)
-            new Task(m2,temp,m1,p).runTaskLater(Main.getPlugin(),100);
+            new Task(m2,temp,m1,p,this).runTaskLater(Main.getPlugin(),100);
     }
 
     public class Task extends BukkitRunnable{
@@ -72,12 +76,14 @@ public class Travel {
         private final Player p;
         private final Marker to;
         private final Marker from;
+        private final Travel travel;
 
-        public Task(Marker from,Marker temp, Marker to, Player p){
+        public Task(Marker from,Marker temp, Marker to, Player p,Travel t){
             this.from = from;
             this.temp = temp;
             this.p = p;
             this.to = to;
+            this.travel = t;
         }
 
         @Override
@@ -85,12 +91,16 @@ public class Travel {
             if (p.getLocation().distance(from)<5) {
                 p.teleport(temp);
                 p.sendMessage(ChatColor.GRAY + "Profitez du voyage pour admirer la vue !");
-                new Task(from,temp,to,p).runTaskLater(Main.getPlugin(),600);
+                new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),600);
+                return;
             }
             if (p.getLocation().distance(temp)<20){
                 p.teleport(to);
                 p.sendMessage(ChatColor.GRAY + "Vous pouvez descendre du bateau, allez y avant qu'il ne reparte !");
+                new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),600);
+                return;
             }
+            travel.traveler.remove(p);
         }
     }
 

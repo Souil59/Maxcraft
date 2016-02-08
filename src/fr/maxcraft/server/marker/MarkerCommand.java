@@ -35,18 +35,18 @@ public class MarkerCommand extends Command{
             create((Player) arg0,args);
         if (args[0].equals("remove")||args[0].equals("delete"))
             remove((Player) arg0,args);
-        if (args[0].equals("marker"))
+        if (args[0].equals("travel"))
             travel((Player) arg0,args);
             return true;
     }
 
     private void travel(Player arg0, String[] args) {
         if (args.length==5){
-            if (args[2].equals("create")&&(Marker.getMarker(args[5])==null||Marker.getMarker(args[4])==null||Marker.getMarker(args[3])==null)) {
+            if (args[2].equals("create")&&(Marker.getMarker(args[4])==null||Marker.getMarker(args[3])==null||Marker.getMarker(args[2])==null)) {
                 arg0.sendMessage("Un ou plusieurs des markers n'existe pas!");
                 return;
             }
-            new Travel(Marker.getMarker(args[5]),Marker.getMarker(args[4]),Marker.getMarker(args[3])).insert();
+            new Travel(Marker.getMarker(args[4]),Marker.getMarker(args[3]),Marker.getMarker(args[2])).insert();
         }
         if (args.length==3){
             if (args[2].equals("delete")&&Marker.getMarker(args[3])==null) {
