@@ -1,14 +1,20 @@
 package fr.maxcraft.server.customentities;
 
+import fr.maxcraft.Main;
 import net.minecraft.server.v1_8_R3.*;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by Crevebedaine on 26/01/2016.
  */
-public class Franky extends EntityWolf {
+public class Franky extends  EntityWolf{
 
     public Franky(net.minecraft.server.v1_8_R3.World w) {
         super(w);
@@ -34,20 +40,115 @@ public class Franky extends EntityWolf {
         return e;
 
     }
+    //ZQSD controle
     @Override
-    public EntityAgeable createChild(EntityAgeable entityAgeable) {
-        return null;
+    public void g(float sideMot, float forMot) {
+        if(this.passenger != null && this.passenger.equals(this.getOwner())) {
+            this.lastYaw = this.yaw = this.passenger.yaw;
+            this.pitch = this.passenger.pitch * 0.5F;
+            this.setYawPitch(this.yaw, this.pitch);
+            this.aI = this.aG = this.yaw;
+            sideMot = ((EntityLiving)this.passenger).aZ * 0.5F;
+            forMot = ((EntityLiving)this.passenger).ba;
+            if(forMot <= 0.0F) {
+                forMot *= 0.25F;
+            }
+
+            this.S = 1.0F;
+            this.aM = this.bI() * 0.1F;
+            if(!this.world.isClientSide) {
+                this.k((float)this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).getValue());
+                super.g(sideMot, forMot);
+            }
+
+
+            this.ay = this.az;
+            double d0 = this.locX - this.lastX;
+            double d1 = this.locZ - this.lastZ;
+            float f4 = MathHelper.sqrt(d0 * d0 + d1 * d1) * 4.0F;
+            if(f4 > 1.0F) {
+                f4 = 1.0F;
+            }
+
+            this.az += (f4 - this.az) * 0.4F;
+            this.aA += this.az;
+        } else {
+            super.g(sideMot, forMot);
+        }
+
+
     }
-    protected String bo() {
-        return "mob.pig.death";
+    protected void initAttributes() {
+        super.initAttributes();
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(10.0D);
+        this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.25D);
     }
 
-    protected String bp() {
-        return "mob.pig.death";
+    public void b(NBTTagCompound nbttagcompound) {
+        super.b(nbttagcompound);
+        nbttagcompound.setBoolean("Saddle", this.hasSaddle());
+    }
+
+    public void a(NBTTagCompound nbttagcompound) {
+        super.a(nbttagcompound);
+        this.setSaddle(nbttagcompound.getBoolean("Saddle"));
     }
 
     protected String z() {
         return "mob.pig.say";
     }
 
+    protected String bo() {
+        return "mob.pig.say";
+    }
+
+    protected String bp() {
+        return "mob.pig.death";
+    }
+
+    protected void a(BlockPosition blockposition, Block block) {
+        this.makeSound("mob.pig.step", 0.15F, 1.0F);
+    }
+
+    public boolean a(EntityHuman entityhuman) {
+        ItemStack itemstack = entityhuman.inventory.getItemInHand();
+        if (itemstack.getItem()==Items.SADDLE) {
+            this.setSaddle(!hasSaddle());
+            return true;
+        }
+        if(!this.hasSaddle() || this.world.isClientSide || this.passenger != null && this.passenger != entityhuman) {
+            return false;
+        } else {
+            entityhuman.mount(this);
+            return true;
+        }
+    }
+
+    public boolean hasSaddle() {
+        return (this.datawatcher.getByte(16) & 1) != 0;
+    }
+
+    public void setSaddle(boolean flag) {
+        if(flag) {
+            this.datawatcher.watch(16, Byte.valueOf((byte)1));
+        } else {
+            this.datawatcher.watch(16, Byte.valueOf((byte)0));
+        }
+
+    }
+
+    public boolean d(ItemStack itemstack) {
+        return itemstack != null && itemstack.getItem() == Items.CARROT;
+    }
+
+    public EntityAgeable createChild(EntityAgeable entityageable) {
+        return this.b(entityageable);
+    }
+
+    public boolean isSitting() {
+        return false;
+    }
+    public boolean isTamed() {
+        return true;
+    }
 }
