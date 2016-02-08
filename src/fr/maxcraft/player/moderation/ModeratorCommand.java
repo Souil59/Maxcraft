@@ -20,9 +20,9 @@ public class ModeratorCommand implements CommandExecutor {
 			String[] args) {
 		switch(cmd.getName())
 		{
-			case "mute":
+			case "mute":   //done
 				return this.mute(sender, args);
-			case "ban":
+			case "ban":    //done
 				return this.ban(sender, args);
 			case "kick":
 				return this.kick(sender, args);
@@ -73,6 +73,13 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean kick(CommandSender sender, String[] args) {
+		args = args.toString().split(" ", 2);
+		User u = User.get(args[0]);
+		if (u ==  null){
+			sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
+			return true;
+		}
+		//TODO Pour Lu, reprendre ICI !!
 		return false;
 		
 	}
@@ -138,7 +145,7 @@ public class ModeratorCommand implements CommandExecutor {
 		}
 		if (j.getModeration().isMute()){
 			j.getModeration().setMute(false, -1);
-			sender.sendMessage(args[0] + " n'est plus muet");
+			AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " n'est plus muet !");
 			j.sendNotifMessage(ChatColor.GREEN+"Vous n'êtes plus muet.");
 			Journal.add(sender.getName(), "demute", j.getUuid(), "", "");
 			return true;
