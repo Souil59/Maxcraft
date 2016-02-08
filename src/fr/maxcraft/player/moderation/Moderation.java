@@ -92,7 +92,31 @@ public class Moderation {
 		this.save();
 	}
 
-    public String getBanReason() {
+	public long getMuteend() {
+		return muteend;
+	}
+
+	public void setMuteend(long muteend) {
+		this.muteend = muteend;
+	}
+
+	public long getJailend() {
+		return jailend;
+	}
+
+	public void setJailend(long jailend) {
+		this.jailend = jailend;
+	}
+
+	public long getBanend() {
+		return banend;
+	}
+
+	public void setBanend(long banend) {
+		this.banend = banend;
+	}
+
+	public String getBanReason() {
         return banReason;
     }
 

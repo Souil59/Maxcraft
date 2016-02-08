@@ -20,9 +20,9 @@ public class ModeratorCommand implements CommandExecutor {
 			String[] args) {
 		switch(cmd.getName())
 		{
-			case "mute":
+			case "mute":   //done
 				return this.mute(sender, args);
-			case "ban":
+			case "ban":    //done
 				return this.ban(sender, args);
 			case "kick":
 				return this.kick(sender, args);
@@ -73,6 +73,13 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean kick(CommandSender sender, String[] args) {
+		args = args.toString().split(" ", 2);
+		User u = User.get(args[0]);
+		if (u ==  null){
+			sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
+			return true;
+		}
+		//TODO Pour Lu, reprendre ICI !!
 		return false;
 		
 	}
@@ -111,28 +118,35 @@ public class ModeratorCommand implements CommandExecutor {
 			long d = DurationParser.translateTimeStringToDate(args[1]);
             j.getModeration().setMute(true, d);
             if (args[2].isEmpty()){
-                j.sendNotifMessage("Vous avez été mute "+DurationParser.translateToString(args[1]));
+                j.sendNotifMessage(ChatColor.GOLD + "Vous avez été mute "+DurationParser.translateToString(args[1]));
                 Journal.add(sender.getName(), "mute", j.getUuid(), DurationParser.translateToString(args[1]), "Pas de raison");
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet"+DurationParser.translateToString(args[1]));
             }
 			else{
-                j.sendNotifMessage("Vous avez été mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
+                j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
                 Journal.add(sender.getName(), "mute", j.getUuid(), DurationParser.translateToString(args[1]), args[2]);
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet" + DurationParser.translateToString(args[1]+" pour :"+args[2]));
             }
 			return true;
 		}
-		if (!j.getModeration().isMute() && args[1].isEmpty()){ //TODO Pour Lu Reprendre ici !!
+		if (!j.getModeration().isMute() && args[1].isEmpty()){
 			j.getModeration().setMute(true, -1);
-			sender.sendMessage(Moderation.message()+args[0] + " est desormais muet");
-			j.sendNotifMessage("Vous avez été rendu muet.");
-			Journal.add(sender.getName(), "mute", j.getUuid(), "", "");
+			if (args[2].isEmpty()){
+				j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute !");
+				Journal.add(sender.getName(), "mute", j.getUuid(), "Pas de durée", "Pas de raison");
+				AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet");
+			}
+			else{
+				j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute pour :"+args[2]);
+				Journal.add(sender.getName(), "mute", j.getUuid(), "Pas de durée", args[2]);
+				AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet pour :"+args[2]);
+			}
 			return true;
 		}
 		if (j.getModeration().isMute()){
 			j.getModeration().setMute(false, -1);
-			sender.sendMessage(args[0] + " n'est plus muet");
-			j.sendNotifMessage("Vous n'est plus mute.");
+			AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " n'est plus muet !");
+			j.sendNotifMessage(ChatColor.GREEN+"Vous n'êtes plus muet.");
 			Journal.add(sender.getName(), "demute", j.getUuid(), "", "");
 			return true;
 		}

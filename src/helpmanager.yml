@@ -6,7 +6,9 @@ zone:
 
 moderation:
   ban:
-    commande: /ban <joueur> [durée] [raison]
+    commande: /ban <joueur> [raison]
   mute:
     commande: /mute <joueur> [durée] [raison]
+  kick:
+    commande: /kick <joueur> [raison]
     
