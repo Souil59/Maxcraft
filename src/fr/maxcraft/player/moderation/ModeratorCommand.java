@@ -79,7 +79,14 @@ public class ModeratorCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
 			return true;
 		}
-		//TODO Pour Lu, reprendre ICI !!
+        if (u.getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Vous ne pouvez pas kick ce joueur !");
+            return true;
+        }
+        if (u.getPlayer().isOnline()){
+            u.getPlayer().kickPlayer(args[1]);
+        }
+        //TODO ICI Lu
 		return false;
 		
 	}
@@ -114,6 +121,10 @@ public class ModeratorCommand implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Joueur non trouvé !");
 			return true;
 		}
+        if (j.getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: "+ChatColor.RED+"Vous en pouvez pas rendre ce joueur muet !");
+            return true;
+        }
 		if (!j.getModeration().isMute() && !args[1].isEmpty()){
 			long d = DurationParser.translateTimeStringToDate(args[1]);
             j.getModeration().setMute(true, d);
