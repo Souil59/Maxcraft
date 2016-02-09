@@ -86,10 +86,16 @@ public class ModeratorCommand implements CommandExecutor {
         if (u.getPlayer().isOnline()){
             if (args[1].isEmpty()){
                 u.getPlayer().kickPlayer(ChatColor.RED+ "Ejecté du Serveur");
-                AdminChat.sendMessageToStaffs(Moderation.message() + args[1] + " a été kick du serveur " + ChatColor.ITALIC + "sans raison !");
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " a été kick du serveur " + ChatColor.ITALIC + "sans raison !");
                 Journal.add(sender.getName(), "kick", u.getUuid(), "", "pas de raison");
             }
+            else{
+                u.getPlayer().kickPlayer(ChatColor.RED+ args[1]);
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " a été kick du serveur pour: " + ChatColor.ITALIC + args[1]);
+                Journal.add(sender.getName(), "kick", u.getUuid(), "", args[1]);
+            }
         }
+        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
 		return false;
 		
 	}
