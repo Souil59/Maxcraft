@@ -5,4 +5,6 @@ moderation:
     commande: /mute <joueur> [durée] [raison]
   kick:
     commande: /kick <joueur> [raison]
+  pardon:
+    commande: /pardon <joueur>
     

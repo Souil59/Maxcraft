@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import fr.maxcraft.player.User;
 import fr.maxcraft.utils.DurationParser;
 
+import java.util.Date;
+
 public class ModeratorCommand implements CommandExecutor {
 
 	public ModeratorCommand() {
@@ -24,9 +26,9 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.mute(sender, args);
 			case "ban":    //done
 				return this.ban(sender, args);
-			case "kick":
+			case "kick":   //done
 				return this.kick(sender, args);
-			case "fine":  //amende
+			case "fine":   //amende
 				return this.fine(sender, args);
 			case "jail":
 				return this.jail(sender, args);
@@ -36,7 +38,7 @@ public class ModeratorCommand implements CommandExecutor {
 		    	return this.ec(sender, args);
 		    case "journal":
 		    	return this.journal(sender, args);
-            case "pardon":
+            case "pardon":  //done
                 return this.unban(sender, args);
             case "bantemp":
                 return this.bantemp(sender, args);
@@ -45,6 +47,22 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
     private boolean unban(CommandSender sender, String[] args){
+        args = args.toString().split(" ", 2);
+        User u = User.get(args[0]);
+        if (u == null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            return true;
+        }
+        if (!u.getModeration().isBan()){
+            sender.sendMessage(ChatColor.RED+"La commande ne peut s'exécuter dans le contexte actuel !");
+            return true;
+        }
+        else if (!args[0].isEmpty()){
+            u.getModeration().setBan(false, -1);
+            Journal.add(sender.getName(), "unban", u.getUuid(), "le : "+DurationParser.getCurrentTimeStampInString(), "");
+            AdminChat.sendMessageToStaffs(Moderation.message() + ChatColor.BOLD + args[0] + " a été débanni.");
+        }
+        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
 		return false;
     }
 
