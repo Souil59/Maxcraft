@@ -201,7 +201,7 @@ public class User implements Owner {
 				return false;
 			}
 			this.balance-=d;
-			this.sendNotifMessage("Vous avez payer "+d+" POs.");
+			this.sendNotifMessage("Vous avez payé "+d+" POs.");
             MySQLSaver.mysql_update("UPDATE `player` SET `balance` = "+this.balance+" WHERE `id` = '"+this.uuid.toString()+"';");
             return true;
 		}

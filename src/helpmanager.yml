@@ -1,4 +1,9 @@
 moderation:
+  jail:
+    commande: /jail <joueur> [durée] [raison]
+    notes:
+        -le tp pour le jail se fera au warp "jail"
+        -les warps/markers "jail" et "spawn" sont nécessaires au bon fonctionnement de la commande
   invsee:
     commande: /invsee <joueur>
   amende:

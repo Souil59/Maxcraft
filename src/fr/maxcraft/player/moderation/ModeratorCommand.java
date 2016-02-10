@@ -1,6 +1,7 @@
 package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.server.chatmanager.AdminChat;
+import fr.maxcraft.server.marker.Marker;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -33,7 +34,7 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.kick(sender, args);
 			case "fine":   // = amende //Done
 				return this.fine(sender, args);
-			case "jail":
+			case "jail":   //done
 				return this.jail(sender, args);
 		    case "invsee":
 		    	return this.invsee(sender, args);
@@ -45,15 +46,26 @@ public class ModeratorCommand implements CommandExecutor {
                 return this.unban(sender, args);
             case "bantemp": //done
                 return this.bantemp(sender, args);
+            case "unjail":
+                return this.unjail(sender, args);
 		}
 		return true;
 	}
+
+    private boolean unjail(CommandSender sender, String[] args){
+        return false;
+    }
+
 
     private boolean unban(CommandSender sender, String[] args){
         args = args.toString().split(" ", 1);
         User u = User.get(args[0]);
         if (u == null){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            return true;
+        }
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+" Vous n'avez pas le droit de faire ça !");
             return true;
         }
         if (!u.getModeration().isBan()){
@@ -104,11 +116,11 @@ public class ModeratorCommand implements CommandExecutor {
 	private boolean invsee(CommandSender sender, String[] args) {
         User u = User.get(args[0]);
         if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
-            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+" Vous n'avez pas le droit de faire ça !");
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + " Vous n'avez pas le droit de faire ça !");
             return true;
         }
         if (u==null){
-            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Joueur introuvable !");
             return true;
         }
         if (args.length > 0 && u.getPlayer().isOnline()){
@@ -125,14 +137,70 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean jail(CommandSender sender, String[] args) {
-		return false;
+        args = args.toString().split(" ", 3);
+        User u = User.get(args[0]);
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Joueur introuvable !");
+            return true;
+        }
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcarft.modo") || u.getPerms().hasPerms("maxcraft.admin")){
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Vous ne pouvez pas emprisonner ce joueur !");
+            return true;
+        }
+
+        if (!u.getModeration().isJail() && !args[1].isEmpty()){
+            long d = DurationParser.translateTimeStringToDate(args[1]);
+            u.getModeration().setJail(true, d);
+            try{
+                u.getPlayer().teleport(Marker.getMarker("jail"));
+
+            }
+            catch (NullPointerException e){
+                sender.sendMessage(ChatColor.RED+"Le warp/marker \"jail\" n'a pas été trouvé !");
+                return true;
+            }
+            if (args[2].isEmpty()){
+                u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail jusqu'au "+DurationParser.translateToString(args[1]));
+                Journal.add(sender.getName(), "jail", u.getUuid(), DurationParser.translateToString(args[1]), "Pas de raison");
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail jusqu'au "+DurationParser.translateToString(args[1]));
+            }
+            else{
+                u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail jusqu'au " + DurationParser.translateToString(args[1]) + " pour :" + args[2]);
+                Journal.add(sender.getName(), "jail", u.getUuid(), DurationParser.translateToString(args[1]), args[2]);
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail jusqu'au " + DurationParser.translateToString(args[1] + " pour :" + args[2]));
+            }
+            return true;
+        }
+        if (!u.getModeration().isJail() && args[1].isEmpty()){
+            u.getModeration().setJail(true, -1);
+            try{
+                u.getPlayer().teleport(Marker.getMarker("jail"));
+            }
+            catch (NullPointerException e) {
+                sender.sendMessage(ChatColor.RED + "Le warp/marker \"jail\" n'a pas été trouvé !");
+                return true;
+            }
+            if (args[2].isEmpty()){
+                u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail !");
+                Journal.add(sender.getName(), "jail", u.getUuid(), "Pas de durée", "Pas de raison");
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail sans durée ni raison");
+            }
+            else{
+                u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail pour :" + args[2]);
+                Journal.add(sender.getName(), "jail", u.getUuid(), "Pas de durée", args[2]);
+                AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail indéfiniement pour :"+args[2]);
+            }
+            return true;
+        }
+        sender.sendMessage(ChatColor.RED+"Erreur dans l'exécution de la commande...");
+        return false;
 		
 	}
 
 	private boolean fine(CommandSender sender, String[] args) {
         args = args.toString().split(" ", 3);
         User u = User.get(args[0]);
-        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo") || u.getPerms().hasPerms("maxcraft.admin")){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Vous ne pouvez pas donner d'amende à ce joueur !");
             return true;
         }
@@ -164,11 +232,11 @@ public class ModeratorCommand implements CommandExecutor {
 	private boolean kick(CommandSender sender, String[] args) {
 		args = args.toString().split(" ", 2);
 		User u = User.get(args[0]);
-		if (u ==  null){
-			sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
-			return true;
-		}
-        if (u.getPerms().hasPerms("maxcraft.modo")){
+        if (u ==  null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
+            return true;
+        }
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo") ||u.getPerms().hasPerms("maxcraft.modo")){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Vous ne pouvez pas kick ce joueur !");
             return true;
         }
@@ -261,6 +329,7 @@ public class ModeratorCommand implements CommandExecutor {
 			Journal.add(sender.getName(), "demute", j.getUuid(), "", "");
 			return true;
 		}
+        sender.sendMessage(ChatColor.RED+"Erreur dans l'exécution de la commande...");
 		return false;
 	}
 
