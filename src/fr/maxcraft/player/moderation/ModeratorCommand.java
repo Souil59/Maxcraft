@@ -28,7 +28,7 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.ban(sender, args);
 			case "kick":   //done
 				return this.kick(sender, args);
-			case "fine":   //amende
+			case "fine":   // = amende
 				return this.fine(sender, args);
 			case "jail":
 				return this.jail(sender, args);
@@ -40,14 +40,14 @@ public class ModeratorCommand implements CommandExecutor {
 		    	return this.journal(sender, args);
             case "pardon":  //done
                 return this.unban(sender, args);
-            case "bantemp":
+            case "bantemp": //done
                 return this.bantemp(sender, args);
 		}
 		return true;
 	}
 
     private boolean unban(CommandSender sender, String[] args){
-        args = args.toString().split(" ", 2);
+        args = args.toString().split(" ", 1);
         User u = User.get(args[0]);
         if (u == null){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
@@ -122,11 +122,11 @@ public class ModeratorCommand implements CommandExecutor {
         args = args.toString().split(" ", 2);
 		User j = User.get(args[0]);
 		if (j==null){
-			sender.sendMessage(ChatColor.RED + "Ce joueur n'existe pas !");
+			sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Ce joueur n'existe pas !");
 			return true;
 		}
         if (args[1] == null){
-            sender.sendMessage("Vous devez indiquer une raison");
+            sender.sendMessage(ChatColor.RED +"Vous devez indiquer une raison");
             return true;
         }
 		if (!j.getModeration().isBan()){
@@ -137,8 +137,10 @@ public class ModeratorCommand implements CommandExecutor {
             j.getPlayer().kickPlayer(args[1]);
 			return true;
 		}
-		return false;
-		
+        else{
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Le joueur est déjà banni ou une erreur s'est produite dans l'exécution de la commande !");
+            return true;
+        }
 	}
 
 	private boolean mute(CommandSender sender, String[] args) {
@@ -192,7 +194,29 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
     private boolean bantemp(CommandSender sender, String[] args){
-        return false;
+		args = args.toString().split(" ", 3);
+		User u = User.get(args[0]);
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            return  true;
+        }
+        if (args[2] == null){
+            sender.sendMessage(ChatColor.RED+"Vous devez indiquer une raison !");
+            return true;
+        }
+        if (!u.getModeration().isBan() && !args[1].isEmpty()){
+            long d = DurationParser.translateTimeStringToDate(args[1]);
+            u.getModeration().setBan(true, d);
+            AdminChat.sendMessageToStaffs(Moderation.message() + ChatColor.RED + args[0] + ChatColor.GOLD + " est desormais banni jusqu'au " + d + " pour" + ChatColor.ITALIC + args[2]);
+            u.sendNotifMessage(ChatColor.GOLD + "Vous avez été banni jusqu'au " + d + " pour" + args[1]);
+            Journal.add(sender.getName(), "ban", u.getUuid(), "jusqu'au"+d, args[2]);
+            u.getPlayer().kickPlayer(args[2]);
+            return true;
+        }
+        else {
+            sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
+            return true;
+        }
     }
 
 

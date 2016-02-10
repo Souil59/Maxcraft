@@ -1,4 +1,8 @@
 moderation:
+  unban:
+    commande: /pardon <joueur>
+  bantemp:
+    commande: /bantemp <joueur> <durée> [raison]
   ban:
     commande: /ban <joueur> [raison]
   mute:
