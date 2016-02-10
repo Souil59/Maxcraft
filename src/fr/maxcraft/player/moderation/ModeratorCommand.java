@@ -4,6 +4,7 @@ import fr.maxcraft.server.chatmanager.AdminChat;
 import fr.maxcraft.server.marker.Marker;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,14 +47,32 @@ public class ModeratorCommand implements CommandExecutor {
                 return this.unban(sender, args);
             case "bantemp": //done
                 return this.bantemp(sender, args);
-            case "unjail":
+            case "unjail": //done
                 return this.unjail(sender, args);
 		}
 		return true;
 	}
 
     private boolean unjail(CommandSender sender, String[] args){
-        return false;
+        User u = User.get(args[0]);
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Joueur introuvable !");
+            return true;
+        }
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcarft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Vous n'avez pas la permission de libérer ce joueur !");
+            return true;
+        }
+        if(!u.getModeration().isJail()){
+            sender.sendMessage(ChatColor.RED+"Le joueur que vous tentez de libérer est déjà libre... ou s'est déjà enfui !");
+            return true;
+        }
+        u.getModeration().setJail(false, -1);
+        u.getPlayer().teleport(Marker.getMarker("spawn"));
+        AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " a été libéré !");
+        u.sendNotifMessage(ChatColor.GREEN + "Vous avez été libéré ! Tenez-vous mieux la prochaine fois...");
+        Journal.add(sender.getName(), "unjail", u.getUuid(), DurationParser.getCurrentTimeStampInString(), "Pas de raison");
+        return true;
     }
 
 
@@ -159,6 +178,7 @@ public class ModeratorCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED+"Le warp/marker \"jail\" n'a pas été trouvé !");
                 return true;
             }
+            u.getPlayer().setGameMode(GameMode.ADVENTURE);
             if (args[2].isEmpty()){
                 u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail jusqu'au "+DurationParser.translateToString(args[1]));
                 Journal.add(sender.getName(), "jail", u.getUuid(), DurationParser.translateToString(args[1]), "Pas de raison");
@@ -180,6 +200,7 @@ public class ModeratorCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.RED + "Le warp/marker \"jail\" n'a pas été trouvé !");
                 return true;
             }
+            u.getPlayer().setGameMode(GameMode.ADVENTURE);
             if (args[2].isEmpty()){
                 u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail !");
                 Journal.add(sender.getName(), "jail", u.getUuid(), "Pas de durée", "Pas de raison");

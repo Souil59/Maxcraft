@@ -1,4 +1,6 @@
 moderation:
+  unjail:
+    commande: /unjail <joueur>
   jail:
     commande: /jail <joueur> [durée] [raison]
     notes:

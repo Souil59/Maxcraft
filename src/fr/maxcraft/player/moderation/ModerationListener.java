@@ -2,6 +2,7 @@ package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
+import fr.maxcraft.server.marker.Marker;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Date;
 
@@ -45,5 +47,18 @@ public class ModerationListener implements Listener {
         }
         e.setCancelled(true);
         u.sendNotifMessage(ChatColor.RED+"Vous êtes muet, vous ne pouvez pas parler !");
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onPlayerMoveEvent(PlayerMoveEvent e){
+        User u = User.get(e.getPlayer());
+        if (!u.getModeration().isJail()) return;
+        if ( !(u.getModeration().getJailend() < new Date().getTime())){
+            u.getModeration().setJail(false, -1);
+            u.getPlayer().teleport(Marker.getMarker("spawn"));
+            u.sendNotifMessage(ChatColor.GREEN+"Vous avez été libéré, le temps de votre peine s'est écoulé!");
+            return;
+        }
+        return;
     }
 }
