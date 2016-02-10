@@ -42,6 +42,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 
     @Override
     public boolean execute(CommandSender arg0, String arg1, String[] arg2) {
+        arg0.sendMessage(ChatColor.RED+"Arrivée juste avant le switch");
         if (!User.get(arg0.getName()).getPerms().hasPerms("maxcarft.guide")) return true;
         switch(this.getName())
         {
