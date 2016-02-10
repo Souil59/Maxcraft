@@ -1,4 +1,8 @@
 moderation:
+  amende:
+    commande: /fine <joueur> <somme> <raison>
+    notes:
+        -"somme" peut etre négatif pour donner de l'argent en cas d'erreur
   enderchest:
     commande: /ec <joueur>
   unban:

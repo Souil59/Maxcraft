@@ -1,6 +1,7 @@
 package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.server.chatmanager.AdminChat;
+import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +31,7 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.ban(sender, args);
 			case "kick":   //done
 				return this.kick(sender, args);
-			case "fine":   // = amende
+			case "fine":   // = amende //Done
 				return this.fine(sender, args);
 			case "jail":
 				return this.jail(sender, args);
@@ -82,16 +83,20 @@ public class ModeratorCommand implements CommandExecutor {
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
             return true;
         }
-        if (args.length > 0){
+        if (args.length > 0 && u.getPlayer().isOnline()){
             Player senderP = sender.getServer().getPlayer(sender.getName());
             senderP.closeInventory();
             senderP.openInventory(u.getPlayer().getEnderChest());
             return true;
         }
-        else{
+        else if(!(args.length > 0)){
             Player senderP = sender.getServer().getPlayer(sender.getName());
             senderP.closeInventory();
             senderP.openInventory(senderP.getEnderChest());
+            return true;
+        }
+        else {
+            sender.sendMessage(ChatColor.RED+"Le joueur n'est pas en ligne!");
             return true;
         }
 	}
@@ -107,7 +112,34 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean fine(CommandSender sender, String[] args) {
-		return false;
+        args = args.toString().split(" ", 3);
+        User u = User.get(args[0]);
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Vous ne pouvez pas donner d'amende à ce joueur !");
+            return true;
+        }
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
+            return true;
+        }
+        if (args[2].isEmpty()){
+            sender.sendMessage(ChatColor.RED+"Vous devez spécifier la raison de l'amende !");
+            return true;
+        }
+        Double somme, uBalance=u.getBalance();
+        try{
+            somme = Double.parseDouble(args[1]);
+        }
+        catch (ClassCastException e){
+           sender.sendMessage(ChatColor.RED+"Erreur dans la saisie du montant à retirer !");
+           return false;
+        }
+        uBalance-=somme;
+        MySQLSaver.mysql_update("UPDATE `player` SET `balance` = " + uBalance + " WHERE `id` = '" + u.getUuid().toString() + "';");
+        if (u.getPlayer().isOnline()) u.sendNotifMessage(ChatColor.RED + "Votre compte a été débité de " + somme + " suite à une amende pour " + ChatColor.ITALIC + args[2]);
+        AdminChat.sendMessageToStaffs(Moderation.message()+args[0]+"a été débité de "+somme+" suite à une amende par "+sender.getName()+" pour "+ChatColor.ITALIC+args[2]);
+        Journal.add(sender.getName(), "amende", u.getUuid(), "", args[2]);
+        return true;
 		
 	}
 

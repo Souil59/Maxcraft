@@ -214,7 +214,7 @@ public class User implements Owner {
 		@Override
 		public void give(double d) {
 			this.balance+=d;
-			this.sendNotifMessage("Vous avez recu "+d+" POs.");
+			this.sendNotifMessage("Vous avez reçu "+d+" POs.");
             MySQLSaver.mysql_update("UPDATE `player` SET `balance` = "+this.balance+" WHERE `id` = '"+this.uuid.toString()+"';");
 
         }
