@@ -102,8 +102,26 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean invsee(CommandSender sender, String[] args) {
-		return false;
-		
+        User u = User.get(args[0]);
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+" Vous n'avez pas le droit de faire ça !");
+            return true;
+        }
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            return true;
+        }
+        if (args.length > 0 && u.getPlayer().isOnline()){
+            Player senderP = (Player)sender;
+            senderP.closeInventory();
+            senderP.openInventory(u.getPlayer().getInventory());
+            return true;
+        }
+        else {
+            if (!(args.length>0)) sender.sendMessage(ChatColor.RED+"Vous n'avez pas spécifié le joueur cible !");
+            if (!u.getPlayer().isOnline())sender.sendMessage(ChatColor.RED + "Le joueur n'est pas en ligne!");
+            return true;
+        }
 	}
 
 	private boolean jail(CommandSender sender, String[] args) {

@@ -1,4 +1,6 @@
 moderation:
+  invsee:
+    commande: /invsee <joueur>
   amende:
     commande: /fine <joueur> <somme> <raison>
     notes:
