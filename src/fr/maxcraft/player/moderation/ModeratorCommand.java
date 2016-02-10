@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 
 import fr.maxcraft.player.User;
 import fr.maxcraft.utils.DurationParser;
+import org.bukkit.entity.Player;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ public class ModeratorCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label,
 			String[] args) {
+        if (User.get(sender.getName()).getPerms().hasPerms("maxcarft.guide")) return true;
 		switch(cmd.getName())
 		{
 			case "mute":   //done
@@ -34,7 +36,7 @@ public class ModeratorCommand implements CommandExecutor {
 				return this.jail(sender, args);
 		    case "invsee":
 		    	return this.invsee(sender, args);
-		    case "ec":
+		    case "ec":      //done
 		    	return this.ec(sender, args);
 		    case "journal":
 		    	return this.journal(sender, args);
@@ -71,8 +73,27 @@ public class ModeratorCommand implements CommandExecutor {
 	}
 
 	private boolean ec(CommandSender sender, String[] args) {
-		return false;
-		
+        User u = User.get(args[0]);
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+" Vous n'avez pas le droit de faire ça !");
+            return true;
+        }
+        if (u==null){
+            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
+            return true;
+        }
+        if (args.length > 0){
+            Player senderP = sender.getServer().getPlayer(sender.getName());
+            senderP.closeInventory();
+            senderP.openInventory(u.getPlayer().getEnderChest());
+            return true;
+        }
+        else{
+            Player senderP = sender.getServer().getPlayer(sender.getName());
+            senderP.closeInventory();
+            senderP.openInventory(senderP.getEnderChest());
+            return true;
+        }
 	}
 
 	private boolean invsee(CommandSender sender, String[] args) {

@@ -1,4 +1,6 @@
 moderation:
+  enderchest:
+    commande: /ec <joueur>
   unban:
     commande: /pardon <joueur>
   bantemp:
