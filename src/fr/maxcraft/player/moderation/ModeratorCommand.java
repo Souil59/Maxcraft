@@ -13,45 +13,63 @@ import fr.maxcraft.player.User;
 import fr.maxcraft.utils.DurationParser;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.Date;
 
-public class ModeratorCommand implements CommandExecutor {
+public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 
-	public ModeratorCommand() {
-		
+	public ModeratorCommand(String s) {
+        super(s);
+        if (s.equals("ban")){
+            this.setPerms("maxcraft.modo").register();
+        }
+        if (s.equals("bantemp")){
+            this.setPerms("maxcraft.modo").register();
+        }
+        if (s.equals("mute")){
+            this.setPerms("maxcraft.guide").register();
+        }
+        if (s.equals("jail")){
+            this.setPerms("maxcraft.modo").register();
+        }
+        if (s.equals("kick")){
+            this.setPerms("maxcraft.modo").register();
+        }
+        if (s.equals("moderation")){
+            this.setPerms("maxcraft.guide").setAliases(Arrays.asList("m")).register();
+        }
 	}
-	
-	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label,
-			String[] args) {
-        if (User.get(sender.getName()).getPerms().hasPerms("maxcarft.guide")) return true;
-		switch(cmd.getName())
-		{
-			case "mute":   //done
-				return this.mute(sender, args);
-			case "ban":    //done
-				return this.ban(sender, args);
-			case "kick":   //done
-				return this.kick(sender, args);
-			case "fine":   // = amende //Done
-				return this.fine(sender, args);
-			case "jail":   //done
-				return this.jail(sender, args);
-		    case "invsee":
-		    	return this.invsee(sender, args);
-		    case "ec":      //done
-		    	return this.ec(sender, args);
-		    case "journal":
-		    	return this.journal(sender, args);
+
+    @Override
+    public boolean execute(CommandSender arg0, String arg1, String[] arg2) {
+        if (!User.get(arg0.getName()).getPerms().hasPerms("maxcarft.guide")) return true;
+        switch(this.getName())
+        {
+            case "mute":   //done
+                return this.mute(arg0, arg2);
+            case "ban":    //done
+                return this.ban(arg0, arg2);
+            case "kick":   //done
+                return this.kick(arg0, arg2);
+            case "fine":   // = amende //Done
+                return this.fine(arg0, arg2);
+            case "jail":   //done
+                return this.jail(arg0, arg2);
+            case "invsee": //done
+                return this.invsee(arg0, arg2);
+            case "ec":      //done
+                return this.ec(arg0, arg2);
+            case "journal":
+                return this.journal(arg0, arg2);
             case "pardon":  //done
-                return this.unban(sender, args);
+                return this.unban(arg0, arg2);
             case "bantemp": //done
-                return this.bantemp(sender, args);
+                return this.bantemp(arg0, arg2);
             case "unjail": //done
-                return this.unjail(sender, args);
-		}
-		return true;
-	}
+                return this.unjail(arg0, arg2);
+        }
+        return true;
+    }
 
     private boolean unjail(CommandSender sender, String[] args){
         User u = User.get(args[0]);
