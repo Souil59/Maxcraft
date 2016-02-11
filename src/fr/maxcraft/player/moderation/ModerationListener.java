@@ -2,7 +2,7 @@ package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.world.marker.Marker;
+import fr.maxcraft.server.marker.Marker;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -31,6 +31,7 @@ public class ModerationListener implements Listener {
         }
         if (!(u.getModeration().getBanend() < new Date().getTime())){
             u.getModeration().setBan(false, -1);
+            e.allow();
             return;
         }
         e.disallow(e.getResult(), u.getModeration().getBanReason());
