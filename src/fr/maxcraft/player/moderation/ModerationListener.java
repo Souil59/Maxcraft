@@ -30,12 +30,6 @@ public class ModerationListener implements Listener {
             e.getPlayer().sendMessage("a");
             return;
         }
-        if (!(u.getModeration().getBanend() < new Date().getTime())){
-            u.getModeration().setBan(false, -1);
-            e.allow();
-            e.getPlayer().sendMessage("b");
-            return;
-        }
         e.disallow(e.getResult(), u.getModeration().getBanReason());
     }
 
