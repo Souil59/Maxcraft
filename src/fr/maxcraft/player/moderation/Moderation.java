@@ -31,7 +31,7 @@ public class Moderation {
 			this.sqlInsert();
 	}
 	public static Moderation load(UUID uuid){
-		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `moderation` WHERE `moderation`.`id` = '"+uuid.toString()+"';",true);
+		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `moderation` WHERE `id` = '"+uuid.toString()+"';",true);
 		try {
 			if (r.next())
 				return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"),false, r.getString("banreason"));
@@ -52,7 +52,7 @@ public class Moderation {
 		
 	}
 	public void save(){
-		MySQLSaver.mysql_update("UPDATE `moderation` SET `ismute` = '"+this.mute+"' ,`isban` = '"+this.ban+"',`isjail` = '"+this.jail+"'"
+		MySQLSaver.mysql_update("UPDATE `moderation` SET `ismute` = "+this.mute+" ,`isban` = "+this.ban+",`isjail` = "+this.jail+""
 				+ ",`muteend` = '"+this.muteend+"',`banend` = '"+this.banend+"',`jailend` = '"+this.jailend+"' WHERE `id` = '"+this.uuid.toString()+"';");
 	}
 	

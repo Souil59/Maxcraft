@@ -22,26 +22,11 @@ public class ModerationListener implements Listener {
         main.getServer().getPluginManager().registerEvents(this, main);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onPlayerAttempsToJoin(PlayerLoginEvent e){
         User u = User.get(e.getPlayer());
-        if (!u.getModeration().isBan()) {
-            e.allow();
-            return;
-        }
-        if (!(u.getModeration().getBanend() < new Date().getTime())){
-            u.getModeration().setBan(false, -1);
-            return;
-        }
-        e.disallow(e.getResult(), u.getModeration().getBanReason());
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onMutedPlayerChat(AsyncPlayerChatEvent e){
-        User u = User.get(e.getPlayer());
-        if (!u.getModeration().isMute()) return;
-        e.setCancelled(true);
-        u.sendNotifMessage(ChatColor.RED+"Vous êtes muet, vous ne pouvez pas parler !");
+        if (u.getModeration().isBan())
+            e.disallow(e.getResult(), u.getModeration().getBanReason());
     }
 
     @EventHandler(priority = EventPriority.LOW)
