@@ -13,7 +13,7 @@ public class PermsCommand extends Command {
 	public PermsCommand(String name) {
 		super(name);
 		this.setAliases(Arrays.asList("group")).setPerms("maxcraft.modo").register();
-        this.tabComplete("group",Arrays.asList("[player] set [group]"));
+        this.tabComplete(name,Arrays.asList("[player] set [group]"));
 	}
 
 	@Override

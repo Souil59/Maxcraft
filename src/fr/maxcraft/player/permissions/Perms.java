@@ -57,6 +57,8 @@ public class Perms {
 	}
 	
 	public boolean hasPerms(String s){
+        if (User.get(this.uuid).getPlayer().isOp())
+            return true;
 		if( this.perms.contains(s))
 			return true;
 		return false;

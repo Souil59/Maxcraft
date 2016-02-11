@@ -16,7 +16,7 @@ public class Citoyen implements Group{
 
 	@Override
 	public String getPrefix() {
-		return " ";
+		return "";
 	}
 
 	@Override
