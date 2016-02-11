@@ -111,8 +111,9 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
         }
         else if (!args[0].isEmpty()){
             u.getModeration().setBan(false, -1);
-            Journal.add(sender.getName(), "unban", u.getUuid(), "le : "+DurationParser.getCurrentTimeStampInString(), "");
+            Journal.add(sender.getName(), "unban", u.getUuid(), "le : " + DurationParser.getCurrentTimeStampInString(), "");
             AdminChat.sendMessageToStaffs(Moderation.message() + ChatColor.BOLD + args[0] + " a été débanni.");
+            return true;
         }
         sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
 		return false;
@@ -223,15 +224,16 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
                 u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail !");
                 Journal.add(sender.getName(), "jail", u.getUuid(), "Pas de durée", "Pas de raison");
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail sans durée ni raison");
+                return true;
             }
             else{
                 u.sendNotifMessage(ChatColor.GOLD + "Vous avez été jail pour :" + args[2]);
                 Journal.add(sender.getName(), "jail", u.getUuid(), "Pas de durée", args[2]);
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais jail indéfiniement pour :"+args[2]);
+                return true;
             }
-            return true;
         }
-        sender.sendMessage(ChatColor.RED+"Erreur dans l'exécution de la commande...");
+        sender.sendMessage(ChatColor.RED + "Erreur dans l'exécution de la commande...");
         return false;
 		
 	}
@@ -262,7 +264,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
         uBalance-=somme;
         MySQLSaver.mysql_update("UPDATE `player` SET `balance` = " + uBalance + " WHERE `id` = '" + u.getUuid().toString() + "';");
         if (u.getPlayer().isOnline()) u.sendNotifMessage(ChatColor.RED + "Votre compte a été débité de " + somme + " suite à une amende pour " + ChatColor.ITALIC + args[2]);
-        AdminChat.sendMessageToStaffs(Moderation.message()+args[0]+"a été débité de "+somme+" suite à une amende par "+sender.getName()+" pour "+ChatColor.ITALIC+args[2]);
+        AdminChat.sendMessageToStaffs(Moderation.message()+args[0]+"a été débité de "+somme+" suite à une amende par "+sender.getName()+" pour "+ChatColor.ITALIC+ args[2]);
         Journal.add(sender.getName(), "amende", u.getUuid(), "", args[2]);
         return true;
 		
@@ -284,11 +286,13 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
                 u.getPlayer().kickPlayer(ChatColor.RED+ "Ejecté du Serveur");
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " a été kick du serveur " + ChatColor.ITALIC + "sans raison !");
                 Journal.add(sender.getName(), "kick", u.getUuid(), "", "pas de raison");
+                return true;
             }
             else{
                 u.getPlayer().kickPlayer(ChatColor.RED+ args[1]);
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " a été kick du serveur pour: " + ChatColor.ITALIC + args[1]);
                 Journal.add(sender.getName(), "kick", u.getUuid(), "", args[1]);
+                return true;
             }
         }
         sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
@@ -316,7 +320,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 			return true;
 		}
         else{
-            sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Le joueur est déjà banni ou une erreur s'est produite dans l'exécution de la commande !");
+            sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Le joueur est déjà banni ou une erreur s'est produite dans l'exécution de la commande !");
             return true;
         }
 	}
@@ -339,13 +343,14 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
                 j.sendNotifMessage(ChatColor.GOLD + "Vous avez été mute "+DurationParser.translateToString(args[1]));
                 Journal.add(sender.getName(), "mute", j.getUuid(), DurationParser.translateToString(args[1]), "Pas de raison");
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet"+DurationParser.translateToString(args[1]));
+                return true;
             }
 			else{
                 j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute "+DurationParser.translateToString(args[1])+" pour :"+args[2]);
                 Journal.add(sender.getName(), "mute", j.getUuid(), DurationParser.translateToString(args[1]), args[2]);
                 AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet" + DurationParser.translateToString(args[1]+" pour :"+args[2]));
+                return true;
             }
-			return true;
 		}
 		if (!j.getModeration().isMute() && args[1].isEmpty()){
 			j.getModeration().setMute(true, -1);
@@ -353,13 +358,14 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 				j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute !");
 				Journal.add(sender.getName(), "mute", j.getUuid(), "Pas de durée", "Pas de raison");
 				AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet");
-			}
+                return true;
+            }
 			else{
 				j.sendNotifMessage(ChatColor.GOLD+"Vous avez été mute pour :"+args[2]);
 				Journal.add(sender.getName(), "mute", j.getUuid(), "Pas de durée", args[2]);
 				AdminChat.sendMessageToStaffs(Moderation.message() + args[0] + " est desormais muet pour :"+args[2]);
-			}
-			return true;
+                return true;
+            }
 		}
 		if (j.getModeration().isMute()){
 			j.getModeration().setMute(false, -1);

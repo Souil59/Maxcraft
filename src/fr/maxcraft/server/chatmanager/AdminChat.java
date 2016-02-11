@@ -18,7 +18,7 @@ public class AdminChat {
 
 	public static void sendMessageToStaffs(String message){
         for(Player p: Bukkit.getOnlinePlayers()) {
-            if (User.get(p).getPerms().hasPerms("maxcraft.guide")) return;
+            if (User.get(p).getPerms().hasPerms("maxcraft.guide")|| p.isOp()) return;
             p.sendMessage(message);
         }
     }
