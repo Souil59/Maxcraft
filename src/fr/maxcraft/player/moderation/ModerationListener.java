@@ -2,9 +2,8 @@ package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.marker.Marker;
+import fr.maxcraft.server.world.marker.Marker;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -37,14 +36,10 @@ public class ModerationListener implements Listener {
         e.disallow(e.getResult(), u.getModeration().getBanReason());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onMutedPlayerChat(AsyncPlayerChatEvent e){
         User u = User.get(e.getPlayer());
         if (!u.getModeration().isMute()) return;
-        if (!(u.getModeration().getMuteend() < new Date().getTime())){
-            u.getModeration().setMute(false, -1);
-            return;
-        }
         e.setCancelled(true);
         u.sendNotifMessage(ChatColor.RED+"Vous êtes muet, vous ne pouvez pas parler !");
     }
