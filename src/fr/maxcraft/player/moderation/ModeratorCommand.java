@@ -1,20 +1,16 @@
 package fr.maxcraft.player.moderation;
 
+import fr.maxcraft.player.User;
 import fr.maxcraft.server.chatmanager.AdminChat;
 import fr.maxcraft.server.marker.Marker;
+import fr.maxcraft.utils.DurationParser;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-
-import fr.maxcraft.player.User;
-import fr.maxcraft.utils.DurationParser;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
-import java.util.Date;
 
 public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 
@@ -43,7 +39,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
     @Override
     public boolean execute(CommandSender arg0, String arg1, String[] arg2) {
         if (!User.get(arg0.getName()).getPerms().hasPerms("maxcraft.guide")) return true;
-        switch(this.getName())
+        switch(arg1)
         {
             case "mute":   //done
                 return this.mute(arg0, arg2);
@@ -95,7 +91,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 
 
     private boolean unban(CommandSender sender, String[] args){
-        args = args.toString().split(" ", 1);
+        args = argsToString(args).split(" ", 1);
         User u = User.get(args[0]);
         if (u == null){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
@@ -115,7 +111,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
             AdminChat.sendMessageToStaffs(Moderation.message() + ChatColor.BOLD + args[0] + " a été débanni.");
             return true;
         }
-        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
+        sender.sendMessage(ChatColor.RED + "Erreur dans la soumission de la commande !");
 		return false;
     }
 
@@ -175,7 +171,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 	}
 
 	private boolean jail(CommandSender sender, String[] args) {
-        args = args.toString().split(" ", 3);
+        args = argsToString(args).split(" ", 3);
         User u = User.get(args[0]);
         if (u==null){
             sender.sendMessage(ChatColor.DARK_RED + "Erreur: " + ChatColor.RED + "Joueur introuvable !");
@@ -239,7 +235,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 	}
 
 	private boolean fine(CommandSender sender, String[] args) {
-        args = args.toString().split(" ", 3);
+        args = argsToString(args).split(" ", 3);
         User u = User.get(args[0]);
         if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo") || u.getPerms().hasPerms("maxcraft.admin")){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Vous ne pouvez pas donner d'amende à ce joueur !");
@@ -250,7 +246,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
             return true;
         }
         if (args[2].isEmpty()){
-            sender.sendMessage(ChatColor.RED+"Vous devez spécifier la raison de l'amende !");
+            sender.sendMessage(ChatColor.RED + "Vous devez spécifier la raison de l'amende !");
             return true;
         }
         Double somme, uBalance=u.getBalance();
@@ -271,7 +267,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 	}
 
 	private boolean kick(CommandSender sender, String[] args) {
-		args = args.toString().split(" ", 2);
+		args = argsToString(args).split(" ", 2);
 		User u = User.get(args[0]);
         if (u ==  null){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur :"+ChatColor.RED+ " Joueur introuvable !");
@@ -295,13 +291,13 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
                 return true;
             }
         }
-        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
+        sender.sendMessage(ChatColor.RED + "Erreur dans la soumission de la commande !");
 		return false;
 		
 	}
 
 	private boolean ban(CommandSender sender, String[] args) {
-        args = args.toString().split(" ", 2);
+        args = argsToString(args).split(" ", 2);
 		User j = User.get(args[0]);
 		if (j==null){
 			sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED + "Ce joueur n'existe pas !");
@@ -326,7 +322,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 	}
 
 	private boolean mute(CommandSender sender, String[] args) {
-        args = args.toString().split(" ", 3);
+        args = argsToString(args).split(" ", 3);
 		User j = User.get(args[0]);
 		if (j==null){
 			sender.sendMessage(ChatColor.RED + "Joueur non trouvé !");
@@ -379,7 +375,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
 	}
 
     private boolean bantemp(CommandSender sender, String[] args){
-		args = args.toString().split(" ", 3);
+		args = argsToString(args).split(" ", 3);
 		User u = User.get(args[0]);
         if (u==null){
             sender.sendMessage(ChatColor.DARK_RED+"Erreur: "+ChatColor.RED+"Joueur introuvable !");
@@ -399,11 +395,17 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
             return true;
         }
         else {
-            sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
+            sender.sendMessage(ChatColor.RED + "Erreur dans la soumission de la commande !");
             return true;
         }
     }
 
+    private String argsToString(String[] args) {
+                String s = "";
+                for (String sc : args)
+                    s+=sc+" ";
+                return s;
+    }
 
 
 }
