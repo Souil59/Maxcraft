@@ -60,7 +60,7 @@ public class ZoneListener implements Listener{
 				if(e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
 				{
 					selections.remove(m);
-					p.sendMessage(message("S�lection r�initialis�e !"));
+					p.sendMessage(message("Sélection réinitialisée !"));
 				}
 				else if(e.getAction().equals(Action.LEFT_CLICK_BLOCK))
 				{
@@ -71,17 +71,17 @@ public class ZoneListener implements Listener{
 						if (Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0]))!=null)
 							if(!Zone.getZone(l).equals(Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0])))){
 								e.setCancelled(true);
-								p.sendMessage(message("Selection impossible, ce point n'est pas dans la m�me zone que le premier."));
+								p.sendMessage(message("Selection impossible, ce point n'est pas dans la même zone que le premier."));
 								return;
 					}
 					if (Zone.getZone(l)==null&&Zone.getZone(new Location(l.getWorld(),selections.get(m).xpoints[0],0,selections.get(m).ypoints[0]))!=null){
 						e.setCancelled(true);
-						p.sendMessage(message("Selection impossible, ce point n'est pas dans la m�me zone que le premier."));
+						p.sendMessage(message("Selection impossible, ce point n'est pas dans la même zone que le premier."));
 						return;
 					}
 					}
 					selections.get(m).addPoint(l.getBlockX(), l.getBlockZ());
-					p.sendMessage(message("Position "+selections.get(m).npoints+" enregistr�e !"));
+					p.sendMessage(message("Position "+selections.get(m).npoints+" enregistrée !"));
 				}
 					
 				e.setCancelled(true);
@@ -121,7 +121,7 @@ public class ZoneListener implements Listener{
 
     @EventHandler
     public void onSignClic(PlayerInteractEvent e){
-        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)&&!e.getAction().equals(Action.LEFT_CLICK_AIR))
+        if (!e.getAction().equals(Action.RIGHT_CLICK_BLOCK)&&!e.getAction().equals(Action.LEFT_CLICK_BLOCK))
             return;
         if (e.getClickedBlock().getType().equals(Material.SIGN_POST)) {
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK))
@@ -730,7 +730,6 @@ if(z != null)
 			if (z1.getParent()!=null)
 				if (z1.getParent().equals(z2))
 					return;
-		if (!z2.getTags().isEmpty())
 		if(z2 != null && z2.getTags().contains("enter-message"))
 		{
 			if(z2.getOwner()!=null){

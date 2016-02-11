@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import fr.maxcraft.player.User;
 import org.bukkit.Material;
 
 import fr.maxcraft.player.jobs.Jobs;

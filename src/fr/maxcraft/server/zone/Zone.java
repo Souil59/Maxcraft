@@ -206,11 +206,18 @@ public class Zone {
 		return this.owner;
 	}
 
+    public Owner getHighestOwner() {
+        if (this.getParent()!=null)
+            if (this.getParent().getOwner()!=null)
+                return this.getParent().getHighestOwner();
+        return this.owner;
+    }
+
 	public static String create(Polygon p, User u, String name) {
 		World w = u.getPlayer().getWorld();
 		Owner o = null;
 		if (p.npoints<2)
-			return "Vous devez faire une s�lection d'au moins 2 points !";
+			return "Vous devez faire une sélection d'au moins 2 points !";
 		if (p.npoints==2){
 			int[] x = p.xpoints.clone();
 			int[] y = p.ypoints.clone();
@@ -236,7 +243,7 @@ public class Zone {
 		}
 		Zone z = new Zone(0, name, o, p, w.getName(), pid, null, null, null);
 		z.insert();
-		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A �t� cr�e !";
+		return "La zone <"+ ChatColor.GOLD+ name + ChatColor.GRAY +"> A étè crée !";
 		
 	}
 
@@ -275,9 +282,9 @@ public class Zone {
 		String d = "";
         d+=ChatColor.GRAY+"*** <"+ChatColor.GOLD+ this.getName() +ChatColor.GRAY +"> ***";
         if (isToSell())
-            d+="\n" + ChatColor.WHITE+"Numéro : "+ ChatColor.GOLD + this.getSale()+"POs";
+            d+="\n" + ChatColor.GOLD+"A vendre : "+ ChatColor.GREEN + this.getSale().getPrice()+"POs";
 		d+="\n" + ChatColor.WHITE+"Numéro : "+ ChatColor.GREEN + this.id;
-		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " m�.";
+		d+="\n" + ChatColor.WHITE+"Surface : "+ ChatColor.GREEN +this.getArea()+ " m².";
 		if(this.getOwner() != null)
 			d+="\n" + ChatColor.WHITE+"Propriétaire : "+ ChatColor.GREEN + this.owner.getName();
 		else

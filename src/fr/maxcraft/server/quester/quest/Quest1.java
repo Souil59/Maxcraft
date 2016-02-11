@@ -22,9 +22,9 @@ public class Quest1 extends Quest{
     @Override
     public int rightclic(User u, int i) {
         if (i==0) {
-            Chat(u, "Mais qu'en ais-je fait ? Où est cette foutu clèf ? Tiens ! Qui êtes vous ? Oh et puisque vous êtes là, souhaiteriez vous m'aider ? J'ai perdu la clef permettant l'ouverture de ce coffre !");
-            Ask(u, "Bien sur.", 1, ChatColor.BLUE);
-            Ask(u, "J'ai autres chose à faire.", 2, ChatColor.RED);
+            chat(u, "Mais qu'en ais-je fait ? Où est cette foutu clèf ? Tiens ! Qui êtes vous ? Oh et puisque vous êtes là, souhaiteriez vous m'aider ? J'ai perdu la clef permettant l'ouverture de ce coffre !");
+            ask(u, "Bien sur.", 1, ChatColor.BLUE);
+            ask(u, "J'ai autres chose à faire.", 2, ChatColor.RED);
             return 0;
         }
         return i;

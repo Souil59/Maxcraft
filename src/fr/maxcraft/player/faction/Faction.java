@@ -21,7 +21,7 @@ import fr.maxcraft.Main;
 
 public class Faction implements Owner{
 
-	private static ArrayList<Faction> factionlist = new ArrayList<Faction>();
+	public static ArrayList<Faction> factionlist = new ArrayList<Faction>();
 	private String name;
 	private UUID id;
 	private String TAG;
@@ -199,4 +199,8 @@ public class Faction implements Owner{
 	public void load(User u) {
 		this.team.addPlayer(u.getPlayer());
 	}
+
+    public Team getTeam() {
+        return team;
+    }
 }

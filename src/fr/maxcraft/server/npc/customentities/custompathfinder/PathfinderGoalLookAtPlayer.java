@@ -1,4 +1,4 @@
-package fr.maxcraft.server.customentities.custompathfinder;
+package fr.maxcraft.server.npc.customentities.custompathfinder;
 
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.EntityHuman;

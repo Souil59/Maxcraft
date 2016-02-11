@@ -1,6 +1,7 @@
-package fr.maxcraft.server.customentities;
+package fr.maxcraft.server.npc.customentities;
 
-import fr.maxcraft.server.customentities.customplayer.CustomPlayer;
+import fr.maxcraft.server.npc.customentities.customplayer.CustomPlayer;
+import fr.maxcraft.server.npc.EntityNPC;
 import net.minecraft.server.v1_8_R3.Entity;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;

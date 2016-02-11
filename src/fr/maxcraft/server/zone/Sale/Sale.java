@@ -6,6 +6,8 @@ import fr.maxcraft.server.zone.Zone;
 import fr.maxcraft.utils.MySQLSaver;
 import fr.maxcraft.utils.Serialize;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
@@ -25,7 +27,10 @@ public class Sale {
         this.zone = z;
         this.price = price;
         this.type = type;
-        this.sign = (Sign) Serialize.locationFromString(s).getBlock().getState();
+        Block b = Serialize.locationFromString(s).getBlock();
+        if (!b.getType().equals(Material.SIGN_POST)||!b.getType().equals(Material.WALL_SIGN))
+            b.setType(Material.SIGN_POST);
+        this.sign = (Sign)b.getState();
         saleliste.add(this);
         this.zone.setSale(this);
         this.initialize();
@@ -36,7 +41,8 @@ public class Sale {
             this.sign.setLine(0, ChatColor.AQUA + "A VENDRE");
         if (type.equals(SaleType.RENT))
             this.sign.setLine(0, ChatColor.AQUA + "A LOUER");
-        this.sign.setLine(1,this.zone.getOwner().getName());
+        if (this.zone.getOwner()!=null)
+            this.sign.setLine(1,this.zone.getOwner().getName());
         this.sign.setLine(2,"clique = achat");
         this.sign.setLine(3, ChatColor.DARK_RED +""+ this.price + " POs");
         sign.update();
@@ -59,12 +65,20 @@ public class Sale {
     }
 
     public void sell(User user) {
-        if (!user.pay(this.price,this.zone.getOwner()))
+        if(this.zone.getOwner()!=null)
+            if (!user.pay(this.price,this.zone.getOwner()))
             return;
+        if(this.zone.getOwner()==null)
+            if (!user.take(this.price))
+                return;
         MySQLSaver.mysql_update("DELETE FROM `sale` WHERE `id` = "+this.zone.getId());
         saleliste.remove(this);
         this.zone.reset();
         this.zone.setOwner(user);
         this.sign.getBlock().breakNaturally();
+    }
+
+    public int getPrice() {
+        return price;
     }
 }

@@ -1,15 +1,9 @@
-package fr.maxcraft.server.customentities;
+package fr.maxcraft.server.npc.customentities;
 
-import fr.maxcraft.Main;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.event.CraftEventFactory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by Crevebedaine on 26/01/2016.
@@ -18,6 +12,7 @@ public class Franky extends  EntityWolf{
 
     public Franky(net.minecraft.server.v1_8_R3.World w) {
         super(w);
+        this.persistent = true;
         NBTTagCompound tag = new NBTTagCompound();
         this.c(tag);
         tag.setBoolean("Invulnerable", true);
@@ -40,6 +35,12 @@ public class Franky extends  EntityWolf{
         return e;
 
     }
+
+    @Override
+    public boolean isInvulnerable(DamageSource damagesource) {
+        return damagesource != DamageSource.OUT_OF_WORLD;
+    }
+
     //ZQSD controle
     @Override
     public void g(float sideMot, float forMot) {
@@ -80,7 +81,7 @@ public class Franky extends  EntityWolf{
     }
     protected void initAttributes() {
         super.initAttributes();
-        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(10.0D);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(200.0D);
         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.25D);
     }
 
@@ -112,6 +113,10 @@ public class Franky extends  EntityWolf{
 
     public boolean a(EntityHuman entityhuman) {
         ItemStack itemstack = entityhuman.inventory.getItemInHand();
+        if (itemstack==null) {
+            entityhuman.mount(this);
+            return true;
+        }
         if (itemstack.getItem()==Items.SADDLE) {
             this.setSaddle(!hasSaddle());
             return true;

@@ -1,4 +1,4 @@
-package fr.maxcraft.server.marker;
+package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.Main;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ public class MarkerListener implements Listener{
     @EventHandler
     public void onMove(PlayerMoveEvent e){
         for(Travel t :Travel.travelslist)
-            if (t.isReadyToTravel(e.getPlayer()))
+            if (t.isReadyToTravel(e))
                 t.travel(e.getPlayer());
     }
 }

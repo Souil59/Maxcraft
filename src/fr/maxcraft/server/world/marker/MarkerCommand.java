@@ -1,4 +1,4 @@
-package fr.maxcraft.server.marker;
+package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.server.command.Command;
 import org.bukkit.command.CommandSender;
@@ -46,20 +46,22 @@ public class MarkerCommand extends Command{
                 arg0.sendMessage("Un ou plusieurs des markers n'existe pas!");
                 return;
             }
-            new Travel(Marker.getMarker(args[4]),Marker.getMarker(args[3]),Marker.getMarker(args[2])).insert();
+            new Travel(Marker.getMarker(args[2]),Marker.getMarker(args[3]),Marker.getMarker(args[4])).insert();
+            arg0.sendMessage("Travel ajouté");
+            return;
         }
         if (args.length==3){
-            if (args[2].equals("delete")&&Marker.getMarker(args[3])==null) {
+            if (args[2].equals("delete")&&Marker.getMarker(args[2])==null) {
                 arg0.sendMessage("Le marker n'existe pas!");
                 return;
             }
             int i = 0;
-            for (Travel t : Travel.travelslist)
-                if (t.contains(Marker.getMarker(args[3]))) {
+            for (Travel t : (ArrayList<Travel>) Travel.travelslist.clone())
+                if (t.contains(Marker.getMarker(args[2]))) {
                     t.remove();
                     i++;
                 }
-            arg0.sendMessage(i+" travels passant par "+args[3]+" supprimé(s)");
+            arg0.sendMessage(i+" travels passant par "+args[2]+" supprimé(s)");
             return;
         }
         arg0.sendMessage("/warp travel create [marker1] [marker2] [marker3]");

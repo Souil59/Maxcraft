@@ -26,7 +26,7 @@ public class GameInstance {
     private static ArrayList<GameInstance> instances = new ArrayList<GameInstance>();
     private Faction faction;
     private String sourceWorldName;
-    private String instanceWorldName;
+    public String instanceWorldName;
     private World instanceWorld;
     private NathemWorld nathemWorld;
     private Game game;
@@ -88,6 +88,8 @@ public class GameInstance {
 
         File uidFile = new File(instanceFile, "uid.dat");
         uidFile.delete();
+        File file = new File(this.instanceWorld.getWorldFolder().getAbsolutePath()+"/inventories/delete.yml");
+
 
         // World loading
         this.instanceWorld = Bukkit.createWorld(WorldCreator.name(this.instanceWorldName));
@@ -141,9 +143,9 @@ public class GameInstance {
         try {
             FileUtils.deleteDirectory(testWorldFile);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        this.life= new HashMap<Player, Integer>();
         this.setStatus(InstanceStatus.END);
     }
 
@@ -151,7 +153,6 @@ public class GameInstance {
         Location backLocation = this.getBackLocations().get(p);
         if (backLocation == null) backLocation = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
         p.teleport(backLocation);
-
     }
 
     @Override
@@ -181,6 +182,11 @@ public class GameInstance {
     }
 
     public void teleport(Player p){
+        if (this.getLife().containsKey(p))
+            if (this.getLife().get(p)==0){
+                p.sendMessage("Vous n'avez plus de vies");
+                return;
+            }
         int i;
         for(i = 0;i<100;i++) {
             if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance() + ":" + i))
@@ -190,6 +196,7 @@ public class GameInstance {
                     } else {
                         this.backLocations.put(p,p.getLocation());
                         p.teleport((this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i)));
+                        p.setGameMode(GameMode.ADVENTURE);
                         if (this.life.containsKey(p))
                             this.life.put(p, game.getLife());
                         return;
@@ -198,6 +205,7 @@ public class GameInstance {
         if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance())){
             this.backLocations.put(p,p.getLocation());
             p.teleport(this.getNathemWorld().getMarkers().get(this.game.getEntrance()));
+            p.setGameMode(GameMode.ADVENTURE);
             if (!this.life.containsKey(p))
                 this.life.put(p, game.getLife());
             return;
@@ -229,6 +237,7 @@ public class GameInstance {
     }
 
     public void setFaction(Faction faction) {
+        this.setStatus(InstanceStatus.FACTION);
         this.faction = faction;
     }
 

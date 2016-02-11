@@ -2,7 +2,7 @@ package fr.maxcraft.player.moderation;
 
 import fr.maxcraft.player.User;
 import fr.maxcraft.server.chatmanager.AdminChat;
-import fr.maxcraft.server.marker.Marker;
+import fr.maxcraft.server.world.marker.Marker;
 import fr.maxcraft.utils.DurationParser;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.ChatColor;

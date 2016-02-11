@@ -1,11 +1,9 @@
 package fr.maxcraft.server.game;
 
 import fr.maxcraft.server.command.Command;
-import fr.maxcraft.server.customentities.EntityNPC;
-import fr.maxcraft.server.customentities.Franky;
-import fr.maxcraft.server.customentities.customplayer.CustomPlayer;
+import fr.maxcraft.server.npc.EntityNPC;
+import fr.maxcraft.server.npc.customentities.Franky;
 import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -29,7 +27,7 @@ public class GameCommand extends Command {
         if (args[0].equals("new")) {
             Entity nmsEntity = EntityNPC.spawn(((Player)arg0).getLocation());
             StartSign s = new StartSign(nmsEntity.getBukkitEntity().getUniqueId(), Integer.parseInt(args[1]),false, args[2], args[3], args[4], Integer.parseInt(args[5]), Integer.parseInt(args[6]));
-            s.save();
+            s.insert();
         }
         return true;
     }

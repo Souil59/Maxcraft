@@ -29,6 +29,7 @@ public class ItemStackCreator extends ItemStack {
 
 	public ItemStackCreator(Material material) {
 		this.setType(material);
+        this.setAmount(1);
 	}
 	
 	public ItemStackCreator setamount(int i){

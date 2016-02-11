@@ -1,5 +1,7 @@
 package fr.maxcraft.player.jobs;
 
+import fr.maxcraft.server.zone.Zone;
+import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -22,6 +24,9 @@ public class JobsListener implements Listener {
 	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onbreak(BlockBreakEvent e) {
+        if (Zone.getZone(e.getBlock().getLocation())!=null)
+            if (!Zone.getZone(e.getBlock().getLocation()).canBuild(e.getPlayer()))
+                e.setCancelled(true);
 		if (e.isCancelled())
 			return;
 		if (!e.getPlayer().getGameMode().equals(GameMode.SURVIVAL))
