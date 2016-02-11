@@ -4,11 +4,16 @@ import java.lang.reflect.Field;
 
 import fr.maxcraft.player.moderation.ModerationListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
-import fr.maxcraft.server.customentities.EntityTypes;
+import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
-import fr.maxcraft.server.marker.*;
+import fr.maxcraft.server.warzone.NPCFarmer;
+import fr.maxcraft.server.world.marker.*;
+import fr.maxcraft.server.npc.NPCCommand;
+import fr.maxcraft.server.quester.Quester;
+import fr.maxcraft.server.quester.QuesterListener;
+import fr.maxcraft.server.warzone.WarzoneListener;
 import fr.maxcraft.server.world.WorldCommand;
 import net.md_5.bungee.api.ChatColor;
 
@@ -31,8 +36,7 @@ import fr.maxcraft.player.moderation.ModeratorCommand;
 import fr.maxcraft.player.permissions.PermsCommand;
 import fr.maxcraft.player.permissions.PermsListener;
 import fr.maxcraft.server.chatmanager.ChatListener;
-import fr.maxcraft.server.command.HelpManager;
-import fr.maxcraft.server.merchant.MerchantListener;
+import fr.maxcraft.server.economy.merchant.MerchantListener;
 import fr.maxcraft.server.protect.ProtectListener;
 import fr.maxcraft.server.world.World;
 import fr.maxcraft.server.world.WorldListener;
@@ -73,6 +77,8 @@ public class Main extends JavaPlugin {
             StartSign.load();
             Marker.load();
             Travel.load();
+            Quester.load();
+            NPCFarmer.load();
 
 		//Task
 		    new ManaTask().runTaskTimer(this, 0, 5);
@@ -88,6 +94,7 @@ public class Main extends JavaPlugin {
             new ModeratorCommand("mute");
             new ModeratorCommand("jail");
             new ModeratorCommand("kick");
+            new NPCCommand("npc");
 		    new HelpManagerCommand("help");
 		    new ZoneCommand("zone");
 		    new PermsCommand("perms");
@@ -111,6 +118,8 @@ public class Main extends JavaPlugin {
             new GameListener(this);
 			new ModerationListener(this);
             new MarkerListener(this);
+            new QuesterListener(this);
+            new WarzoneListener(this);
 		
 		
 		

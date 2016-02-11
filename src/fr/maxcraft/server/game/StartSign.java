@@ -6,6 +6,7 @@ import fr.maxcraft.player.menu.Menu;
 import fr.maxcraft.player.menu.game.Instance;
 import fr.maxcraft.player.menu.game.SwitchUsable;
 import fr.maxcraft.utils.MySQLSaver;
+import fr.maxcraft.utils.Serialize;
 import org.bukkit.inventory.Inventory;
 
 import java.sql.ResultSet;
@@ -64,7 +65,7 @@ public class StartSign {
         return npcUUID;
     }
 
-    public void save(){
+    public void insert(){
         MySQLSaver.mysql_update("INSERT INTO `startsign` (`uuid`, `nbrInstances`,`open`, `name`, `source`,  `entrance`, `max`, `life`) VALUES"
                 + " ('"+this.npcUUID+"',"+this.nbrInstances+","+this.open+",'"+this.game.getName()+"','"+this.game.getSource()+"','"+this.game.getEntrance()+"',"+this.game.getMax()+","+this.game.getLife()+");");
     }
@@ -75,5 +76,11 @@ public class StartSign {
 
     public void switchAccess() {
         this.open = !this.open;
+        this.save();
+    }
+
+    private void save() {
+        MySQLSaver.mysql_update("UPDATE `startsign` SET `open` ="+this.isOpen()+" WHERE `uuid` = '"+this.getNPCUUID().toString()+"'");
+
     }
 }

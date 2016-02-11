@@ -40,7 +40,7 @@ public abstract class Command extends org.bukkit.command.Command{
 
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {
-        if (args.length==1)
+        if (args.length==1&&this.completer.get(this.getName())!=null)
             return this.completer.get(this.getName());
         if (this.completer.containsKey(args[args.length-1]))
             return this.completer.get(args[args.length-1]);

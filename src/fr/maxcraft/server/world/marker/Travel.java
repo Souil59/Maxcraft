@@ -1,10 +1,10 @@
-package fr.maxcraft.server.marker;
+package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.utils.MySQLSaver;
-import fr.maxcraft.utils.Serialize;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.ResultSet;
@@ -20,7 +20,6 @@ public class Travel {
     private final Marker temp;
     private final Marker m2;
     public static ArrayList<Travel> travelslist = new ArrayList<Travel>();
-    private ArrayList<Player> traveler = new ArrayList<Player>();
 
     public Travel(Marker m1, Marker temp, Marker m2){
         this.m1 = m1;
@@ -51,19 +50,21 @@ public class Travel {
 
     public void remove(){
         travelslist.remove(this);
-        MySQLSaver.mysql_update("DELETE FROM `travel` WHERE `marker1`= "+this.m1.getName());
+        MySQLSaver.mysql_update("DELETE FROM `travel` WHERE `marker1`= '"+this.m1.getName()+"'");
     }
-    public boolean isReadyToTravel(Player p){
-        if (traveler.contains(p))
-            return false;
-        if (p.getLocation().distance(m1)<5||p.getLocation().distance(m2)<5)
-            return true;
+    public boolean isReadyToTravel(PlayerMoveEvent e){
+        Player p = e.getPlayer();
+        if (m1.getWorld().equals(p.getLocation().getWorld()))
+            if (e.getTo().distance(m1)<5&&e.getFrom().distance(m1)>5)
+                return true;
+        if (m2.getWorld().equals(p.getLocation().getWorld()))
+            if (e.getTo().distance(m2)<5&&e.getFrom().distance(m2)>5)
+                return true;
         return false;
     }
 
     public void travel(Player p){
         p.sendMessage(ChatColor.GRAY+"Patientez ici quelques secondes le temps de larguer les ammarres");
-        traveler.add(p);
         if (p.getLocation().distance(m1)<5)
             new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
         if (p.getLocation().distance(m2)<5)
@@ -97,10 +98,9 @@ public class Travel {
             if (p.getLocation().distance(temp)<20){
                 p.teleport(to);
                 p.sendMessage(ChatColor.GRAY + "Vous pouvez descendre du bateau, allez y avant qu'il ne reparte !");
-                new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),600);
+                new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),40);
                 return;
             }
-            travel.traveler.remove(p);
         }
     }
 

@@ -71,7 +71,7 @@ public class NSCore {
 	
 	public static void log(String message)
 	{
-		//NSCore.log(message, LogType.CONSOLE);
+		NSCore.log(message, LogType.CONSOLE);
 	}
 	
 	public NathemWorld getNathemWorld(World world)

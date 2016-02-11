@@ -1,4 +1,4 @@
-package fr.maxcraft.server.merchant;
+package fr.maxcraft.server.economy.merchant;
 
 import java.util.Arrays;
 

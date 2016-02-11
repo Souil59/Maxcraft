@@ -1,14 +1,12 @@
-package fr.maxcraft.server.marker;
+package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.utils.MySQLSaver;
 import fr.maxcraft.utils.Serialize;
 import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Created by Crevebedaine on 07/02/2016.
@@ -46,7 +44,7 @@ public class Marker extends Location{
 
     public void remove(){
         markerlist.remove(this);
-        MySQLSaver.mysql_update("DELETE FROM `marker` WHERE `name`= "+this.name);
+        MySQLSaver.mysql_update("DELETE FROM `marker` WHERE `name`= '"+this.name+"'");
 
     }
 

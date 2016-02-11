@@ -27,6 +27,8 @@ public class PlayerMenu extends Menu{
 		ItemStack i = new ItemStack(Material.SKULL_ITEM,1 , (byte)3);
 		SkullMeta  m = (SkullMeta) i.getItemMeta();
 		m.setOwner(u.getName());
+        if (u.getJob()!=null)
+        m.setLore(u.getJob().info());
 		i.setItemMeta(m);
 		return i;
 	}

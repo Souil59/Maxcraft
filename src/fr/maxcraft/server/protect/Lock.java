@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import fr.maxcraft.player.faction.Faction;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -27,9 +28,12 @@ public class Lock {
 			return true;
 		if (z.hasDirectlyTag("lock-public"))
 			return true;
+        if (z.getOwner() instanceof Faction)
+            if (((Faction)z.getOwner()).getAllMembers().contains(u))
+                return true;
 	}
 	else
-		return true;
+		return false;
 	}
 		//TAG Checker
 	if (getTags(block).contains(u.getName()))
@@ -38,6 +42,9 @@ public class Lock {
 		return true;
 	if (getTags(block).contains("publique"))
 		return true;
+    if (u.getFaction()!=null)
+        if (getTags(block).contains(u.getFaction().getTAG()))
+            return true;
 	return false;
 	}
 
@@ -81,16 +88,20 @@ public class Lock {
 	private static List<String> getDirectlyTags(Block block) {
 		ArrayList<String> tags = new ArrayList<String>();
 		if (block.getRelative(BlockFace.EAST).getType().equals(Material.WALL_SIGN))
-			for (String s :((Sign) block.getRelative(BlockFace.EAST).getState()).getLines())
+            if(block.getRelative(BlockFace.EAST).getRelative(((org.bukkit.material.Sign) block.getRelative(BlockFace.EAST).getState().getData()).getAttachedFace()).equals(block))
+			    for (String s :((Sign) block.getRelative(BlockFace.EAST).getState()).getLines())
 				tags.add(s);
 		if (block.getRelative(BlockFace.WEST).getType().equals(Material.WALL_SIGN))
-			for (String s :((Sign) block.getRelative(BlockFace.WEST).getState()).getLines())
+            if(block.getRelative(BlockFace.WEST).getRelative(((org.bukkit.material.Sign) block.getRelative(BlockFace.WEST).getState().getData()).getAttachedFace()).equals(block))
+                for (String s :((Sign) block.getRelative(BlockFace.WEST).getState()).getLines())
 				tags.add(s);
 		if (block.getRelative(BlockFace.NORTH).getType().equals(Material.WALL_SIGN))
-			for (String s :((Sign) block.getRelative(BlockFace.NORTH).getState()).getLines())
+            if(block.getRelative(BlockFace.NORTH).getRelative(((org.bukkit.material.Sign) block.getRelative(BlockFace.NORTH).getState().getData()).getAttachedFace()).equals(block))
+                for (String s :((Sign) block.getRelative(BlockFace.NORTH).getState()).getLines())
 				tags.add(s);
 		if (block.getRelative(BlockFace.SOUTH).getType().equals(Material.WALL_SIGN))
-			for (String s :((Sign) block.getRelative(BlockFace.SOUTH).getState()).getLines())
+            if(block.getRelative(BlockFace.SOUTH).getRelative(((org.bukkit.material.Sign) block.getRelative(BlockFace.SOUTH).getState().getData()).getAttachedFace()).equals(block))
+                for (String s :((Sign) block.getRelative(BlockFace.SOUTH).getState()).getLines())
 				tags.add(s);
 		return tags;
 	}

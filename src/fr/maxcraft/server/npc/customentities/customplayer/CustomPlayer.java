@@ -1,7 +1,7 @@
-package fr.maxcraft.server.customentities.customplayer;
+package fr.maxcraft.server.npc.customentities.customplayer;
 
 import com.mojang.authlib.GameProfile;
-import fr.maxcraft.server.customentities.EntityTypes;
+import fr.maxcraft.server.npc.customentities.EntityTypes;
 import net.minecraft.server.v1_8_R3.EntityHuman;
 import org.bukkit.Location;
 import org.bukkit.World;

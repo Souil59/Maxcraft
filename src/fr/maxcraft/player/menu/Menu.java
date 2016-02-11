@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import fr.maxcraft.Main;
+import fr.maxcraft.player.menu.quest.QuestBook;
 import fr.maxcraft.player.menu.settings.Settings;
 import fr.maxcraft.player.menu.zone.ZoneDisplay;
 import net.md_5.bungee.api.ChatColor;
@@ -52,8 +53,9 @@ public abstract class Menu {
 		for (int s = 0 ; s<inv.getSize();s++)
 			inv.setItem(s, voiditem);
         inv.setItem(0, new PlayerMenu(u).getItem(u));
-        inv.setItem(3,new ZoneDisplay(u).getItem(u));
-		inv.setItem(4, new FactionMenu(u).getItem(u));
+        inv.setItem(1, new QuestBook(u).getItem(u));
+        inv.setItem(4,new ZoneDisplay(u).getItem(u));
+		inv.setItem(5, new FactionMenu(u).getItem(u));
         inv.setItem(8, new Settings(u).getItem(u));
 		return inv;
 	}

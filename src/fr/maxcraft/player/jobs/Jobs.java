@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import fr.maxcraft.player.User;
 import net.nathem.script.core.NSCore;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
 import fr.maxcraft.Main;
@@ -20,8 +22,8 @@ protected UUID uuid;
 protected String name;
 	
 	public int getLvl() {
-		if((Math.sqrt(this.xp)/30)<=10)
-			return (int) (Math.sqrt(this.xp)/30);
+		if((Math.sqrt(this.xp)/300)<=10)
+			return (int) (Math.sqrt(this.xp/300));
 		return 10;
 	}
 
@@ -32,7 +34,7 @@ protected String name;
 	
 	public static Jobs buildJob(UUID uuid,String metier,double xp){
 		try {
-            Jobs j = (Jobs) Class.forName("fr.maxcraft.jobs.jobs." + metier).getConstructor(UUID.class, double.class).newInstance(uuid, xp);
+            Jobs j = (Jobs) Class.forName("fr.maxcraft.player.jobs.jobs." + metier).getConstructor(UUID.class, double.class).newInstance(uuid, xp);
             j.initializeSave();
             return j;
 	} catch (Exception e) {
@@ -55,13 +57,30 @@ protected String name;
 		return null;
 	}
 
-	protected void insert() {
-		MySQLSaver.mysql_update("INSERT INTO `jobs` (`uuid`, `metier`, `xp`) VALUES ('"+this.uuid.toString()+"', '"+this.name+"', '"+this.xp+"');");
+    public List<String> info(){
+        String progress = "";
+        double xplvl =(this.xp - this.getLvl()*this.getLvl()*300);
+        double xpnec = ((this.getLvl()+1)*(this.getLvl()+1)*300)-this.getLvl()*this.getLvl()*300;
+        int progressper30 = (int) ((xplvl/xpnec)*30);
+        for (int i = 1 ; i<=30;i++)
+            if (i<progressper30) {
+                progress += ChatColor.GREEN + "|";
+            }else{
+                progress += ChatColor.WHITE + "|";
+            }
+
+        return Arrays.asList(ChatColor.GRAY+"*** <"+ChatColor.GOLD+ this.name +ChatColor.GRAY +"> ***",ChatColor.WHITE+"Niveau : "+ChatColor.GREEN+this.getLvl()
+        ,progress);
+    }
+
+	public void insert() {
+        MySQLSaver.mysql_update("DELETE FROM `jobs` WHERE `uuid`= '"+this.uuid.toString()+"'");
+        MySQLSaver.mysql_update("INSERT INTO `jobs` (`uuid`, `metier`, `xp`) VALUES ('"+this.uuid.toString()+"', '"+this.name+"', '"+this.xp+"');");
 		
 	}
 
     public void save() {
-        MySQLSaver.mysql_update("UPDATE `jobs` SET `metier` ='"+this.name+"',`xp` ='"+this.xp+"' WHERE 'uuid' = "+this.uuid);
+        MySQLSaver.mysql_update("UPDATE `jobs` SET `metier` ='"+this.name+"',`xp` ="+this.xp+" WHERE `uuid` = '"+this.uuid+"'");
 
     }
 
