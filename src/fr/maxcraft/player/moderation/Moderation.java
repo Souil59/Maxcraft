@@ -18,7 +18,7 @@ public class Moderation {
 	private UUID uuid;
     private String banReason;
 
-	public Moderation(UUID uuid,boolean ismute,long muteend,boolean isjail,long jailend,boolean isban,long banend,boolean insert, String banReason){
+	public Moderation(UUID uuid,boolean ismute,long muteend,boolean isjail,long jailend,boolean isban,long banend, String banReason){
 		this.uuid = uuid;
 		this.mute = ismute;
 		this.muteend = muteend;
@@ -27,15 +27,14 @@ public class Moderation {
 		this.ban = isban;
 		this.banend = banend;
         this.banReason = banReason;
-		if (insert)
-			this.sqlInsert();
 	}
 	public static Moderation load(UUID uuid){
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `moderation` WHERE `id` = '"+uuid.toString()+"';",true);
 		try {
-			if (r.next())
-				return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"),false, r.getString("banreason"));
-			return new Moderation(uuid,false,-1,false,-1,false,-1,true, null);
+            if (!r.isFirst())
+                return new Moderation(uuid,false,-1,false,-1,false,-1, null).sqlInsert();
+            return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"), r.getString("banreason"));
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -46,10 +45,10 @@ public class Moderation {
 		return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY;
 	}
 
-	private void sqlInsert() {
+	public Moderation sqlInsert() {
 		MySQLSaver.mysql_update("INSERT INTO `moderation` (`id`, `ismute`, `isban`, `isjail`, `muteend`, `banend`, `jailend`) "
 				+ "VALUES ('"+this.uuid.toString()+"', '0', '0', '0', '-1', '-1', '-1');");
-		
+		return this;
 	}
 	public void save(){
 		MySQLSaver.mysql_update("UPDATE `moderation` SET `ismute` = "+this.mute+" ,`isban` = "+this.ban+",`isjail` = "+this.jail+""
