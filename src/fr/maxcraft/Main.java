@@ -3,6 +3,7 @@ package fr.maxcraft;
 import java.lang.reflect.Field;
 
 import fr.maxcraft.player.moderation.ModerationListener;
+import fr.maxcraft.server.anticheat.AntiCheatListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
 import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
@@ -120,6 +121,7 @@ public class Main extends JavaPlugin {
             new MarkerListener(this);
             new QuesterListener(this);
             new WarzoneListener(this);
+			new AntiCheatListener(this);
 		
 		
 		
