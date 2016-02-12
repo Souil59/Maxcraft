@@ -38,7 +38,7 @@ public class Marker extends Location{
     }
 
     public void save() {
-        MySQLSaver.mysql_update("UPDATE `marker` SET `location ='"+Serialize.locationToString(this)+"',`gps` ='"+this.GPS+"' WHERE 'name' = "+this.name);
+        MySQLSaver.mysql_update("UPDATE `marker` SET `location ='"+Serialize.locationToString(this)+"',`gps` ="+this.GPS+" WHERE 'name' = "+this.name);
 
     }
 
