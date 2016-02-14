@@ -1,4 +1,6 @@
 things:
+  tp:
+    commande: /tp <joueur> [joueur]
   afk:
     commande: /afk [joueur]
 moderation:
