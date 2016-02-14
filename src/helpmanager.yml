@@ -1,4 +1,6 @@
 things:
+  back:
+    commande: /back [joueur]
   tp:
     commande: /tp <joueur> [joueur]
   afk:

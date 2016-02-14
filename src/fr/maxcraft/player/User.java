@@ -10,6 +10,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -37,6 +38,7 @@ public class User implements Owner {
 	private Mage mage;
 	private Faction faction;
 	private boolean afk;
+	private Location lastLocation;
 
 	public Faction getFaction() {
 		return faction;
@@ -235,4 +237,12 @@ public class User implements Owner {
 		public void setAfk(boolean afk) {
 			this.afk = afk;
 		}
+
+    public Location getLastLocation() {
+        return lastLocation;
+    }
+
+    public void setLastLocation(Location lastLocation) {
+        this.lastLocation = lastLocation;
+    }
 }
