@@ -1,4 +1,4 @@
-package fr.maxcraft.player.magicraft;
+package fr.maxcraft.player.classes.magicraft;
 
 public abstract class Spell {
 	

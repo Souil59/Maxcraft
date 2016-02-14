@@ -1,9 +1,7 @@
-package fr.maxcraft.player.magicraft.spells;
+package fr.maxcraft.player.classes.magicraft.spells;
 
-import fr.maxcraft.player.magicraft.Mage;
-import fr.maxcraft.player.magicraft.Spell;
-import fr.maxcraft.server.game.Event;
-import org.bukkit.entity.Entity;
+import fr.maxcraft.player.classes.classes.Mage;
+import fr.maxcraft.player.classes.magicraft.Spell;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.player.PlayerInteractEvent;
 

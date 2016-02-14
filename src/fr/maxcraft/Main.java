@@ -2,6 +2,7 @@ package fr.maxcraft;
 
 import java.lang.reflect.Field;
 
+import fr.maxcraft.dev.chess.ChessListener;
 import fr.maxcraft.player.moderation.ModerationListener;
 import fr.maxcraft.dev.anticheat.AntiCheatListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
@@ -12,6 +13,7 @@ import fr.maxcraft.server.game.StartSign;
 import fr.maxcraft.server.things.AfkCommand;
 import fr.maxcraft.server.things.ThingsListener;
 import fr.maxcraft.server.warzone.NPCFarmer;
+import fr.maxcraft.server.world.Travel;
 import fr.maxcraft.server.world.marker.*;
 import fr.maxcraft.server.npc.NPCCommand;
 import fr.maxcraft.server.quester.Quester;
@@ -32,8 +34,8 @@ import fr.maxcraft.player.User;
 import fr.maxcraft.player.faction.Faction;
 import fr.maxcraft.player.faction.FactionListener;
 import fr.maxcraft.player.jobs.JobsListener;
-import fr.maxcraft.player.magicraft.MagicListener;
-import fr.maxcraft.player.magicraft.ManaTask;
+import fr.maxcraft.player.classes.magicraft.MagicListener;
+import fr.maxcraft.player.classes.magicraft.ManaTask;
 import fr.maxcraft.player.menu.MenuListener;
 import fr.maxcraft.player.moderation.ModeratorCommand;
 import fr.maxcraft.player.permissions.PermsCommand;
@@ -125,6 +127,7 @@ public class Main extends JavaPlugin {
             new QuesterListener(this);
             new WarzoneListener(this);
 			new ThingsListener(this);
+            new ChessListener(this);
 			//new AntiCheatListener(this);
 		
 		

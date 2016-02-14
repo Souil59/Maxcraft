@@ -1,5 +1,6 @@
 package fr.maxcraft.server.chatmanager;
 
+import fr.maxcraft.dev.chess.ChessGame;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,8 +22,9 @@ public class ChatListener implements Listener{
 
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e){
-        if (lastmessage.get(e.getPlayer()).equals(e.getMessage()))
-            return;
+        if (lastmessage.containsKey(e.getPlayer()))
+            if (lastmessage.get(e.getPlayer()).equals(e.getMessage()))
+                return;
         lastmessage.put(e.getPlayer(),e.getMessage());
 		User u = User.get(e.getPlayer());
 		if (u.getModeration().isMute()){

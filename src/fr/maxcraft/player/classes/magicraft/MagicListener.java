@@ -1,4 +1,4 @@
-package fr.maxcraft.player.magicraft;
+package fr.maxcraft.player.classes.magicraft;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

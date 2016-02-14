@@ -1,7 +1,8 @@
-package fr.maxcraft.player.magicraft;
+package fr.maxcraft.player.classes.magicraft;
 
 import java.lang.reflect.Field;
 
+import fr.maxcraft.player.classes.classes.Mage;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.server.v1_8_R3.DataWatcher;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
