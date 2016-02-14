@@ -1,3 +1,6 @@
+things:
+  afk:
+    commande: /afk [joueur]
 moderation:
   unjail:
     commande: /unjail <joueur>

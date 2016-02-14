@@ -28,9 +28,11 @@ public class Private implements CommandExecutor {
 		}
 		User u = User.get(args[0]);
 		if (u == null){
-			sender.sendMessage("Ce joueur n'est pas connect�.");
+			sender.sendMessage("Ce joueur n'est pas connecté.");
 			return true;
 		}
+		if (u.isAfk()) sender.sendMessage(org.bukkit.ChatColor.DARK_PURPLE+"Ce joueur est afk, il risque de ne pas de répondre");
+
 		String p = ChatColor.GOLD+"["+j.getName()+ChatColor.GOLD+" -> Moi] :";
 		String p2 = ChatColor.GOLD+"[Moi -> "+u.getName()+"] :";
 		String m =ChatColor.WHITE+"";

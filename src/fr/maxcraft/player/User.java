@@ -36,6 +36,7 @@ public class User implements Owner {
 	private Perms perms;
 	private Mage mage;
 	private Faction faction;
+	private boolean afk;
 
 	public Faction getFaction() {
 		return faction;
@@ -225,5 +226,13 @@ public class User implements Owner {
 				return false;
 			to.give(d);
 			return true;
+		}
+
+	    public boolean isAfk() {
+			return afk;
+		}
+
+		public void setAfk(boolean afk) {
+			this.afk = afk;
 		}
 }

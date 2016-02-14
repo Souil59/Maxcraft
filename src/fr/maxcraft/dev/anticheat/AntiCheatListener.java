@@ -1,12 +1,10 @@
-package fr.maxcraft.server.anticheat;
+package fr.maxcraft.dev.anticheat;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.server.chatmanager.AdminChat;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -51,8 +49,6 @@ public class AntiCheatListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerMoveEvent(PlayerMoveEvent e){
         if ( !(e.getFrom().getBlockY() - e.getTo().getBlockY() >3)) return;
-        if ( !(e.getPlayer().getLastDamageCause().equals(EntityDamageEvent.DamageCause.FALL))) return;
-        if ((e.getPlayer().getEquipment().getBoots().getEnchantments().containsKey(Enchantment.PROTECTION_FALL))) return;
 
     }
 

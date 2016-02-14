@@ -55,7 +55,7 @@ public class ModeratorCommand extends fr.maxcraft.server.command.Command {
                 return this.invsee(arg0, arg2);
             case "ec":      //done
                 return this.ec(arg0, arg2);
-            case "journal":
+            case "journal": // Sur le site
                 return this.journal(arg0, arg2);
             case "pardon":  //done
                 return this.unban(arg0, arg2);

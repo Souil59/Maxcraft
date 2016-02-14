@@ -1,4 +1,4 @@
-package fr.maxcraft.server.anticheat;
+package fr.maxcraft.dev.anticheat;
 
 import org.bukkit.ChatColor;
 

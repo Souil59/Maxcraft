@@ -34,7 +34,7 @@ public class WorldCommand extends Command {
 			if(!createWorld(args,p))
 				sender.sendMessage("/world create <name> [type]");
 			else
-				sender.sendMessage("Nouveau monde cr�e");
+				sender.sendMessage("Nouveau monde créé");
 			break;
 		}
 		case "tp":{

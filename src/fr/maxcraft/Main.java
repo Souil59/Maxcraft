@@ -3,12 +3,14 @@ package fr.maxcraft;
 import java.lang.reflect.Field;
 
 import fr.maxcraft.player.moderation.ModerationListener;
-import fr.maxcraft.server.anticheat.AntiCheatListener;
+import fr.maxcraft.dev.anticheat.AntiCheatListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
 import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
+import fr.maxcraft.server.things.AfkCommand;
+import fr.maxcraft.server.things.ThingsListener;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.marker.*;
 import fr.maxcraft.server.npc.NPCCommand;
@@ -103,6 +105,7 @@ public class Main extends JavaPlugin {
             new GameCommand("game");
             new WorldCommand("world");
             new MarkerCommand("warp");
+			new AfkCommand("afk");
 		    //ChatListener.register(this);
 
 		//Listeners
@@ -121,7 +124,8 @@ public class Main extends JavaPlugin {
             new MarkerListener(this);
             new QuesterListener(this);
             new WarzoneListener(this);
-			new AntiCheatListener(this);
+			new ThingsListener(this);
+			//new AntiCheatListener(this);
 		
 		
 		
