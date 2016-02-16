@@ -27,7 +27,7 @@ public class Respond implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2,
 			String[] args) {
 		if (!reply.containsKey((Player)sender)){
-			sender.sendMessage("Vous n'avez personne a qui repondre");
+			sender.sendMessage("Vous n'avez personne à qui répondre");
 			return true;
 		}
 		Player j = (Player) sender;
@@ -37,7 +37,7 @@ public class Respond implements CommandExecutor {
 		}
 		User u = User.get(reply.get((Player)sender));
 		if (u == null){
-			sender.sendMessage("Ce joueur n'est pas connect�.");
+			sender.sendMessage("Ce joueur n'est pas connecté.");
 			return true;
 		}
 		String p = ChatColor.GOLD+"["+j.getName()+ChatColor.GOLD+" -> Moi] :";

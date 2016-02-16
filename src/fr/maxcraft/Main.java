@@ -10,6 +10,7 @@ import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
 import fr.maxcraft.server.things.AfkCommand;
+import fr.maxcraft.server.things.ClearinventoryCommand;
 import fr.maxcraft.server.things.ThingsListener;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.marker.*;
@@ -106,6 +107,7 @@ public class Main extends JavaPlugin {
             new WorldCommand("world");
             new MarkerCommand("warp");
 			new AfkCommand("afk");
+			new ClearinventoryCommand("clearinventory");
 		    //ChatListener.register(this);
 
 		//Listeners

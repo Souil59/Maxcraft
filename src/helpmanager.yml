@@ -1,4 +1,6 @@
 things:
+  clearinventory:
+    commande: /clearinventory [joueur]
   back:
     commande: /back [joueur]
   tp:
