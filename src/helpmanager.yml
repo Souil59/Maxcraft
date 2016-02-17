@@ -1,4 +1,6 @@
 things:
+  enchant:
+    commande: /enchant <enchantement_en_anglais> [niveau]
   clearinventory:
     commande: /clearinventory [joueur]
   back:

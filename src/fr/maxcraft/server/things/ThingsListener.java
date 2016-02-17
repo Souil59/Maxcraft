@@ -2,11 +2,14 @@ package fr.maxcraft.server.things;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 
 /**
@@ -26,5 +29,14 @@ public class ThingsListener implements Listener {
         u.sendMessage(ChatColor.GRAY + "Vous n'êtes plus marqué absent");
         return;
     }
+
+    /*@EventHandler(priority = EventPriority.NORMAL) //TODO fnr
+    public void onPlayerTeleportEvent(PlayerTeleportEvent e){
+        if (!User.get(e.getPlayer()).getPerms().hasPerms("maxcraft.guide")) return;
+        for (Player p : Bukkit.getOnlinePlayers()){
+            p.hidePlayer(e.getPlayer());
+        }
+
+    }*/
 
 }
