@@ -1,4 +1,6 @@
 things:
+  experience:
+    commande: /experience [joueur] [somme] <transformer_en_niveaux?>
   enchant:
     commande: /enchant <enchantement_en_anglais> [niveau]
   clearinventory:
