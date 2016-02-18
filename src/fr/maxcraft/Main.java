@@ -9,10 +9,7 @@ import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
-import fr.maxcraft.server.things.AfkCommand;
-import fr.maxcraft.server.things.ClearinventoryCommand;
-import fr.maxcraft.server.things.ExpCommand;
-import fr.maxcraft.server.things.ThingsListener;
+import fr.maxcraft.server.things.*;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.marker.*;
 import fr.maxcraft.server.npc.NPCCommand;
@@ -110,6 +107,7 @@ public class Main extends JavaPlugin {
 			new AfkCommand("afk");
 			new ClearinventoryCommand("clearinventory");
 			new ExpCommand("experience");
+			new FeedCommand("feed");
 		    //ChatListener.register(this);
 
 		//Listeners

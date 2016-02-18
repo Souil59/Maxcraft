@@ -1,4 +1,6 @@
 things:
+  feed:
+    commande: /feed [player]
   experience:
     commande: /experience [joueur] [somme] <transformer_en_niveaux?>
   enchant:
