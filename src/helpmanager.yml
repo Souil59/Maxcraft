@@ -1,4 +1,6 @@
 things:
+  fly:
+    commande: /fly [joueur]
   feed:
     commande: /feed [player]
   experience:
