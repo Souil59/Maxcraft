@@ -110,6 +110,7 @@ public class Main extends JavaPlugin {
 			new FeedCommand("feed");
 			new FlyCommand("fly");
 			new GamemodeCommand("gamemode");
+            new GetPosCommand("getpos");
 
 
 		    //ChatListener.register(this);
