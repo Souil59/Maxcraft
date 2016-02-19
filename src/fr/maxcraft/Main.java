@@ -109,6 +109,7 @@ public class Main extends JavaPlugin {
 			new ExpCommand("experience");
 			new FeedCommand("feed");
 			new FlyCommand("fly");
+			new GamemodeCommand("gamemode");
 
 
 		    //ChatListener.register(this);
