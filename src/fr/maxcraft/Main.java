@@ -116,6 +116,8 @@ public class Main extends JavaPlugin {
             new KillCommand("kill");
 			new LightningCommand("lightning");
             new NearCommand("near");
+			new PingCommand("ping");
+            new PowerToolCommand("powertool");
 
 
 		    //ChatListener.register(this);

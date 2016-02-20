@@ -1,4 +1,8 @@
 things:
+  powertool:
+    commande: /powertool <commande/"rem">
+  ping:
+    commande: /ping
   near:
     commande: /near <rayon/"map">
   lighting:

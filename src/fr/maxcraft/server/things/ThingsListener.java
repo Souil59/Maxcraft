@@ -8,7 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -37,6 +39,15 @@ public class ThingsListener implements Listener {
         User u = User.get(p);
         if (!u.isGod()) return;
         e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void playerInteractPowertool(PlayerInteractEvent e){
+        if (!e.getAction().equals(Action.LEFT_CLICK_AIR) && !e.getAction().equals(Action.LEFT_CLICK_BLOCK)) return;
+        User u = User.get(e.getPlayer());
+        if (u==null) return;
+        if (!u.getPowertool().containsKey(e.getItem().getType())) return;
+        u.getPlayer().performCommand(u.getPowertool().get(e.getItem().getType()));
     }
 
     /*@EventHandler(priority = EventPriority.NORMAL) //TODO fnr

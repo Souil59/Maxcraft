@@ -3,6 +3,7 @@ package fr.maxcraft.player;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -11,6 +12,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -40,6 +42,7 @@ public class User implements Owner {
 	private boolean afk;
 	private Location lastLocation;
 	private boolean god;
+	private HashMap<Material,String> powertool;
 
 	public Faction getFaction() {
 		return faction;
@@ -253,5 +256,13 @@ public class User implements Owner {
 
     public void setGod(boolean god) {
         this.god = god;
+    }
+
+    public HashMap<Material, String> getPowertool() {
+        return powertool;
+    }
+
+    public void setPowertool(HashMap<Material, String> powertool) {
+        this.powertool = powertool;
     }
 }
