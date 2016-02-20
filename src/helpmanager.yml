@@ -1,4 +1,8 @@
 things:
+  kill:
+    commandes:
+        /<mourir/aidezmoisvpjesuiscoincedansuntrou/coince>
+        /kill <joueur>
   heal:
     commande: /heal [Joueur]
   hat:

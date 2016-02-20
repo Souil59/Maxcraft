@@ -114,6 +114,7 @@ public class Main extends JavaPlugin {
             new GodCommand("god");
 			new HatCommand("hat");
             new HealCommand("heal");
+            new KillCommand("kill");
 
 
 		    //ChatListener.register(this);
