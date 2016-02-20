@@ -1,4 +1,8 @@
 things:
+  near:
+    commande: /near <rayon/"map">
+  lighting:
+    commande: /<lightning/thor> [Joueur]
   kill:
     commandes:
         /<mourir/aidezmoisvpjesuiscoincedansuntrou/coince>

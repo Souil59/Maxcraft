@@ -3,7 +3,6 @@ package fr.maxcraft;
 import java.lang.reflect.Field;
 
 import fr.maxcraft.player.moderation.ModerationListener;
-import fr.maxcraft.dev.anticheat.AntiCheatListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
 import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
@@ -115,6 +114,8 @@ public class Main extends JavaPlugin {
 			new HatCommand("hat");
             new HealCommand("heal");
             new KillCommand("kill");
+			new LightningCommand("lightning");
+            new NearCommand("near");
 
 
 		    //ChatListener.register(this);
