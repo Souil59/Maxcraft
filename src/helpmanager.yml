@@ -1,4 +1,8 @@
 things:
+  heal:
+    commande: /heal [Joueur]
+  hat:
+    commande: /hat
   godmode:
     commande: /god [joueur]
   getpos:

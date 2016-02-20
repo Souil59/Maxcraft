@@ -112,6 +112,8 @@ public class Main extends JavaPlugin {
 			new GamemodeCommand("gamemode");
             new GetPosCommand("getpos");
             new GodCommand("god");
+			new HatCommand("hat");
+            new HealCommand("heal");
 
 
 		    //ChatListener.register(this);
