@@ -5,9 +5,7 @@ import fr.maxcraft.server.command.Command;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-/**
- * Created by admin on 19/02/16.
- */
+
 public class GetPosCommand extends Command {
 
     public GetPosCommand(String name) {

@@ -39,6 +39,7 @@ public class User implements Owner {
 	private Faction faction;
 	private boolean afk;
 	private Location lastLocation;
+	private boolean god;
 
 	public Faction getFaction() {
 		return faction;
@@ -244,5 +245,13 @@ public class User implements Owner {
 
     public void setLastLocation(Location lastLocation) {
         this.lastLocation = lastLocation;
+    }
+
+    public boolean isGod() {
+        return god;
+    }
+
+    public void setGod(boolean god) {
+        this.god = god;
     }
 }

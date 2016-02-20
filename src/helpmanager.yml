@@ -1,4 +1,6 @@
 things:
+  godmode:
+    commande: /god [joueur]
   getpos:
     commande: /getpos [Joueur]
   gamemode:

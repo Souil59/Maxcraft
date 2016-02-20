@@ -111,6 +111,7 @@ public class Main extends JavaPlugin {
 			new FlyCommand("fly");
 			new GamemodeCommand("gamemode");
             new GetPosCommand("getpos");
+            new GodCommand("god");
 
 
 		    //ChatListener.register(this);
