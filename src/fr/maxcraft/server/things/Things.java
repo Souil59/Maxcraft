@@ -16,4 +16,8 @@ public class Things {
         return ChatColor.GRAY+"["+ChatColor.GOLD+"Socialspy"+ChatColor.GRAY+"]"+ " "+sender.getName()+" --> "+p.getName()+" : "+message;
     }
 
+    public static String alertMessage(){
+        return ChatColor.RED+"["+ChatColor.GRAY+"!"+ChatColor.RED+"]"+ChatColor.GRAY+ChatColor.ITALIC;
+    }
+
 }

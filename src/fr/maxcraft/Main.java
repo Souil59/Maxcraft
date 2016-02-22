@@ -123,6 +123,7 @@ public class Main extends JavaPlugin {
 			new SpawnMobCommand("spawnmob");
             new SpeedCommand("speed");
             new TpPosCommand("tppos");
+            new WhoisCommand("whois");
 
 
 		    //ChatListener.register(this);

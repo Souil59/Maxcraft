@@ -1,4 +1,6 @@
 things:
+  whois:
+    commande: /whois <joueur>
   tppos:
     commande: /tppos <x> <y> <z>
   speed:
