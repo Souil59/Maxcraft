@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
  */
 public class SocialspyCommand extends Command{
 
-    protected SocialspyCommand(String name) {
+    public SocialspyCommand(String name) {
         super(name);
         this.setPerms("maxcraft.modo").register();
     }

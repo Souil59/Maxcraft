@@ -1,4 +1,6 @@
 things:
+  spawnmob:
+    commande: /spawnmob <entité> [quantité]
   socialspy:
     commande: /socialspy
   repair:

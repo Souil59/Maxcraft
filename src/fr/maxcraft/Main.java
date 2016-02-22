@@ -119,6 +119,8 @@ public class Main extends JavaPlugin {
 			new PingCommand("ping");
             new PowerToolCommand("powertool");
 			new RepairCommand("repair");
+			new SocialspyCommand("socialspy");
+			new SpawnMobCommand("spawnmob");
 
 
 		    //ChatListener.register(this);
