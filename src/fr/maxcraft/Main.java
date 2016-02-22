@@ -118,6 +118,7 @@ public class Main extends JavaPlugin {
             new NearCommand("near");
 			new PingCommand("ping");
             new PowerToolCommand("powertool");
+			new RepairCommand("repair");
 
 
 		    //ChatListener.register(this);

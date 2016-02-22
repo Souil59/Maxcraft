@@ -1,4 +1,10 @@
 things:
+  socialspy:
+    commande: /socialspy
+  repair:
+    commande: /repair
+    note:
+        -Il faut avoir un objet réparable dans la main.
   powertool:
     commande: /powertool <commande/"rem">
   ping:

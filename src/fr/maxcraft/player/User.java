@@ -43,6 +43,7 @@ public class User implements Owner {
 	private Location lastLocation;
 	private boolean god;
 	private HashMap<Material,String> powertool;
+	private boolean socialspy;
 
 	public Faction getFaction() {
 		return faction;
@@ -265,4 +266,12 @@ public class User implements Owner {
     public void setPowertool(HashMap<Material, String> powertool) {
         this.powertool = powertool;
     }
+
+	public boolean isSocialspy() {
+		return socialspy;
+	}
+
+	public void setSocialspy(boolean socialspy) {
+		this.socialspy = socialspy;
+	}
 }

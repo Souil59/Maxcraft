@@ -1,11 +1,13 @@
 package fr.maxcraft.server.chatmanager;
 
+import fr.maxcraft.server.things.Things;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,11 +41,16 @@ public class Private implements CommandExecutor {
 		for (int i = 1; i<args.length ;i++)
 			m += " "+args[i];
 		TextComponent message = new TextComponent(p+m);
-		message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour repondre.").color(ChatColor.BLUE).create() ));
-		message.setClickEvent( new ClickEvent( ClickEvent.Action.SUGGEST_COMMAND, "/msg "+j.getName()));
+		message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Cliquez pour repondre.").color(ChatColor.BLUE).create()));
+		message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, "/msg " + j.getName()));
 		u.sendNotifMessage(message);
-		j.sendMessage(p2+m);
+		j.sendMessage(p2 + m);
 		Respond.reply.put(u.getPlayer() , (Player) sender);
+		for (Player pl : Bukkit.getOnlinePlayers()){
+			if (User.get(pl)==null) continue;
+			if (!User.get(pl).isSocialspy())continue;
+			pl.sendMessage(Things.socialspyMessage(j, u.getPlayer(), m));
+		}
 		return true;
 	}
 
