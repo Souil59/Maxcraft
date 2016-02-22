@@ -1,4 +1,6 @@
 things:
+  speed:
+    commande: /speed <valeure> <"fly"/"walk"> [Joueur]
   spawnmob:
     commande: /spawnmob <entité> [quantité]
   socialspy:

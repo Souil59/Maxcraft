@@ -121,6 +121,7 @@ public class Main extends JavaPlugin {
 			new RepairCommand("repair");
 			new SocialspyCommand("socialspy");
 			new SpawnMobCommand("spawnmob");
+            new SpeedCommand("speed");
 
 
 		    //ChatListener.register(this);
