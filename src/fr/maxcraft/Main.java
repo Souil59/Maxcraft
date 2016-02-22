@@ -122,6 +122,7 @@ public class Main extends JavaPlugin {
 			new SocialspyCommand("socialspy");
 			new SpawnMobCommand("spawnmob");
             new SpeedCommand("speed");
+            new TpPosCommand("tppos");
 
 
 		    //ChatListener.register(this);

@@ -1,4 +1,6 @@
 things:
+  tppos:
+    commande: /tppos <x> <y> <z>
   speed:
     commande: /speed <valeure> <"fly"/"walk"> [Joueur]
   spawnmob:
