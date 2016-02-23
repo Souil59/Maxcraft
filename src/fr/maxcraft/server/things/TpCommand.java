@@ -26,6 +26,7 @@ public class TpCommand extends Command {
                 sender.sendMessage(ChatColor.RED+"Joueur(s) non trouvé(s) !");
                 return true;
             }
+            u.setLastLocation(u.getPlayer().getLocation());
             u.getPlayer().teleport(toU.getPlayer(), PlayerTeleportEvent.TeleportCause.COMMAND);
             sender.sendMessage(Things.message() + "Tp réussi : " + u.getName() + " ---> " + toU.getName());
             u.sendMessage(ChatColor.GRAY+"Vous avez été tp à "+toU.getName());
@@ -37,6 +38,7 @@ public class TpCommand extends Command {
                 sender.sendMessage(ChatColor.RED+"Joueur(s) non trouvé(s) !");
                 return true;
             }
+            u.setLastLocation(u.getPlayer().getLocation());
             u.getPlayer().teleport(toU.getPlayer(), PlayerTeleportEvent.TeleportCause.COMMAND);
             sender.sendMessage(Things.message() + "Tp réussi : " + u.getName() + " ---> " + toU.getName());
             return true;

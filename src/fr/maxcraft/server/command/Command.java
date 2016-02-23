@@ -36,7 +36,7 @@ public abstract class Command extends org.bukkit.command.Command{
         this.completer.put(lastargs,als);
     }
 	@Override
-	public abstract boolean execute(CommandSender arg0, String arg1, String[] arg2);
+	public abstract boolean execute(CommandSender sender, String cmd, String[] args);
 
     @Override
     public List<String> tabComplete(CommandSender sender, String alias, String[] args) throws IllegalArgumentException {

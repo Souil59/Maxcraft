@@ -1,4 +1,52 @@
 things:
+  whois:
+    commande: /whois <joueur>
+  tppos:
+    commande: /tppos <x> <y> <z>
+  speed:
+    commande: /speed <valeure> <"fly"/"walk"> [Joueur]
+  spawnmob:
+    commande: /spawnmob <entité> [quantité]
+  socialspy:
+    commande: /socialspy
+  repair:
+    commande: /repair
+    note:
+        -Il faut avoir un objet réparable dans la main.
+  powertool:
+    commande: /powertool <commande/"rem">
+  ping:
+    commande: /ping
+  near:
+    commande: /near <rayon/"map">
+  lighting:
+    commande: /<lightning/thor> [Joueur]
+  kill:
+    commandes:
+        /<mourir/aidezmoisvpjesuiscoincedansuntrou/coince>
+        /kill <joueur>
+  heal:
+    commande: /heal [Joueur]
+  hat:
+    commande: /hat
+  godmode:
+    commande: /god [joueur]
+  getpos:
+    commande: /getpos [Joueur]
+  gamemode:
+    commandes:
+        /gamemode <0/1/2/3> [Joueur]
+        /<gms/gms/gmsp/gma> [joueur]
+  fly:
+    commande: /fly [joueur]
+  feed:
+    commande: /feed [player]
+  experience:
+    commande: /experience [joueur] [somme] <transformer_en_niveaux?>
+  enchant:
+    commande: /enchant <enchantement_en_anglais> [niveau]
+  clearinventory:
+    commande: /clearinventory [joueur]
   back:
     commande: /back [joueur]
   tp:

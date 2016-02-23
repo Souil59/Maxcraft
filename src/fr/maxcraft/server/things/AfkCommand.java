@@ -21,7 +21,7 @@ public class AfkCommand extends Command {
     @Override
     public boolean execute(CommandSender arg0, String arg1, String[] arg2) {
         if (!User.get(arg0.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
-        if (arg2[0]==null) {
+        if (arg2.length==0) {
             if (!User.get(arg0.getName()).isAfk()) {
                 User.get(arg0.getName()).setAfk(true);
                 arg0.sendMessage(ChatColor.GRAY+"Vous êtes désormais marqué absent");

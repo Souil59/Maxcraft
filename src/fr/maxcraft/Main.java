@@ -4,14 +4,12 @@ import java.lang.reflect.Field;
 
 import fr.maxcraft.dev.chess.ChessListener;
 import fr.maxcraft.player.moderation.ModerationListener;
-import fr.maxcraft.dev.anticheat.AntiCheatListener;
 import fr.maxcraft.server.command.HelpManagerCommand;
 import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
-import fr.maxcraft.server.things.AfkCommand;
-import fr.maxcraft.server.things.ThingsListener;
+import fr.maxcraft.server.things.*;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.Travel;
 import fr.maxcraft.server.world.marker.*;
@@ -108,6 +106,28 @@ public class Main extends JavaPlugin {
             new WorldCommand("world");
             new MarkerCommand("warp");
 			new AfkCommand("afk");
+			new ClearinventoryCommand("clearinventory");
+			new ExpCommand("experience");
+			new FeedCommand("feed");
+			new FlyCommand("fly");
+			new GamemodeCommand("gamemode");
+            new GetPosCommand("getpos");
+            new GodCommand("god");
+			new HatCommand("hat");
+            new HealCommand("heal");
+            new KillCommand("kill");
+			new LightningCommand("lightning");
+            new NearCommand("near");
+			new PingCommand("ping");
+            new PowerToolCommand("powertool");
+			new RepairCommand("repair");
+			new SocialspyCommand("socialspy");
+			new SpawnMobCommand("spawnmob");
+            new SpeedCommand("speed");
+            new TpPosCommand("tppos");
+            new WhoisCommand("whois");
+
+
 		    //ChatListener.register(this);
 
 		//Listeners
