@@ -236,7 +236,7 @@ public class ShopListener implements Listener {
         {
 
 
-            Shop shop = new Shop(this.manager, this.manager.getNewId(), sce.getLocation(), sce.getOwner(), sce.getType(), sce.getAmount(), sce.getPrice(), sce.isAdmin(), Zone.getZone(sce.getLocation()), null);
+            Shop shop = new Shop(this.manager, this.manager.getNewId(), sce.getLocation(), sce.getOwner(), sce.getType(), sce.getAmount(), sce.getPrice(), sce.isAdmin(), null);
             shop.save();
             e.getPlayer().sendMessage(Shop.message()+"Vous avez créé un shop !");
 

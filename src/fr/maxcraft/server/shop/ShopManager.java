@@ -34,12 +34,12 @@ public class ShopManager {
 
     public void saveConfig(){
         for (Shop s : this.shops){
-            int id, zoneId, amount, x, y, z, admin;
+
+            int id, amount, x, y, z, admin;
             String owner, type, world, item;
             double price;
 
             id = s.getId();
-            zoneId = s.getZone().getId();
             amount = s.getAmount();
             x = s.getLocation().getBlockX();
             y = s.getLocation().getBlockY();
@@ -52,7 +52,7 @@ public class ShopManager {
             if (s.isAdmin()) admin = 1; else admin = 0;
 
 
-            MySQLSaver.mysql_update("INSERT INTO 'shop' ('id', 'zone_id', 'owner', 'type', 'price', 'admin', 'amount', 'world', 'x', 'y', 'z', 'item') VALUES ('"+id+"', '"+zoneId+"', '"+owner+"','"+type+"', '"+price+"', '"+admin+"', '"+amount+"', '"+world+"', '"+x+"', '"+y+"', '"+z+"', '"+item+"')");
+            MySQLSaver.mysql_update("UPDATE 'shop' ('owner', 'type', 'price', 'admin', 'amount', 'world', 'x', 'y', 'z', 'item') VALUES ('"+owner+"','"+type+"', '"+price+"', '"+admin+"', '"+amount+"', '"+world+"', '"+x+"', '"+y+"', '"+z+"', '"+item+"') WHERE 'id' = '"+id+"'");
         }
     }
 
@@ -60,13 +60,13 @@ public class ShopManager {
         ResultSet r = MySQLSaver.mysql_query("SELECT * FROM 'shop';", false);
 
         try{
+            assert r != null;
             while (r.next()){
 
                 int id, x, y, z, amount;
                 String worldName, ownerUuid, type;
                 boolean admin;
                 float price;
-                Zone zone;
                 Material item;
 
                 try {
@@ -82,7 +82,6 @@ public class ShopManager {
 
                     admin = r.getBoolean("admin");
                     price = r.getFloat("price");
-                    zone = Zone.getZone(r.getInt("zone_id"));
                     item = Material.getMaterial(r.getString("item"));
 
                 }catch (SQLException e){
@@ -94,7 +93,7 @@ public class ShopManager {
                 Location l = new Location(w, x, y, z);
                 User owner = User.get(ownerUuid);
 
-                new Shop(this, id, l, owner, type, amount, price, admin, zone, item);
+                new Shop(this, id, l, owner, type, amount, price, admin, item);
 
             }
         }catch (SQLException e){
@@ -139,7 +138,7 @@ public class ShopManager {
     }
 
     public int getNewId(){
-        int id = 0;
+        int id;
         id = this.getLastId()+1;
         return id;
     }

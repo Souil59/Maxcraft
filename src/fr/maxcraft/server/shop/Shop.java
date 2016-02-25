@@ -1,16 +1,13 @@
 package fr.maxcraft.server.shop;
 
 
-import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
 import fr.maxcraft.server.shop.events.ShopTransactionEvent;
-import fr.maxcraft.server.zone.Zone;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
@@ -33,11 +30,10 @@ public class Shop {
     private Chest chest;
     private String type;
     private boolean admin;
-    private Zone zone;
     private Location location;
 
     //constructor
-    public Shop(ShopManager manager, int id, Location location, User owner, String type, int amount, float price, boolean admin, Zone zone, Material item) {
+    public Shop(ShopManager manager, int id, Location location, User owner, String type, int amount, float price, boolean admin, Material item) {
         this.manager = manager;
         this.id=id;
 
@@ -54,7 +50,6 @@ public class Shop {
         this.amount = amount;
         this.price = price;
         this.admin = admin;
-        this.zone = zone;
         this.item = item;
         this.location = location;
 
@@ -213,14 +208,6 @@ public class Shop {
         this.type = type;
     }
 
-    public Zone getZone() {
-        return zone;
-    }
-
-    public void setZone(Zone zone) {
-        this.zone = zone;
-    }
-
     public ShopManager getManager() {
         return manager;
     }
@@ -234,7 +221,15 @@ public class Shop {
     }
 
     public void save(){
-        MySQLSaver.mysql_update("INSERT INTO 'shop' ('id', 'zone_id', 'owner', 'type', 'price', 'admin', 'amount', 'world', 'x', 'y', 'z', 'item') VALUES ('" + this.id + "', '" + this.zone.getId() + "', '" + this.owner + "','" + this.type + "', '" + this.price + "', '" + this.admin + "', '" + this.amount + "', '" + this.location.getWorld().getName() + "', '" + this.location.getBlockX() + "', '" + this.location.getBlockY() + "', '" + this.location.getBlockZ() + "', '" + this.item.name() + "')");
+        int admin;
+        if (this.admin) admin = 1; else admin = 0;
+        if (this.manager.getShops().contains(this)){
+            MySQLSaver.mysql_update("UPDATE 'shop' ('owner', 'type', 'price', 'admin', 'amount', 'world', 'x', 'y', 'z', 'item') VALUES ('"+this.owner.getUuid()+"', '"+this.type+"', '"+this.price+"', '"+admin+"', '"+this.amount+"', '"+this.location.getWorld().getName()+"', '"+this.location.getBlockX()+"', '"+this.location.getBlockY()+"', '"+this.location.getBlockZ()+"', '"+this.item.name()+"') WHERE 'id' = '"+this.id+"'");
+        }
+        else {
+            MySQLSaver.mysql_update("INSERT INTO 'shop' ('id', 'owner', 'type', 'price', 'admin', 'amount', 'world', 'x', 'y', 'z', 'item') VALUES ('" + this.id + "', '" + this.owner.getUuid() + "','" + this.type + "', '" + this.price + "', '" + admin + "', '" + this.amount + "', '" + this.location.getWorld().getName() + "', '" + this.location.getBlockX() + "', '" + this.location.getBlockY() + "', '" + this.location.getBlockZ() + "', '" + this.item.name() + "')");
+        }
+        this.manager.getShops().add(this);
     }
 
     public void transaction(User u){
@@ -249,7 +244,6 @@ public class Shop {
                 this.buyTransaction(u);
             default:
                 u.sendMessage(message()+"Erreur dans la transaction !");
-                return;
         }
     }
 
@@ -459,7 +453,6 @@ public class Shop {
 
         }
 
-        return;
     }
 
     public int getFreeSpace(ItemStack is, Inventory inventory)
