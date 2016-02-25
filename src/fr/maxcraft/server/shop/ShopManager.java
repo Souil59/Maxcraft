@@ -8,6 +8,9 @@ import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Sign;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.ResultSet;
@@ -108,5 +111,36 @@ public class ShopManager {
         if(!item1.getItemMeta().equals(item2.getItemMeta())) return false;
         if(!item1.getData().equals(item2.getData())) return false;
         return true;
+    }
+
+    public Chest getRelativeChest(Sign sign)
+    {
+        Chest chest = null;
+        org.bukkit.material.Sign s = (org.bukkit.material.Sign) sign.getData();
+        Block chestBlock = sign.getBlock().getRelative(s.getAttachedFace());
+
+        try
+        {
+            chest = (Chest) chestBlock.getState();
+        }
+        catch(Exception e)
+        {
+        }
+
+        return chest;
+    }
+
+    public int getLastId(){
+        int id = 0;
+        for (Shop s : this.shops){
+            if (id<s.getId()) id = s.getId();
+        }
+        return id;
+    }
+
+    public int getNewId(){
+        int id = 0;
+        id = this.getLastId()+1;
+        return id;
     }
 }

@@ -10,6 +10,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -32,7 +33,15 @@ public class ThingsListener implements Listener {
         u.sendMessage(ChatColor.GRAY + "Vous n'êtes plus marqué absent");
     }
 
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerAkfChat(AsyncPlayerChatEvent e){
+        User u = User.get(e.getPlayer());
+        if (!u.isAfk()) return;
+        u.setAfk(false);
+        u.sendMessage(ChatColor.GRAY+"Vous n'êtes plus marqué absent");
+    }
 
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDamagePlayer(EntityDamageEvent e){
         if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player)e.getEntity();

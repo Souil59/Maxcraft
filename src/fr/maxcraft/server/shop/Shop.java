@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
@@ -100,7 +101,7 @@ public class Shop {
         if (this.getChest() == null) return false;
         if (this.getItemFrame()==null) return false;
 
-        if(this.getItemFrame().getItem() == null || this.getItemFrame().getItem().getType().equals(Material.AIR)) return false;
+        if(this.getItemFrame().getItem() == null || this.getItemFrame().getItem().getType().equals(Material.AIR)||item==null) return false;
 
         return true;
 
@@ -508,4 +509,6 @@ public class Shop {
 
         return stock;
     }
+
+
 }

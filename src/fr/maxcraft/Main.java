@@ -152,7 +152,7 @@ public class Main extends JavaPlugin {
             new QuesterListener(this);
             new WarzoneListener(this);
 			new ThingsListener(this);
-			new ShopListener(this);
+			new ShopListener(this, this.shopManager);
 			//new AntiCheatListener(this);
 		
 		
@@ -185,4 +185,5 @@ public class Main extends JavaPlugin {
     public static void setNSCore(net.nathem.script.core.NSCore NSCore) {
         Main.NSCore = NSCore;
     }
+	public ShopManager getShopManager() {return this.shopManager;}
 }

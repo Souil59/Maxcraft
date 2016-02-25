@@ -3,6 +3,8 @@ package fr.maxcraft.server.zone;
 import java.awt.Polygon;
 import java.util.HashMap;
 
+import fr.maxcraft.server.shop.Shop;
+import fr.maxcraft.server.shop.ShopManager;
 import fr.maxcraft.server.zone.sale.Sale;
 import fr.maxcraft.server.zone.sale.SaleType;
 import fr.maxcraft.utils.Serialize;
@@ -10,6 +12,8 @@ import net.nathem.script.editor.event.SignPlaceEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.block.*;
@@ -44,11 +48,14 @@ public class ZoneListener implements Listener{
 	
 	public static HashMap<User,Polygon> selections =  new HashMap<User,Polygon>();
 
+    private Main plugin;
+
 		//CONSTRUCTOR
 		public ZoneListener(Main plugin){
 			plugin.getServer().getPluginManager().registerEvents(this, plugin);
-			
+			this.plugin = plugin;
 		}
+
 		@EventHandler(priority = EventPriority.NORMAL)
 		public void onZoneSelection(PlayerInteractEvent e){
 			Player p = e.getPlayer();
@@ -892,6 +899,67 @@ if(z != null)
 		}
 		
 	}
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPistonExtend(BlockPistonExtendEvent e){
+
+        Zone zPiston = Zone.getZone(e.getBlock().getLocation());
+        Zone z;
+
+        for (Block b : e.getBlocks()){
+
+            Block bl = b.getRelative(e.getDirection());
+
+            z = Zone.getZone(bl.getLocation());
+
+            if (zPiston.equals(z)){
+
+                for (Shop s : this.plugin.getShopManager().getShops()){
+
+                    if (b.getLocation().distance(s.getItemFrame().getLocation()) == 1){
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+
+                continue;
+            }
+
+            e.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPistonRetract(BlockPistonRetractEvent e){
+        if (!e.isSticky()) return;
+
+        Zone zPiston = Zone.getZone(e.getBlock().getLocation());
+        Zone z = null;
+
+        for (Block b : e.getBlocks()){
+
+            z = Zone.getZone(b.getLocation());
+
+            if (zPiston.equals(z)){
+
+                for (Shop s : this.plugin.getShopManager().getShops()){
+
+                    if (b.getLocation().distance(s.getItemFrame().getLocation()) == 1){
+                        e.setCancelled(true);
+                        return;
+                    }
+                }
+
+                continue;
+            }
+
+            e.setCancelled(true);
+            return;
+        }
+
+    }
+
 
 	private String message(String message)
 	{
