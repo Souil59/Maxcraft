@@ -8,6 +8,8 @@ import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
+import fr.maxcraft.server.shop.ShopListener;
+import fr.maxcraft.server.shop.ShopManager;
 import fr.maxcraft.server.things.*;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.marker.*;
@@ -52,6 +54,7 @@ public class Main extends JavaPlugin {
 	private static Plugin plugin;
 	private static CommandMap cmap;
     private static NSCore NSCore;
+    private ShopManager shopManager;
 
     public void onLoad() {
         EntityTypes.register();
@@ -80,6 +83,10 @@ public class Main extends JavaPlugin {
             Travel.load();
             Quester.load();
             NPCFarmer.load();
+
+		//SHOPS
+            new ShopManager(this);
+            this.getLogger().info("Shops chargés ! ("+this.shopManager.getShops().size()+" shops)");
 
 		//Task
 		    new ManaTask().runTaskTimer(this, 0, 5);
@@ -145,6 +152,7 @@ public class Main extends JavaPlugin {
             new QuesterListener(this);
             new WarzoneListener(this);
 			new ThingsListener(this);
+			new ShopListener(this);
 			//new AntiCheatListener(this);
 		
 		

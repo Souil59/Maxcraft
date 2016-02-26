@@ -2,6 +2,7 @@ package fr.maxcraft.server.shop.events;
 
 import fr.maxcraft.player.User;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -17,7 +18,7 @@ public class ShopCreateEvent extends Event {
     private String type;
     private boolean admin;
     private boolean cancelled;
- 
+
     public ShopCreateEvent(User owner, float price, int amount, Location location, String type, boolean admin) {
         this.owner = owner;
         this.price = price;
