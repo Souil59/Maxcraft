@@ -131,6 +131,7 @@ public class Main extends JavaPlugin {
             new SpeedCommand("speed");
             new TpPosCommand("tppos");
             new WhoisCommand("whois");
+			new JoueurCommand("joueur");
 
 
 		    //ChatListener.register(this);

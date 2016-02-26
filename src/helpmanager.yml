@@ -1,4 +1,6 @@
 things:
+  joueur:
+    commande: /joueur <on/off>
   whois:
     commande: /whois <joueur>
   tppos:

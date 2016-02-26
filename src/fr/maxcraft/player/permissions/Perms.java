@@ -35,6 +35,7 @@ public class Perms {
 	public static Perms load(UUID uuid) {
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `perms` WHERE `perms`.`id` = '"+uuid.toString()+"'",true);
 		try {
+			assert r != null;
 			if (!r.isFirst())
 				return new Perms(uuid,"Citoyen",Serialize.ArrayStringFromString(""));
 		return new Perms(uuid,r.getString("group"),Serialize.ArrayStringFromString(r.getString("perms")));

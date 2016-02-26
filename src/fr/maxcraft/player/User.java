@@ -65,6 +65,7 @@ public class User implements Owner {
 		playerlist.add(this);
 	}
 	// My SQL statements
+
 	
 		public Mage getMage() {
 		return mage;
