@@ -12,6 +12,7 @@ import fr.maxcraft.server.economy.shop.ShopListener;
 import fr.maxcraft.server.economy.shop.ShopManager;
 import fr.maxcraft.server.things.*;
 import fr.maxcraft.server.warzone.NPCFarmer;
+import fr.maxcraft.server.world.Travel;
 import fr.maxcraft.server.world.marker.*;
 import fr.maxcraft.server.npc.NPCCommand;
 import fr.maxcraft.server.quester.Quester;
@@ -32,8 +33,6 @@ import fr.maxcraft.player.User;
 import fr.maxcraft.player.faction.Faction;
 import fr.maxcraft.player.faction.FactionListener;
 import fr.maxcraft.player.jobs.JobsListener;
-import fr.maxcraft.player.magicraft.MagicListener;
-import fr.maxcraft.player.magicraft.ManaTask;
 import fr.maxcraft.player.menu.MenuListener;
 import fr.maxcraft.player.moderation.ModeratorCommand;
 import fr.maxcraft.player.permissions.PermsCommand;
@@ -89,8 +88,7 @@ public class Main extends JavaPlugin {
             this.getLogger().info("Shops chargés ! ("+this.shopManager.getShops().size()+" shops)");
 
 		//Task
-		    new ManaTask().runTaskTimer(this, 0, 5);
-		
+
 		//CommandRegister
             final Field f = CraftServer.class.getDeclaredField("commandMap");
             f.setAccessible(true);
@@ -146,14 +144,13 @@ public class Main extends JavaPlugin {
 		    new ProtectListener(this);
 		    new FactionListener(this);
 		    new MenuListener(this);
-		    new MagicListener(this);
             new GameListener(this);
 			new ModerationListener(this);
             new MarkerListener(this);
             new QuesterListener(this);
             new WarzoneListener(this);
 			new ThingsListener(this);
-			new ShopListener(this);
+			new ShopListener(this, this.shopManager);
 			//new AntiCheatListener(this);
 		
 		
@@ -186,4 +183,9 @@ public class Main extends JavaPlugin {
     public static void setNSCore(net.nathem.script.core.NSCore NSCore) {
         Main.NSCore = NSCore;
     }
+
+	public ShopManager getShopManager() {
+		return shopManager;
+	}
+
 }
