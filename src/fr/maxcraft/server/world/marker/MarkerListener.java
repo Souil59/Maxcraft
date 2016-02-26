@@ -1,6 +1,7 @@
 package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.Main;
+import fr.maxcraft.server.world.Travel;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;

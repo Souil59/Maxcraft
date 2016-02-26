@@ -12,7 +12,7 @@ public class PowerToolCommand extends Command {
 
     public PowerToolCommand(String name) {
         super(name);
-        this.setPerms("maxcraft.builder").setAliases(Arrays.asList("powtool", "ptool")).register();
+        this.setPerms("maxcraft.builder").setAliases(Arrays.asList("powtool", "ptool", "ptz")).register();
     }
 
     @Override

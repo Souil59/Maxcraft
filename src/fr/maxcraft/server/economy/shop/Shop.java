@@ -1,8 +1,8 @@
-package fr.maxcraft.server.shop;
+package fr.maxcraft.server.economy.shop;
 
 
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.events.ShopTransactionEvent;
+import fr.maxcraft.server.economy.shop.events.ShopTransactionEvent;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

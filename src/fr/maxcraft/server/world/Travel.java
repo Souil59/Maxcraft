@@ -1,6 +1,7 @@
-package fr.maxcraft.server.world.marker;
+package fr.maxcraft.server.world;
 
 import fr.maxcraft.Main;
+import fr.maxcraft.server.world.marker.Marker;
 import fr.maxcraft.utils.MySQLSaver;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -65,10 +66,12 @@ public class Travel {
 
     public void travel(Player p){
         p.sendMessage(ChatColor.GRAY+"Patientez ici quelques secondes le temps de larguer les ammarres");
-        if (p.getLocation().distance(m1)<5)
-            new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
-        if (p.getLocation().distance(m2)<5)
-            new Task(m2,temp,m1,p,this).runTaskLater(Main.getPlugin(),100);
+        if (m1.getWorld().equals(p.getLocation().getWorld()))
+            if (p.getLocation().distance(m1)<6)
+                new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
+        if (m2.getWorld().equals(p.getLocation().getWorld()))
+            if (p.getLocation().distance(m2)<6)
+                new Task(m2,temp,m1,p,this).runTaskLater(Main.getPlugin(),100);
     }
 
     public class Task extends BukkitRunnable{
@@ -89,16 +92,16 @@ public class Travel {
 
         @Override
         public void run() {
+
             if (p.getLocation().distance(from)<5) {
-                p.teleport(temp);
                 p.sendMessage(ChatColor.GRAY + "Profitez du voyage pour admirer la vue !");
+                p.teleport(temp);
                 new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),600);
                 return;
             }
             if (p.getLocation().distance(temp)<20){
-                p.teleport(to);
                 p.sendMessage(ChatColor.GRAY + "Vous pouvez descendre du bateau, allez y avant qu'il ne reparte !");
-                new Task(from,temp,to,p,travel).runTaskLater(Main.getPlugin(),40);
+                p.teleport(to);
                 return;
             }
         }

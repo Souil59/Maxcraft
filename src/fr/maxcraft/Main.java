@@ -8,8 +8,8 @@ import fr.maxcraft.server.npc.customentities.EntityTypes;
 import fr.maxcraft.server.game.GameCommand;
 import fr.maxcraft.server.game.GameListener;
 import fr.maxcraft.server.game.StartSign;
-import fr.maxcraft.server.shop.ShopListener;
-import fr.maxcraft.server.shop.ShopManager;
+import fr.maxcraft.server.economy.shop.ShopListener;
+import fr.maxcraft.server.economy.shop.ShopManager;
 import fr.maxcraft.server.things.*;
 import fr.maxcraft.server.warzone.NPCFarmer;
 import fr.maxcraft.server.world.marker.*;
@@ -153,7 +153,7 @@ public class Main extends JavaPlugin {
             new QuesterListener(this);
             new WarzoneListener(this);
 			new ThingsListener(this);
-			new ShopListener(this, this.shopManager);
+			new ShopListener(this);
 			//new AntiCheatListener(this);
 		
 		
@@ -186,5 +186,4 @@ public class Main extends JavaPlugin {
     public static void setNSCore(net.nathem.script.core.NSCore NSCore) {
         Main.NSCore = NSCore;
     }
-	public ShopManager getShopManager() {return this.shopManager;}
 }

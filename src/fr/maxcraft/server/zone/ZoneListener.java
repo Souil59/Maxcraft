@@ -1,8 +1,9 @@
 package fr.maxcraft.server.zone;
 
-import fr.maxcraft.Main;
-import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.Shop;
+import java.awt.Polygon;
+import java.util.HashMap;
+
+import fr.maxcraft.server.economy.shop.Shop;
 import fr.maxcraft.server.zone.sale.Sale;
 import fr.maxcraft.server.zone.sale.SaleType;
 import fr.maxcraft.utils.Serialize;
@@ -10,11 +11,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Animals;
+import org.bukkit.entity.EntityType;
+import org.bukkit.event.block.*;
+import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Monster;
+import org.bukkit.entity.Painting;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -23,13 +29,17 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
-import org.bukkit.event.player.*;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.vehicle.VehicleDestroyEvent;
 import org.bukkit.event.world.StructureGrowEvent;
 
-import java.awt.*;
-import java.util.HashMap;
+import fr.maxcraft.Main;
+import fr.maxcraft.player.User;
 
 public class ZoneListener implements Listener{
 	

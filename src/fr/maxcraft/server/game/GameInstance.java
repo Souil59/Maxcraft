@@ -5,18 +5,15 @@ import fr.maxcraft.player.faction.Faction;
 import net.nathem.script.core.Map;
 import net.nathem.script.core.NSCore;
 import net.nathem.script.core.NathemWorld;
-import net.nathem.script.editor.Editor;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.server.MapInitializeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Crevebedaine on 23/01/2016.
@@ -88,7 +85,7 @@ public class GameInstance {
 
         File uidFile = new File(instanceFile, "uid.dat");
         uidFile.delete();
-        File file = new File(this.instanceWorld.getWorldFolder().getAbsolutePath()+"/inventories/delete.yml");
+        //File file = new File(this.instanceWorld.getWorldFolder().getAbsolutePath()+"/inventories/delete.yml");
 
 
         // World loading
@@ -115,10 +112,6 @@ public class GameInstance {
 
         // NathemWorld loading
         this.nathemWorld = new NathemWorld(Main.getNSCore(), this.instanceWorldName, map);
-
-        this.setStatus(InstanceStatus.OPEN);
-        if (this.getFaction()!=null)
-            this.setStatus(InstanceStatus.FACTION);
 
         new Task(this).runTaskTimer(Main.getPlugin(),120,20);
         return this.nathemWorld;
@@ -182,24 +175,18 @@ public class GameInstance {
     }
 
     public void teleport(Player p){
-        if (this.getLife().containsKey(p))
-            if (this.getLife().get(p)==0){
-                p.sendMessage("Vous n'avez plus de vies");
-                return;
-            }
         int i;
         for(i = 0;i<100;i++) {
             if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance() + ":" + i))
-                for (Player pl : this.getInstanceWorld().getPlayers())
-                    if (this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i).distance(pl.getLocation()) < 2) {
+                for (Player pl : this.getInstanceWorld().getPlayers()){
+                    if (this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i).distance(pl.getLocation()) < 2)
                         break;
-                    } else {
-                        this.backLocations.put(p,p.getLocation());
-                        p.teleport((this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i)));
-                        p.setGameMode(GameMode.ADVENTURE);
-                        if (this.life.containsKey(p))
-                            this.life.put(p, game.getLife());
-                        return;
+                    this.backLocations.put(p,p.getLocation());
+                    p.teleport((this.getNathemWorld().getMarkers().get(this.game.getEntrance() + ":" + i)));
+                    p.setGameMode(GameMode.ADVENTURE);
+                    if (this.life.containsKey(p))
+                        this.life.put(p, game.getLife());
+                    return;
                     }
         }
         if (this.getNathemWorld().getMarkers().containsKey(this.game.getEntrance())){

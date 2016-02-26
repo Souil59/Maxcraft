@@ -1,6 +1,7 @@
 package fr.maxcraft.server.world.marker;
 
 import fr.maxcraft.server.command.Command;
+import fr.maxcraft.server.world.Travel;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

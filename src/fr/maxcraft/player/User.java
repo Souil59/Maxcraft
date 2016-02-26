@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import fr.maxcraft.Main;
 import fr.maxcraft.player.faction.Faction;
 import fr.maxcraft.player.jobs.Jobs;
-import fr.maxcraft.player.magicraft.Mage;
+import fr.maxcraft.player.classes.classes.Mage;
 import fr.maxcraft.player.moderation.Moderation;
 import fr.maxcraft.player.permissions.Perms;
 import fr.maxcraft.server.economy.Account;
@@ -60,7 +60,7 @@ public class User implements Owner {
 		this.active=active;
 		this.moderation = Moderation.load(uuid);
 		this.jobs = Jobs.load(uuid);
-		this.mage = Mage.load(uuid);
+		//this.mage = Mage.load(uuid);
 		this.perms = Perms.load(uuid);
 		playerlist.add(this);
 	}

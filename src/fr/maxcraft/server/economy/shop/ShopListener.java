@@ -1,8 +1,8 @@
-package fr.maxcraft.server.shop;
+package fr.maxcraft.server.economy.shop;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.events.*;
+import fr.maxcraft.server.economy.shop.events.*;
 import fr.maxcraft.server.zone.Zone;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,8 +24,6 @@ import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-
-import java.sql.SQLException;
 
 
 public class ShopListener implements Listener {

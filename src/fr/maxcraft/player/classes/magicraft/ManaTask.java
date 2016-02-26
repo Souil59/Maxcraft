@@ -1,4 +1,4 @@
-package fr.maxcraft.player.magicraft;
+package fr.maxcraft.player.classes.magicraft;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,11 +12,11 @@ public class ManaTask extends BukkitRunnable {
 	}
 
 	@Override
-	public void run() {
+	public void run() {/*
 		for (Player p : Bukkit.getOnlinePlayers())
 			if (User.get(p).getMage().getMana()<User.get(p).getMage().getMaxMana()){
 				ManaDisplay.sendPacket(p,User.get(p).getMage());
 				User.get(p).getMage().setMana(User.get(p).getMage().getMana()+0.5);
-			}
+			}*/
 	}
 } 
