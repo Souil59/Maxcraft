@@ -1,20 +1,20 @@
-package fr.maxcraft.server.shop.events;
+package fr.maxcraft.server.economy.shop.events;
 
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.Shop;
+import fr.maxcraft.server.economy.shop.Shop;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 
 
-public class ShopInfoEvent extends Event {
+public class ShopClickEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     
     private Shop shop;
     private User user;
 
  
-    public ShopInfoEvent(Shop shop, User u) {
+    public ShopClickEvent(Shop shop, User u) {
     	this.shop = shop;
     	this.user = u;
 

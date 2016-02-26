@@ -1,61 +1,23 @@
-package fr.maxcraft.server.shop.events;
+package fr.maxcraft.server.economy.shop.events;
 
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.Shop;
+import fr.maxcraft.server.economy.shop.Shop;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
 
-public class ShopChoseItemEvent extends Event {
+
+
+public class ShopRemoveItemEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     
     private Shop shop;
     private User user;
-    private ItemStack item;
  
-    public ShopChoseItemEvent(Shop shop, User u, ItemStack is) {
+    public ShopRemoveItemEvent(Shop shop, User u) {
     	this.shop = shop;
     	this.user = u;
-    	this.item = is;
     }
  
- 
-
-
-
-
-	public ItemStack getItem() {
-		return item;
-	}
-
-
-
-
-
-
-	public void setItem(ItemStack item) {
-		this.item = item;
-	}
-
-
-
-
-
-
-	public User getUser() {
-		return user;
-	}
-
-
-
-
-
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
 
 
 
@@ -68,6 +30,22 @@ public class ShopChoseItemEvent extends Event {
 	public void setShop(Shop shop) {
 		this.shop = shop;
 	}
+
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 
 
 

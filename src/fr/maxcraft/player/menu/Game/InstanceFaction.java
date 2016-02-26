@@ -3,6 +3,7 @@ package fr.maxcraft.player.menu.game;
 import fr.maxcraft.player.User;
 import fr.maxcraft.player.menu.Menu;
 import fr.maxcraft.server.game.GameInstance;
+import fr.maxcraft.server.game.InstanceStatus;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -19,6 +20,7 @@ public class InstanceFaction extends Menu{
     @Override
     public void execute(User u) {
         this.gameInstance.build();
+        this.gameInstance.setStatus(InstanceStatus.FACTION);
         this.gameInstance.setFaction(u.getFaction());
         this.gameInstance.teleport(u.getPlayer());
     }

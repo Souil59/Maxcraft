@@ -3,17 +3,14 @@ package fr.maxcraft.server.zone;
 import java.awt.Polygon;
 import java.util.HashMap;
 
-import fr.maxcraft.server.shop.Shop;
-import fr.maxcraft.server.shop.ShopManager;
+import fr.maxcraft.server.economy.shop.Shop;
 import fr.maxcraft.server.zone.sale.Sale;
 import fr.maxcraft.server.zone.sale.SaleType;
 import fr.maxcraft.utils.Serialize;
-import net.nathem.script.editor.event.SignPlaceEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.block.*;

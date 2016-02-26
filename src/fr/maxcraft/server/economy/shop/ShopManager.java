@@ -1,9 +1,8 @@
-package fr.maxcraft.server.shop;
+package fr.maxcraft.server.economy.shop;
 
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.zone.Zone;
 import fr.maxcraft.utils.MySQLSaver;
 import org.bukkit.Location;
 import org.bukkit.Material;

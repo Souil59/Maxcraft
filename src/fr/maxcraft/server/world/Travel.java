@@ -67,13 +67,11 @@ public class Travel {
     public void travel(Player p){
         p.sendMessage(ChatColor.GRAY+"Patientez ici quelques secondes le temps de larguer les ammarres");
         if (m1.getWorld().equals(p.getLocation().getWorld()))
-            if (p.getLocation().distance(m1)<   5)
-                p.sendMessage(ChatColor.GRAY + "Connard!");
-                //new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
+            if (p.getLocation().distance(m1)<6)
+                new Task(m1,temp,m2,p,this).runTaskLater(Main.getPlugin(),100);
         if (m2.getWorld().equals(p.getLocation().getWorld()))
-            if (p.getLocation().distance(m2)<5)
-                p.sendMessage(ChatColor.GRAY + "Connard!");
-                //new Task(m2,temp,m1,p,this).runTaskLater(Main.getPlugin(),100);
+            if (p.getLocation().distance(m2)<6)
+                new Task(m2,temp,m1,p,this).runTaskLater(Main.getPlugin(),100);
     }
 
     public class Task extends BukkitRunnable{
@@ -85,18 +83,15 @@ public class Travel {
         private final Travel travel;
 
         public Task(Marker from,Marker temp, Marker to, Player p,Travel t){
-            p.sendMessage(ChatColor.GRAY + "1");
             this.from = from;
             this.temp = temp;
             this.p = p;
             this.to = to;
             this.travel = t;
-            p.sendMessage(ChatColor.GRAY + "2");
         }
 
         @Override
         public void run() {
-            p.sendMessage(ChatColor.GRAY + "Connard!");
 
             if (p.getLocation().distance(from)<5) {
                 p.sendMessage(ChatColor.GRAY + "Profitez du voyage pour admirer la vue !");

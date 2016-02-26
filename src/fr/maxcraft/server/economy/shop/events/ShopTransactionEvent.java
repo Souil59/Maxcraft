@@ -1,8 +1,8 @@
-package fr.maxcraft.server.shop.events;
+package fr.maxcraft.server.economy.shop.events;
 
 
 import fr.maxcraft.player.User;
-import fr.maxcraft.server.shop.Shop;
+import fr.maxcraft.server.economy.shop.Shop;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

@@ -1,6 +1,7 @@
 package fr.maxcraft.player.menu.game;
 
 import fr.maxcraft.player.User;
+import fr.maxcraft.player.faction.Faction;
 import fr.maxcraft.player.menu.Menu;
 import fr.maxcraft.server.game.GameInstance;
 import fr.maxcraft.server.game.InstanceStatus;
@@ -35,6 +36,12 @@ public class Instance extends Menu{
             return;
         }
         if (gameInstance.getStatus().equals(InstanceStatus.END)){
+            if (u.getFaction()==null){
+                this.gameInstance.build();
+                this.gameInstance.setStatus(InstanceStatus.OPEN);
+                this.gameInstance.teleport(u.getPlayer());
+                return;
+            }
             Inventory i = super.getInventory("Restriction");
             i.setItem(0, new InstanceFaction(u,this.gameInstance).getItem(u));
             i.setItem(3, new InstancePublic(u,this.gameInstance).getItem(u));
@@ -48,7 +55,7 @@ public class Instance extends Menu{
     @Override
     public ItemStack getItem(User u) {
         if (!startsign.isOpen()||gameInstance.getStatus().equals(InstanceStatus.CLOSE)||(gameInstance.getStatus().equals(InstanceStatus.FACTION)&&!gameInstance.getFaction().equals(u.getFaction())))
-            return new ItemStackCreator(Material.STAINED_CLAY,ChatColor.GOLD+ gameInstance.getGame().getName(), Arrays.asList("Vous ne pouvez pas rejoindre cette instance."),1,14);
+            return new ItemStackCreator(Material.STAINED_CLAY,ChatColor.GOLD+ gameInstance.getGame().getName(), Arrays.asList("Vous ne pouvez pas rejoindre cette instance."+gameInstance.getStatus().name()),1,14);
         if (gameInstance.getStatus().equals(InstanceStatus.END))
             return new ItemStackCreator(Material.STAINED_CLAY,ChatColor.GOLD+ gameInstance.getGame().getName(), Arrays.asList("Cette instance est libre."),1,5);
         if (gameInstance.getStatus().equals(InstanceStatus.OPEN)||(gameInstance.getStatus().equals(InstanceStatus.FACTION)&&gameInstance.getFaction().equals(u.getFaction())))
