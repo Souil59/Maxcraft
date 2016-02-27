@@ -7,9 +7,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
 
-/**
- * Created by admin on 17/02/16.
- */
+
 public class ExpCommand extends Command {
 
     public ExpCommand(String name) {
@@ -29,39 +27,54 @@ public class ExpCommand extends Command {
             return true;
         }
 
-        if (args[2].equals("true")){
-            int lvl = 1;
-
-                try {
-                    lvl = Integer.parseInt(args[1]);
-                } catch (NumberFormatException e) {
-                    sender.sendMessage(ChatColor.RED + "Erreur dans la somme d'xp/niveaux soumise");
-                    return false;
-                }
-
-            int xpLvl = u.getPlayer().getLevel() + lvl;
-            u.getPlayer().setLevel(xpLvl);
-            u.sendMessage(ChatColor.GRAY + "Vous avez maintenant " + xpLvl + " niveaux d'expérience !");
-            sender.sendMessage(Things.message()+u.getName()+" a désormais "+ xpLvl +" niveaux d'expérience !");
-            return true;
-        }
-
-        if (args[2].equals("false") || args.length < 3){
-            int xp = 1;
-            if (args.length==2) {
-                try {
-                    xp = Integer.parseInt(args[1]);
-                } catch (NumberFormatException e) {
-                    sender.sendMessage(ChatColor.RED + " Erreur dans la somme d'xp/niveaux soumise !");
-                    return false;
-                }
+        if (args.length < 3) this.onFalseLvl(sender, args, u);
+        else if (args.length == 3){
+            switch (args[2]){
+                case "true":
+                    this.onTrueLvl(sender, args, u);
+                    break;
+                case "false":
+                    this.onFalseLvl(sender, args, u);
+                    break;
             }
-            u.getPlayer().giveExp(xp);
-            u.sendMessage(ChatColor.GRAY + "Vous avez reçu " + xp + " points d'expérience supplémentaires !");
-            sender.sendMessage(Things.message()+u.getName()+" a désormais "+xp+" points d'xp !");
-            return true;
         }
-        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
-        return false;
+        else{
+            sender.sendMessage(ChatColor.RED + "Erreur dans la soumission de la commande !");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean onTrueLvl(CommandSender sender, String[] args, User u){
+        int lvl;
+
+        try {
+            lvl = Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            sender.sendMessage(ChatColor.RED + "Erreur dans la somme d'xp/niveaux soumise");
+            return false;
+        }
+
+        int xpLvl = u.getPlayer().getLevel() + lvl;
+        u.getPlayer().setLevel(xpLvl);
+        u.sendMessage(ChatColor.GRAY + "Vous avez maintenant " + xpLvl + " niveaux d'expérience !");
+        sender.sendMessage(Things.message()+u.getName()+" a désormais "+ xpLvl +" niveaux d'expérience !");
+        return true;
+    }
+
+    public boolean onFalseLvl(CommandSender sender, String[] args, User u){
+        int xp = 1;
+        if (args.length==2) {
+            try {
+                xp = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(ChatColor.RED + " Erreur dans la somme d'xp/niveaux soumise !");
+                return false;
+            }
+        }
+        u.getPlayer().giveExp(xp);
+        u.sendMessage(ChatColor.GRAY + "Vous avez reçu " + xp + " points d'expérience supplémentaires !");
+        sender.sendMessage(Things.message()+u.getName()+" a reçu " + xp + " points d'expérience supplémentaires !");
+        return true;
     }
 }

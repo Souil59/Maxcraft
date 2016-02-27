@@ -84,8 +84,8 @@ public class Main extends JavaPlugin {
             NPCFarmer.load();
 
 		//SHOPS
-            new ShopManager(this);
-            this.getLogger().info("Shops chargés ! ("+this.shopManager.getShops().size()+" shops)");
+            this.shopManager = new ShopManager(this);
+            log("Shops chargés ! ("+this.shopManager.getShops().size()+" shops)");
 
 		//Task
 
@@ -109,7 +109,9 @@ public class Main extends JavaPlugin {
             new WorldCommand("world");
             new MarkerCommand("warp");
 			new AfkCommand("afk");
+			new BackCommand("back");
 			new ClearinventoryCommand("clearinventory");
+            new EnchantCommand("enchant");
 			new ExpCommand("experience");
 			new FeedCommand("feed");
 			new FlyCommand("fly");
@@ -160,7 +162,7 @@ public class Main extends JavaPlugin {
 		Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.DARK_RED+"===================");
 		} catch (Exception e) {
 			e.printStackTrace();
-			logError("Erreur au chargement!");
+			logError(" Erreur au chargement!");
 			this.getServer().shutdown();
 		}
 		

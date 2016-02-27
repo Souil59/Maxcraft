@@ -7,6 +7,8 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class ShopTransactionEvent extends Event{
+    private static final HandlerList handlers = new HandlerList();
+
 
     private Shop shop;
     private User user;
@@ -55,5 +57,9 @@ public class ShopTransactionEvent extends Event{
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

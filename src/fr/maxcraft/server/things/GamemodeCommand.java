@@ -23,15 +23,20 @@ public class GamemodeCommand extends Command {
         switch (cmd){
             case "gmc":
                 this.creativeMode(sender, args, false);
+                break;
             case "gms":
                 this.survieMode(sender, args, false);
+                break;
             case "gmsp":
                 this.spectatorMode(sender, args, false);
+                break;
             case "gma":
                 this.adventureMode(sender, args, false);
+                break;
             case "gm":
             case "gamemode":
                 this.undefinedMode(sender, args);
+                break;
 
         }
         return false;
@@ -45,12 +50,16 @@ public class GamemodeCommand extends Command {
         switch (args[0]){
             case "0":
                 this.survieMode(sender, args, true);
+                break;
             case "1":
                 this.creativeMode(sender, args, true);
+                break;
             case "2":
                 this.adventureMode(sender, args, true);
+                break;
             case "3":
                 this.spectatorMode(sender, args, true);
+                break;
         }
         return false;
     }

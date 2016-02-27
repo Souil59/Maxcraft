@@ -24,12 +24,13 @@ public class RepairCommand extends Command {
             return true;
         }
         ItemStack item = u.getPlayer().getItemInHand();
-        if (item == null || item.getType().isBlock() || item.getDurability()==0){
+        if (item == null || item.getType().isBlock()){
             u.sendMessage(Things.message()+"Impossible de réparer cela !");
             return true;
         }
         if (item.getType().getMaxDurability() == item.getDurability()) return true;
-        item.setDurability(item.getType().getMaxDurability());
+        short d = item.getType().getMaxDurability();
+        item.setDurability(d);
         u.sendMessage(Things.message()+"Item réparé !");
         return true;
     }

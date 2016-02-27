@@ -30,27 +30,22 @@ public class WorldCommand extends Command {
 			return true;
 		}
 		switch(args[0]){
-		case "new": case "create":{
-			if(!createWorld(args,p))
-				sender.sendMessage("/world create <name> [type]");
-			else
-				sender.sendMessage("Nouveau monde créé");
+            case "new":
+            case "create":
+			    if(!createWorld(args,p)) sender.sendMessage("/world create <name> [type]");
+			    else sender.sendMessage("Nouveau monde créé");
+                break;
+
+		case "tp":
+			if(!teleport(args,p)) sender.sendMessage("/world tp <name>");
+			else sender.sendMessage("Teleportation vers "+args[1]);
 			break;
-		}
-		case "tp":{
-			if(!teleport(args,p))
-				sender.sendMessage("/world tp <name>");
-			else
-				sender.sendMessage("Teleportation vers "+args[1]);
+
+		case "delete": case "remove":
+			if(!remove(args,p)) sender.sendMessage("/world remove <name>");
+			else sender.sendMessage("Supression du monde "+args[1]);
 			break;
-		}
-		case "delete": case "remove":{
-			if(!remove(args,p))
-				sender.sendMessage("/world remove <name>");
-			else
-				sender.sendMessage("Supression du monde "+args[1]);
-			break;
-		}
+
 		default :
 			break;
 		}

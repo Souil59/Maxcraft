@@ -28,12 +28,11 @@ import org.bukkit.inventory.ItemStack;
 
 public class ShopListener implements Listener {
 
-    private Main plugin;
     private ShopManager manager;
 
-    public ShopListener(Main pl, ShopManager manager){
-        this.plugin = pl;
+    public ShopListener(Main plugin, ShopManager manager){
         this.manager = manager;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)

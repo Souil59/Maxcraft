@@ -1,6 +1,5 @@
 package fr.maxcraft.dev.chess;
 
-import fr.maxcraft.dev.chess.pieces.Pawns;
 import fr.maxcraft.player.menu.Menu;
 import fr.maxcraft.utils.ItemStackCreator;
 import org.bukkit.Bukkit;
@@ -16,6 +15,8 @@ import java.util.HashMap;
  * Created by Crevebedaine on 14/02/2016.
  */
 public class ChessGame {
+
+    /*
 
     private Inventory inv;
     private ArrayList<Piece> pieces = new ArrayList<Piece>();
@@ -61,5 +62,5 @@ public class ChessGame {
 
     public void addPiece(Piece piece) {
         this.pieces.add(piece);
-    }
+    }*/
 }

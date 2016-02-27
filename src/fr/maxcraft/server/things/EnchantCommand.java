@@ -62,7 +62,9 @@ public class EnchantCommand extends Command {
             return true;
         }
         else if(level > 0){
-            item.addEnchantment(enchant, level);
+            ItemMeta meta = item.getItemMeta();
+            meta.addEnchant(enchant, level, true);
+            item.setItemMeta(meta); //TODO DEBUG ICI
             u.sendMessage(Things.message()+"Enchantement ajouté !");
             return true;
         }

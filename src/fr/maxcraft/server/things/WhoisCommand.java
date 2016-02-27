@@ -29,14 +29,14 @@ public class WhoisCommand extends Command {
         double heal =u.getPlayer().getHealth();
         double maxHeal = u.getPlayer().getMaxHealth();
         int foodLevel = u.getPlayer().getFoodLevel();
-        float xp = u.getPlayer().getExp();
+        float xp = u.getPlayer().getTotalExperience();
         int xpLvl = u.getPlayer().getExpToLevel();
         String worldName = u.getPlayer().getWorld().getName();
-        double x = u.getPlayer().getLocation().getX();
-        double y = u.getPlayer().getLocation().getY();
-        double z = u.getPlayer().getLocation().getZ();
+        double x = u.getPlayer().getLocation().getBlockX();
+        double y = u.getPlayer().getLocation().getBlockY();
+        double z = u.getPlayer().getLocation().getBlockZ();
         double balance = u.getBalance();
-        String ip = u.getPlayer().getServer().getIp();
+        String ip = u.getPlayer().getAddress().getAddress().getHostAddress();
         String gamemode = u.getPlayer().getGameMode().toString();
         boolean god =u.isGod();
         boolean flyAllowed = u.getPlayer().getAllowFlight();
@@ -54,7 +54,7 @@ public class WhoisCommand extends Command {
 
         if (god) godMsg = ChatColor.GREEN+"vrai"; else godMsg = ChatColor.RED+"faux";
         if (flyAllowed) flyAllowedMsg = ChatColor.GREEN+"vrai"; else flyAllowedMsg = ChatColor.RED+"faux";
-        if (fly) flyMsg = ChatColor.GRAY+"(en vol)"; else flyMsg = ChatColor.GRAY+"(ne volant pas)";
+        if (fly) flyMsg = ChatColor.GRAY+" (en vol)"; else flyMsg = ChatColor.GRAY+" (ne volant pas)";
         if (afk) afkMsg = ChatColor.GREEN+"vrai"; else afkMsg = ChatColor.RED+"faux";
         if (jail) jailMsg = ChatColor.GREEN+"vrai"; else jailMsg = ChatColor.RED+"faux";
         if (mute) muteMsg = ChatColor.GREEN+"vrai"; else muteMsg = ChatColor.RED+"faux";
@@ -70,7 +70,7 @@ public class WhoisCommand extends Command {
                                  String godMsg, String flyAllowedMsg, String flyMsg, String afkMsg, String jailMsg, String muteMsg){
 
 
-        sender.sendMessage(Things.message()+"===== Whois "+uName+" =====");
+        sender.sendMessage(Things.message()+ChatColor.GOLD+"===== Whois "+uName+" =====");
         sender.sendMessage(ChatColor.GRAY+"- Santé: " +heal+"/"+maxHeal);
         sender.sendMessage(ChatColor.GRAY+"- Faim: "+foodLvl+"/20");
         sender.sendMessage(ChatColor.GRAY+"- Expérience: "+xp+" (Niveau "+xpLvl+")");
@@ -80,7 +80,7 @@ public class WhoisCommand extends Command {
         sender.sendMessage(ChatColor.GRAY+"- Mode de jeu: "+gamemode);
         sender.sendMessage(ChatColor.GRAY+"- Mode Dieu: "+godMsg);
         sender.sendMessage(ChatColor.GRAY+"- Fly: "+flyAllowedMsg+flyMsg);
-        sender.sendMessage(ChatColor.GRAY+"- Afk/Absent: "+afkMsg);
+        sender.sendMessage(ChatColor.GRAY+"- AFK/Absent: "+afkMsg);
         sender.sendMessage(ChatColor.GRAY+"- Jail: "+jailMsg);
         sender.sendMessage(ChatColor.GRAY+"- Mute: "+muteMsg);
         sender.sendMessage(Things.alertMessage()+"Pour des infos plus précises concernant la Modération allez voir le journal du joueur !");

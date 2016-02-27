@@ -30,20 +30,21 @@ public class NearCommand extends Command {
         }
         int maxDistance = 200;
         ArrayList<Player> pList = new ArrayList<>();
-        if (!args[0].isEmpty() && args[0].equals("map")) maxDistance = -1;
-        else if (!args[0].isEmpty()){
-            try{
-                maxDistance = Integer.parseInt(args[0]);
-            }
-            catch (ClassCastException e){
-                sender.sendMessage(ChatColor.DARK_RED+"Erreur dans la conversion de la distance maximale, /near <rayon/\"map\">");
-                return false;
+        if (args.length==1){
+            if (args[0].equals("map")) maxDistance = -1;
+            else {
+                try {
+                    maxDistance = Integer.parseInt(args[0]);
+                } catch (ClassCastException e) {
+                    sender.sendMessage(ChatColor.DARK_RED + "Erreur dans la conversion de la distance maximale, /near <rayon/\"map\">");
+                    return false;
+                }
             }
         }
         for (Player p : Bukkit.getOnlinePlayers()){
             if (p.equals(u.getPlayer())) continue;
             if (!p.getWorld().equals(u.getPlayer().getWorld())) continue;
-            if (p.getLocation().distance(u.getPlayer().getLocation())>maxDistance) continue;
+            if (p.getLocation().distance(u.getPlayer().getLocation())>maxDistance && maxDistance!=-1) continue;
             pList.add(p);
         }
         this.sendPlayerList(u, pList);

@@ -23,8 +23,11 @@ public class ChatListener implements Listener{
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e){
         if (lastmessage.containsKey(e.getPlayer()))
-            if (lastmessage.get(e.getPlayer()).equals(e.getMessage()))
+            if (lastmessage.get(e.getPlayer()).equals(e.getMessage())) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(ChatColor.RED+"Vous ne pouvez pas répéter un même message !");
                 return;
+            }
         lastmessage.put(e.getPlayer(),e.getMessage());
 		User u = User.get(e.getPlayer());
 		if (u.getModeration().isMute()){

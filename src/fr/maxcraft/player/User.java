@@ -62,6 +62,8 @@ public class User implements Owner {
 		this.jobs = Jobs.load(uuid);
 		//this.mage = Mage.load(uuid);
 		this.perms = Perms.load(uuid);
+        this.powertool = new HashMap<>();
+
 		playerlist.add(this);
 	}
 	// My SQL statements

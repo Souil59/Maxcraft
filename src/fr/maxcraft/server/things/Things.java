@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class Things {
 
     public static String message() {
-        return ChatColor.BLUE+"["+ChatColor.GRAY+"Things"+ChatColor.BLUE+"]"+ChatColor.GRAY+" ";
+        return ChatColor.GRAY+"";
     }
 
     public static String socialspyMessage(Player sender, Player p, String message){
@@ -17,7 +17,7 @@ public class Things {
     }
 
     public static String alertMessage(){
-        return ChatColor.RED+"["+ChatColor.GRAY+"!"+ChatColor.RED+"]"+ChatColor.GRAY+ChatColor.ITALIC;
+        return ChatColor.RED+"["+ChatColor.GRAY+"!"+ChatColor.RED+"]"+ChatColor.GRAY+ChatColor.ITALIC+" ";
     }
 
 }

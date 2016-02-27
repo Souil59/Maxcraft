@@ -1,13 +1,10 @@
 package fr.maxcraft.server.command;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import fr.maxcraft.Main;
 import org.bukkit.command.CommandSender;
 
-import fr.maxcraft.Main;
-import org.bukkit.command.TabCompleter;
+import java.util.HashMap;
+import java.util.List;
 
 
 public abstract class Command extends org.bukkit.command.Command{

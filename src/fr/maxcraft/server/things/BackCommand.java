@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 
 public class BackCommand extends Command {
 
-    protected BackCommand(String name) {
+    public BackCommand(String name) {
         super(name);
         this.setPerms("maxcraft.guide").register();
     }

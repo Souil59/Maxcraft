@@ -3,10 +3,9 @@ package fr.maxcraft.server.economy.shop;
 
 import fr.maxcraft.Main;
 import fr.maxcraft.player.User;
+import fr.maxcraft.server.chatmanager.Chat;
 import fr.maxcraft.utils.MySQLSaver;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
@@ -58,8 +57,11 @@ public class ShopManager {
     public void loadAll(){
         ResultSet r = MySQLSaver.mysql_query("SELECT * FROM 'shop';", false);
 
+        if (r == null){
+            return;
+        }
+
         try{
-            assert r != null;
             while (r.next()){
 
                 int id, x, y, z, amount;
@@ -98,7 +100,6 @@ public class ShopManager {
         }catch (SQLException e){
             e.printStackTrace();
         }
-
     }
 
     public boolean sameItem(ItemStack item1, ItemStack item2)

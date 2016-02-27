@@ -17,7 +17,24 @@ public class PowerToolCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
-        if (args[0].equals("rem")){
+
+        if (args.length == 0){
+            User u = User.get(sender.getName());
+            if (u==null){
+                sender.sendMessage(ChatColor.RED+"Erreur dans la recherche du joueur !");
+                return true;
+            }
+            if (u.getPowertool().containsKey(u.getPlayer().getItemInHand().getType())){
+                String cmmd = u.getPowertool().get(u.getPlayer().getItemInHand().getType());
+                u.sendMessage(Things.message() + "Cet item possède des propriétés de powertool pour : " + cmmd);
+                return true;
+            }
+            else{
+                u.sendMessage(Things.message()+"Pas de propriétés de powertool sur cet item !");
+                return true;
+            }
+        }
+        else if (args[0].equals("rem")){
             User u = User.get(sender.getName());
             if (u==null){
                 sender.sendMessage(ChatColor.RED+"Erreur dans la recherche du joueur !");
@@ -44,23 +61,10 @@ public class PowerToolCommand extends Command {
             u.sendMessage(Things.message()+"Powertool prêt !");
             return true;
         }
-        else {
-            User u = User.get(sender.getName());
-            if (u==null){
-                sender.sendMessage(ChatColor.RED+"Erreur dans la recherche du joueur !");
-                return true;
-            }
-            if (u.getPowertool().containsKey(u.getPlayer().getItemInHand().getType())){
-                String cmmd = u.getPowertool().get(u.getPlayer().getItemInHand().getType());
-                u.sendMessage(Things.message()+"Cet item possède des propriétés de powertool pour : "+cmmd);
-                return true;
-            }
-            else{
-                u.sendMessage(Things.message()+"Pas de propriétés de powertool sur cet item !");
-                return true;
-            }
-        }
 
+
+        sender.sendMessage(ChatColor.RED+"Erreur dans la soumission de la commande !");
+        return false;
     }
 
     private String argsToString(String[] args) {

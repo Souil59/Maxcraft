@@ -54,12 +54,12 @@ public class ZoneCommand extends Command{
 			case "reset": case "reinitialiser":
 				return this.reset(sender, args[1]);
 			default:
-				sender.sendMessage("Il manque des paramêtres...");
+				sender.sendMessage("Il manque des paramï¿½tres...");
 				return true;
 			}
 		}
 		
-		sender.sendMessage("Il manque des paramêtres...");
+		sender.sendMessage("Il manque des paramï¿½tres...");
 		}
 	return true;
 	}
@@ -77,7 +77,7 @@ public class ZoneCommand extends Command{
 		}
 		zone.reset();
 		zone.save();
-		sender.sendMessage(message("Cette zone à été reset."));
+		sender.sendMessage(message("Cette zone a Ã©tÃ© reset."));
 		return true;
 		
 	}
@@ -95,7 +95,7 @@ public class ZoneCommand extends Command{
 		}
 		zone.getTags().remove(string2);
 		zone.save();
-		sender.sendMessage(message("Le TAG "+string2+" à été retiré."));
+		sender.sendMessage(message("Le TAG "+string2+" a Ã©tÃ© retirÃ©."));
 		return true;
 	}
 
@@ -112,7 +112,7 @@ public class ZoneCommand extends Command{
 		}
 		zone.getTags().add(string2);
 		zone.save();
-		sender.sendMessage(message("Le TAG "+string2+" à été ajouté."));
+		sender.sendMessage(message("Le TAG "+string2+" a Ã©tÃ© ajoutÃ©."));
 		return true;
 	}
 
@@ -137,7 +137,7 @@ public class ZoneCommand extends Command{
 		int id = Integer.parseInt(string);
 		Zone zone = Zone.getZone(id);
 		if(!ZoneListener.selections.containsKey(u)){
-			u.sendMessage(this.message("Vous devez faire une sélection !"));
+			u.sendMessage(this.message("Vous devez faire une sÃ©lection !"));
 			return true;
 		}
 		if (!zone.canCubo(u.getPlayer())){
@@ -146,7 +146,7 @@ public class ZoneCommand extends Command{
 		}
 		Polygon p = ZoneListener.selections.get(u);
 		if (p.npoints<2)
-			u.sendMessage(this.message("Vous devez faire une sélection d'au moins 2 points !"));
+			u.sendMessage(this.message("Vous devez faire une sÃ©lection d'au moins 2 points !"));
 		if (p.npoints==2){
 			int[] x = p.xpoints.clone();
 			int[] y = p.ypoints.clone();
@@ -158,7 +158,7 @@ public class ZoneCommand extends Command{
 		}
 		zone.setPolygon(p);
 		zone.save();
-		sender.sendMessage(message("La zone à étè redéfinie."));
+		sender.sendMessage(message("La zone a Ã©tÃ© redÃ©finie."));
 		return true;
 	}
 
@@ -176,19 +176,19 @@ public class ZoneCommand extends Command{
 		}
 		Zone.zonelist.remove(zone);
 		MySQLSaver.mysql_update("DELETE FROM `zone` WHERE `id`= "+id);
-		sender.sendMessage(message("La zone à étè suprimée."));
+		sender.sendMessage(message("La zone a Ã©tÃ© suprimÃ©e."));
 		return true;
 	}
 
 	private boolean createZone(CommandSender sender, String[] args) {
 		User u = User.get(((Player)sender).getUniqueId());
 		if(!ZoneListener.selections.containsKey(u))
-			u.sendMessage(this.message("Vous devez faire une sélection !"));
+			u.sendMessage(this.message("Vous devez faire une sÃ©lection !"));
 		else
 			try {
 				sender.sendMessage(message(Zone.create(ZoneListener.selections.get(u),u,args[1])));
 			} catch (Exception e) {
-				Main.log("Erreur à la creation de zone");
+				Main.log("Erreur Ã  la creation de zone");
 				e.printStackTrace();
 			}
 			ZoneListener.selections.remove(u);
@@ -199,7 +199,7 @@ public class ZoneCommand extends Command{
 		Player p = (Player) sender;
 		if(!p.hasPermission("maxcraft.guide"))
 		{
-			sender.sendMessage(message("Vous n'avez pas accés à  cette commande !"));
+			sender.sendMessage(message("Vous n'avez pas accÃ¨s Ã  cette commande !"));
 			return true;
 		}
 		Zone zone = Zone.getZone(p.getLocation());
@@ -227,7 +227,7 @@ public class ZoneCommand extends Command{
 		}
 		Player p = (Player) sender;
 		if(!p.hasPermission("maxcraft.guide")){
-			sender.sendMessage(message("Vous n'avez pas accés à  cette commande !"));
+			sender.sendMessage(message("Vous n'avez pas accÃ¨s Ã  cette commande !"));
 			return true;
 		}
 		Point po = zone.getCenter();
@@ -237,7 +237,7 @@ public class ZoneCommand extends Command{
 		loc.setWorld(zone.getWorld());
 		loc.setY(loc.getWorld().getHighestBlockAt(loc).getLocation().getBlockY()+1);
 		p.teleport(loc);
-		sender.sendMessage(message("Téléportation vers la zone <"+zone.getName()+"> ..."));
+		sender.sendMessage(message("TÃ©lÃ©portation vers la zone <"+zone.getName()+"> ..."));
 		return true;
 
 		
@@ -247,7 +247,7 @@ public class ZoneCommand extends Command{
 		Player p = (Player) sender;
 		Zone zone = Zone.getZone(p.getLocation());
 		if(zone == null){
-			sender.sendMessage(message("Vous n'êtes pas sur une zone !"));
+			sender.sendMessage(message("Vous n'Ãªtes pas sur une zone !"));
 			return true;
 		}
 		sender.sendMessage(ChatColor.GRAY+zone.description());

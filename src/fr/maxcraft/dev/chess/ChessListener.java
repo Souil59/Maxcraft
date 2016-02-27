@@ -12,7 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class ChessListener implements Listener {
 
-    public ChessListener(Main main) {
+    /*public ChessListener(Main main) {
         main.getServer().getPluginManager().registerEvents(this, main);
     }
 
@@ -21,5 +21,5 @@ public class ChessListener implements Listener {
             new ChessGame((Player)e.getWhoClicked(),(Player)e.getWhoClicked());
         if (e.getAction().equals(InventoryAction.PLACE_ONE))
                 e.getWhoClicked().sendMessage("salut");
-    }
+    }*/
 }

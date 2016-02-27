@@ -4,6 +4,7 @@ import fr.maxcraft.player.User;
 import fr.maxcraft.server.command.Command;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LightningStrike;
 

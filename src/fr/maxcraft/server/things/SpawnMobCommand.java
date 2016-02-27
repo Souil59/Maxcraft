@@ -29,7 +29,7 @@ public class SpawnMobCommand extends Command{
             sender.sendMessage(ChatColor.RED+"Joueur introuvable !");
             return true;
         }
-        Location l = u.getPlayer().getTargetBlock((Set<Material>) null, 100).getLocation();
+        Location l = u.getPlayer().getTargetBlock((Set<Material>) null, 100).getRelative(0, 1, 0).getLocation();
         int nb=1;
         if (args.length>1){
             try {
@@ -40,8 +40,10 @@ public class SpawnMobCommand extends Command{
                 return true;
             }
         }
-        if (nb > 10) nb=10;
-        u.sendMessage(Things.message()+"Nombre d'entités réduit à 10");
+        if (nb > 10) {
+            nb=10;
+            u.sendMessage(Things.message()+"Nombre d'entités réduit à 10");
+        }
         EntityType et = null;
         try {
             et = EntityType.fromName(args[0]);
@@ -50,7 +52,7 @@ public class SpawnMobCommand extends Command{
             u.sendMessage(ChatColor.RED+"Entité introuvable !");
             return false;
         }
-        for (int t =0; t<=nb; t++){
+        for (int t =1; t<=nb; t++){
             u.getPlayer().getWorld().spawnEntity(l, et);
         }
         return true;

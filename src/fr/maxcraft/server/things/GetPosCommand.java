@@ -27,9 +27,9 @@ public class GetPosCommand extends Command {
             }
             String name = u.getName();
             String worldName = u.getPlayer().getWorld().getName();
-            double x = u.getPlayer().getLocation().getX();
-            double y = u.getPlayer().getLocation().getY();
-            double z = u.getPlayer().getLocation().getZ();
+            double x = u.getPlayer().getLocation().getBlockX();
+            double y = u.getPlayer().getLocation().getBlockY();
+            double z = u.getPlayer().getLocation().getBlockZ();
             boolean flying = u.getPlayer().isFlying();
             boolean sneaking = u.getPlayer().isSneaking();
             boolean sprinting = u.getPlayer().isSprinting();
@@ -45,9 +45,9 @@ public class GetPosCommand extends Command {
             }
             String name = u.getName();
             String worldName = u.getPlayer().getWorld().getName();
-            double x = u.getPlayer().getLocation().getX();
-            double y = u.getPlayer().getLocation().getY();
-            double z = u.getPlayer().getLocation().getZ();
+            double x = u.getPlayer().getLocation().getBlockX();
+            double y = u.getPlayer().getLocation().getBlockY();
+            double z = u.getPlayer().getLocation().getBlockZ();
             boolean flying = u.getPlayer().isFlying();
             boolean sneaking = u.getPlayer().isSneaking();
             boolean sprinting = u.getPlayer().isSprinting();

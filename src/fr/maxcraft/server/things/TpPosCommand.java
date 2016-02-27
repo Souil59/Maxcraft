@@ -35,13 +35,16 @@ public class TpPosCommand extends Command {
         }
         catch (ClassCastException e){
             sender.sendMessage(ChatColor.RED+"Erreur dans la conversion des positions...");
+            return true;
         }
         if (x > 30000000 || y > 30000000 || z > 30000000 || x < -30000000 || y < -30000000 || z < -30000000){
            sender.sendMessage(ChatColor.RED+"Coordonnées incohérentes !");
             return true;
         }
+        Location pLocation = u.getPlayer().getLocation();
         Location l = new Location(u.getPlayer().getWorld(), (double)x, (double)y, (double)z);
         u.getPlayer().teleport(l);
+        u.setLastLocation(pLocation);
         u.sendMessage(Things.message()+"Vous avez été tp aux coordonnées "+x+" "+y+" "+z+" de la map "+u.getPlayer().getWorld().getName());
         return true;
     }
