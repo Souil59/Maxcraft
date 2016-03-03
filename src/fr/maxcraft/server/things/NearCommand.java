@@ -19,6 +19,7 @@ public class NearCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.builder")) return false;
         if (args.length != 0 && args.length!=1){
             sender.sendMessage(ChatColor.RED+"Il y a trop de paramètres !");
             return true;

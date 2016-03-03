@@ -20,6 +20,7 @@ public class KillCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.citoyen")) return false;
         switch (cmd){
             case "kill":
                 if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return true;

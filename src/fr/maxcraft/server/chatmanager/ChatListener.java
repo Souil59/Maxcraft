@@ -35,6 +35,10 @@ public class ChatListener implements Listener{
 			e.setCancelled(true);
 			return;
 		}
+		if (u.getModeration().getMuteend() == 0){
+            u.getModeration().setMuteend(-1);
+            u.getModeration().save();
+        }
 		if (e.getPlayer().hasPermission("maxcraft.guide"))
 			e.setMessage(ChatColor.translateAlternateColorCodes('&', e.getMessage()));
 		if (e.getMessage().startsWith("!"))

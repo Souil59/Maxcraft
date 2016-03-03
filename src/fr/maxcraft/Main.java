@@ -94,12 +94,13 @@ public class Main extends JavaPlugin {
             f.setAccessible(true);
             cmap=(CommandMap)f.get(Bukkit.getServer());
 
-		    new ModeratorCommand("moderation");
-			new ModeratorCommand("ban");
-            new ModeratorCommand("bantemp");
-            new ModeratorCommand("mute");
-            new ModeratorCommand("jail");
-            new ModeratorCommand("kick");
+		    new ModeratorCommand("moderation", this);
+			new ModeratorCommand("ban", this);
+            new ModeratorCommand("bantemp", this);
+            new ModeratorCommand("mute", this);
+			new ModeratorCommand("mutetemp", this);
+            new ModeratorCommand("jail", this);
+            new ModeratorCommand("kick", this);
             new NPCCommand("npc");
 		    new HelpManagerCommand("help");
 		    new ZoneCommand("zone");

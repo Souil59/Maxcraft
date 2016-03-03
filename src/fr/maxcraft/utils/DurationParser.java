@@ -66,14 +66,12 @@ public class DurationParser {
 		return (split) ? out.toString().split("~") : new String[0];
 	}
 	public static String translateToString(String string) {
-		// TODO Auto-generated method stub
 		return string;
 	}
 
     public static String getCurrentTimeStampInString() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//dd/MM/yyyy
         Date now = new Date();
-        String strDate = sdfDate.format(now);
-        return strDate;
+        return sdfDate.format(now);
     }
 }

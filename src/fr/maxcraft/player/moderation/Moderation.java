@@ -5,8 +5,11 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
+import fr.maxcraft.player.User;
 import fr.maxcraft.utils.MySQLSaver;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class Moderation {
 	private boolean mute;
@@ -31,7 +34,8 @@ public class Moderation {
 	public static Moderation load(UUID uuid){
 		ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `moderation` WHERE `id` = '"+uuid.toString()+"';",true);
 		try {
-            if (!r.isFirst())
+			assert r != null;
+			if (!r.isFirst())
                 return new Moderation(uuid,false,-1,false,-1,false,-1, null).sqlInsert();
             return new Moderation(UUID.fromString(r.getString("id")),r.getBoolean("ismute"),r.getLong("muteend"),r.getBoolean("isjail"),r.getLong("jailend"),r.getBoolean("isban"),r.getLong("banend"), r.getString("banreason"));
 
@@ -42,7 +46,15 @@ public class Moderation {
 	}
 
 	public static String message(){
-		return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY;
+		return ChatColor.DARK_GRAY + "[Modération]" + ChatColor.GRAY+" ";
+	}
+
+	public static void sendMessageToStaffs(String message){
+		for(Player p: Bukkit.getOnlinePlayers()) {
+			if (User.get(p).getPerms().hasPerms("maxcraft.guide") || p.isOp()){
+                p.sendMessage(org.bukkit.ChatColor.RED+"["+ org.bukkit.ChatColor.GRAY+"!"+ org.bukkit.ChatColor.RED+"]"+" "+ org.bukkit.ChatColor.GRAY+message);
+            }
+		}
 	}
 
 	public Moderation sqlInsert() {
@@ -52,7 +64,7 @@ public class Moderation {
 	}
 	public void save(){
 		MySQLSaver.mysql_update("UPDATE `moderation` SET `ismute` = "+this.mute+" ,`isban` = "+this.ban+",`isjail` = "+this.jail+""
-				+ ",`muteend` = '"+this.muteend+"',`banend` = '"+this.banend+"',`jailend` = '"+this.jailend+"' WHERE `id` = '"+this.uuid.toString()+"';");
+				+ ",`muteend` = '"+this.muteend+"',`banend` = '"+this.banend+"',`jailend` = '"+this.jailend+"',`banreason` = '"+this.banReason+"' WHERE `id` = '"+this.uuid.toString()+"';");
 	}
 	
 	public boolean isMute() {
@@ -65,6 +77,10 @@ public class Moderation {
 		if (jailend<new Date().getTime()&&jailend!=-1)
 			jail = false;
 		return jail;
+	}
+
+	public boolean isJailBoolean(){
+		return this.jail;
 	}
 
 	public boolean isBan() {
@@ -85,9 +101,10 @@ public class Moderation {
 		this.save();
 	}
 
-	public void setBan(boolean ban,long banend) {
+	public void setBan(boolean ban,long banend, String reason) {
 		this.ban = ban;
 		this.banend = banend;
+		this.banReason = reason;
 		this.save();
 	}
 

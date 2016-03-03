@@ -16,6 +16,7 @@ public class TpPosCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.guide")) return false;
         if (args.length!= 3){
             sender.sendMessage(ChatColor.RED+"Nombre de paramètres incorrect !");
             return true;

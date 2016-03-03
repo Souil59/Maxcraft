@@ -20,6 +20,7 @@ public class SpawnMobCommand extends Command{
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.builder")) return false;
         if (args.length != 1 && args.length!= 2){
             sender.sendMessage(ChatColor.RED+"Le nombre de paramètres est incorrect !");
             return true;

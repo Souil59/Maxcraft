@@ -17,6 +17,7 @@ public class SocialspyCommand extends Command{
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
         User u = User.get(sender.getName());
         if (u==null){
             sender.sendMessage(ChatColor.RED+"Erreur dans la recherche du Joueur !");

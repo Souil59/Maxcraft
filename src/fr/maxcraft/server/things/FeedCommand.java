@@ -19,6 +19,7 @@ public class FeedCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
         if (args.length!=0 && args.length!=1 ){
             sender.sendMessage(Things.message()+"Il manque des paramètres !");
             return true;

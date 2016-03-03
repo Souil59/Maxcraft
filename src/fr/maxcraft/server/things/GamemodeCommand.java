@@ -20,6 +20,7 @@ public class GamemodeCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.builder")) return false;
         switch (cmd){
             case "gmc":
                 this.creativeMode(sender, args, false);

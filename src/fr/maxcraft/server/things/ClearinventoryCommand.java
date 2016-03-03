@@ -21,6 +21,7 @@ public class ClearinventoryCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
         if (args.length>0){
             User u = User.get(sender.getName());
             if (u==null){

@@ -91,7 +91,7 @@ public class MarkerCommand extends Command{
             new Marker(p.getLocation(), args[1], false).insert();
         if (args.length == 3)
             new Marker(p.getLocation(), args[1], Boolean.getBoolean(args[2])).insert();
-        p.sendMessage("Marker crée");
+        p.sendMessage("Marker créé");
 
     }
 

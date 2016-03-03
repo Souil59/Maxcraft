@@ -17,6 +17,7 @@ public class ExpCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
         if (args.length !=2 && args.length != 3){
             sender.sendMessage(Things.message()+"Il manque des paramètres !");
             return true;

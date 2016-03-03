@@ -932,25 +932,13 @@ if(z != null)
         if (!e.isSticky()) return;
 
         Zone zPiston = Zone.getZone(e.getBlock().getLocation());
-        Zone z = null;
+        Zone z;
 
         for (Block b : e.getBlocks()){
 
             z = Zone.getZone(b.getLocation());
 
-            if (zPiston.equals(z)){
-
-                for (Shop s : this.plugin.getShopManager().getShops()){
-
-                    if (b.getLocation().distance(s.getItemFrame().getLocation()) == 1){
-                        e.setCancelled(true);
-                        return;
-                    }
-                }
-
-                continue;
-            }
-
+            if (zPiston.equals(z))continue;
             e.setCancelled(true);
             return;
         }

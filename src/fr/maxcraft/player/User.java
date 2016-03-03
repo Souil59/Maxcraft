@@ -99,7 +99,8 @@ public class User implements Owner {
 		public static void loadActive() {
 			ResultSet r = MySQLSaver.mysql_query("SELECT * FROM `player` WHERE `player`.`actif` = '1';",false);
 			try {
-			while (r.next()){
+				assert r != null;
+				while (r.next()){
 				UUID uuid = UUID.fromString(r.getString("id"));
 				new User(uuid,r.getString("name"),r.getInt("balance"),r.getBoolean("actif"));
 			}

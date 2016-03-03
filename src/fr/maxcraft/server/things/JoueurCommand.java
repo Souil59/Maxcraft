@@ -6,6 +6,7 @@ import fr.maxcraft.player.permissions.Perms;
 import fr.maxcraft.player.permissions.groups.Citoyen;
 import fr.maxcraft.server.command.Command;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 
 
@@ -29,23 +30,28 @@ public class JoueurCommand extends Command{
         }
         switch (args[0]){
             case "on":
-                this.setJoueurStateOn(u);
+               return this.setJoueurStateOn(u);
             case "off":
-                this.setJoueurStateOff(u);
+                return this.setJoueurStateOff(u);
         }
         return false;
     }
 
     public boolean setJoueurStateOn(User u){
-        if (u.isGod() || u.isSocialspy() || u.getPlayer().isFlying() || u.getPlayer().getWalkSpeed()!=1){
-            u.sendMessage(Things.message()+ChatColor.RED+"Impossible de passer en joueur : le mode dieu ou socialspy est activé ou vous êtes en train de voler ou votre vitesse de marche n'est pas égales à 1 !");
-            return false;
-        }
+
+        u.setSocialspy(false);
+        u.getPlayer().setAllowFlight(false);
+        u.getPlayer().setFlying(false);
+        u.getPlayer().setWalkSpeed(0.20f);
+        u.getPlayer().setGameMode(GameMode.SURVIVAL);
+        u.setGod(false);
+
         Group usualGroup = u.getPerms().getGroup();
         u.getPerms().setGroup(new Citoyen());
         Citoyen group  = (Citoyen) u.getPerms().getGroup();
         group.setIsStaff(true);
         group.setUsualGroup(usualGroup);
+
         u.sendMessage(Things.message()+"Vous êtes passé en 'mode joueur' !");
         return true;
     }

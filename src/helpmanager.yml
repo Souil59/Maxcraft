@@ -57,30 +57,37 @@ things:
     commande: /afk [joueur]
 moderation:
   unjail:
-    commande: /unjail <joueur>
+    commande: /moderation unjail <joueur>
   jail:
-    commande: /jail <joueur> [durée] [raison]
+    commande: /jail <joueur> <durée> [raison]
     notes:
         -le tp pour le jail se fera au warp "jail"
         -les warps/markers "jail" et "spawn" sont nécessaires au bon fonctionnement de la commande
+        -Pour les durées, suivre la pattern suivant: "s" pour secondes, "m" (minutes), "h" (heures), "d" (jours), "w" (semaines), "y" (années) ex : 20s, 2y, 20h2m3s
   invsee:
-    commande: /invsee <joueur>
+    commande: /moderation invsee <joueur>
   amende:
-    commande: /fine <joueur> <somme> <raison>
+    commande: /moderation fine <joueur> <somme> <raison>
     notes:
         -"somme" peut etre négatif pour donner de l'argent en cas d'erreur
   enderchest:
-    commande: /ec <joueur>
+    commande: /moderation ec <joueur>
   unban:
-    commande: /pardon <joueur>
+    commande: /moderation pardon <joueur>
   bantemp:
     commande: /bantemp <joueur> <durée> [raison]
+    notes:
+        -Pour les durées, suivre la pattern suivant: "s" pour secondes, "m" (minutes), "h" (heures), "d" (jours), "w" (semaines), "y" (années) ex : 20s, 2y, 20h2m3s
   ban:
     commande: /ban <joueur> [raison]
+  mutetemp:
+    commande: /mutetemp <joueur> <durée> [raison]
+    notes:
+        -Pour les durées, suivre la pattern suivant: "s" pour secondes, "m" (minutes), "h" (heures), "d" (jours), "w" (semaines), "y" (années) ex : 20s, 2y, 20h2m3s
+
   mute:
-    commande: /mute <joueur> [durée] [raison]
+    commande: /mute <joueur> [raison]
   kick:
     commande: /kick <joueur> [raison]
-  pardon:
-    commande: /pardon <joueur>
+
     

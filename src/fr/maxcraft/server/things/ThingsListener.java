@@ -71,13 +71,5 @@ public class ThingsListener implements Listener {
         u.sendMessage(ChatColor.GOLD+"Pour revenir à votre emplacement initial tapez "+ChatColor.RED+"/back");
     }
 
-    /*@EventHandler(priority = EventPriority.NORMAL) //TODO fnr
-    public void onPlayerTeleportEvent(PlayerTeleportEvent e){
-        if (!User.get(e.getPlayer()).getPerms().hasPerms("maxcraft.guide")) return;
-        for (Player p : Bukkit.getOnlinePlayers()){
-            p.hidePlayer(e.getPlayer());
-        }
-
-    }*/
 
 }

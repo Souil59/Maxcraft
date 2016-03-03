@@ -15,6 +15,7 @@ public class WhoisCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.modo")) return false;
         if (args.length!=1){
             sender.sendMessage(ChatColor.RED+"Le nombre de paramètres est incorrect !");
             return true;

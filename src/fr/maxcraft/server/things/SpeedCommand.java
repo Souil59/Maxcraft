@@ -15,8 +15,9 @@ public class SpeedCommand extends Command {
 
     @Override
     public boolean execute(CommandSender sender, String cmd, String[] args) {
+        if (!User.get(sender.getName()).getPerms().hasPerms("maxcraft.builder")) return false;
         if (args.length != 2 && args.length != 3) {
-            sender.sendMessage(ChatColor.RED + "nombre de paramètres incorrects !");
+            sender.sendMessage(ChatColor.RED + "Nombre de paramètres incorrects ! /speed <valeure> <\"fly\"/\"walk\"> [Joueur]");
             return true;
         }
         if (args.length == 3) {
@@ -54,7 +55,7 @@ public class SpeedCommand extends Command {
         float v = this.getBukkitSpeed(vitesse);
         if (args[1].equals("fly")){
             u.getPlayer().setFlySpeed(v);
-            u.sendMessage(Things.message() + "Vitesse de fly changée à " + vitesse);
+            u.sendMessage(Things.message() + "Vitesse de vol changée à " + vitesse);
             return true;
         }
         else if(args[1].equals("walk")){
@@ -72,7 +73,7 @@ public class SpeedCommand extends Command {
                 return (float)0;
 
             case 1:
-                return (float)0.2;
+                return (float)0.20;
             case 2:
                 return (float)0.3;
             case 3:
@@ -90,7 +91,7 @@ public class SpeedCommand extends Command {
             case 9:
                 return (float)1.0;
             default:
-                return (float)0.2;
+                return (float)0.20;
         }
     }
 }
